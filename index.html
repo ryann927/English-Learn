@@ -88,7 +88,8 @@
             <h1>个人雅思单词学习平台</h1>
             <p class="tip-text">云端同步 | 多设备互通 | 单词永不重复</p>
         </div>
-        <div>
+       <div style="text-align:right;">
+            <div id="todayDate" style="font-size:16px;font-weight:bold;color:#23395d;margin-bottom:4px;"></div>
             <span id="syncStatus">同步状态：等待操作</span>
         </div>
     </div>
@@ -140,7 +141,10 @@ let cloudStudyData = {
     learnedWords: [],
     d1ReviewWords: [],
     d3ReviewWords: [],
-    learnedSentences: []  // 新增：已学长难句ID
+    learnedSentences: [],
+    lastStudyDate: "",      // 上一次学习的日期（YYYY-MM-DD）
+    todayWords: [],         // 当天已生成的25个单词（防重复刷新）
+    todaySentences: []      // 当天已生成的5句长难句ID
 };
 
 // 雅思词库
@@ -1625,24 +1629,61 @@ function getUniqueNewWord(count) {
     return randomPick;
 }
 
+function getTodayStr() {
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+}
+
+function getTodayDisplay() {
+    const d = new Date();
+    const weekdays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+    return `📅 ${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日 ${weekdays[d.getDay()]}`;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const dateEl = document.getElementById("todayDate");
+    if (dateEl) dateEl.innerText = getTodayDisplay();
+});
+
 function generateTodayContent() {
     document.getElementById("rev1").style.display = "block";
     document.getElementById("rev3").style.display = "block";
     document.getElementById("newWordSec").style.display = "block";
     document.getElementById("sentSec").style.display = "block";
 
+    const today = getTodayStr();
+    let todayNewWords;
+    let isNewDay = (cloudStudyData.lastStudyDate !== today);
+
+    if (isNewDay) {
+        todayNewWords = getUniqueNewWord(25);
+        cloudStudyData.d3ReviewWords = cloudStudyData.d1ReviewWords;
+        cloudStudyData.d1ReviewWords = todayNewWords.slice(0, 10);
+        const wordNameList = todayNewWords.map(w => w.word);
+        cloudStudyData.learnedWords = [...new Set([...cloudStudyData.learnedWords, ...wordNameList])];
+        cloudStudyData.todayWords = todayNewWords;
+        cloudStudyData.lastStudyDate = today;
+        cloudStudyData.todaySentences = [];
+        alert(`今天是 ${today}，已为你生成新一天的学习内容 ✅`);
+    } else {
+        todayNewWords = cloudStudyData.todayWords;
+        if (!todayNewWords || todayNewWords.length === 0) {
+            todayNewWords = getUniqueNewWord(25);
+            cloudStudyData.todayWords = todayNewWords;
+            const wordNameList = todayNewWords.map(w => w.word);
+            cloudStudyData.learnedWords = [...new Set([...cloudStudyData.learnedWords, ...wordNameList])];
+        }
+        alert(`今天（${today}）已学过，为你显示当天的学习内容 📖`);
+    }
+
     renderReviewBlock(cloudStudyData.d1ReviewWords, "rev1List", "rev1Ans");
     renderReviewBlock(cloudStudyData.d3ReviewWords, "rev3List", "rev3Ans");
-
-    const todayNewWords = getUniqueNewWord(25);
     renderNewWordList(todayNewWords);
     createQuiz(todayNewWords.slice(10, 15));
-    createLongSentenceBlock(todayNewWords.slice(0,5));
-
-    const wordNameList = todayNewWords.map(w => w.word);
-    cloudStudyData.d3ReviewWords = cloudStudyData.d1ReviewWords;
-    cloudStudyData.d1ReviewWords = todayNewWords.slice(0,10);
-    cloudStudyData.learnedWords = [...new Set([...cloudStudyData.learnedWords, ...wordNameList])];
+    createLongSentenceBlock(isNewDay);
 }
 
 function renderReviewBlock(wordArr, listDom, ansDom) {
@@ -1691,14 +1732,22 @@ function showQuizAnswer() {
     document.getElementById("quizAns").innerHTML = "自测答案：<br>" + ansText;
 }
 
-function createLongSentenceBlock() {
+function createLongSentenceBlock(isNewDay) {
     if (!cloudStudyData.learnedSentences) cloudStudyData.learnedSentences = [];
-    // 从长难句库过滤掉已学过的
-    const unused = fullSentenceBank.filter(s => !cloudStudyData.learnedSentences.includes(s.id));
-    // 如果剩余不足5句，自动重置（一轮学完后循环）
-    const pool = unused.length >= 5 ? unused : fullSentenceBank;
-    // 随机抽5句
-    const todaySentences = pool.sort(() => Math.random() - 0.5).slice(0, 5);
+    if (!cloudStudyData.todaySentences) cloudStudyData.todaySentences = [];
+
+    let todaySentences;
+
+    if (isNewDay || cloudStudyData.todaySentences.length === 0) {
+        const unused = fullSentenceBank.filter(s => !cloudStudyData.learnedSentences.includes(s.id));
+        const pool = unused.length >= 5 ? unused : fullSentenceBank;
+        todaySentences = pool.sort(() => Math.random() - 0.5).slice(0, 5);
+        const todayIds = todaySentences.map(s => s.id);
+        cloudStudyData.learnedSentences = [...new Set([...cloudStudyData.learnedSentences, ...todayIds])];
+        cloudStudyData.todaySentences = todaySentences;
+    } else {
+        todaySentences = cloudStudyData.todaySentences;
+    }
 
     let sentHtml = "";
     todaySentences.forEach((s, idx) => {
@@ -1712,11 +1761,8 @@ function createLongSentenceBlock() {
         </div>`;
     });
     document.getElementById("sentArea").innerHTML = sentHtml;
-
-    // 记录到已学，避免重复
-    const todayIds = todaySentences.map(s => s.id);
-    cloudStudyData.learnedSentences = [...new Set([...cloudStudyData.learnedSentences, ...todayIds])];
 }
+
 </script>
 </body>
 </html>
