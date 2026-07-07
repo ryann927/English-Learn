@@ -4,81 +4,214 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人雅思云端学习平台</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: "Microsoft Yahei", Arial, sans-serif;
-        }
-        body {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 24px;
-            line-height: 1.7;
-            background-color: #f7f9fc;
-        }
-        .header-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #d0d7e3;
-            margin-bottom: 30px;
-        }
-        .section {
-            margin: 32px 0;
-            padding: 22px;
-            background: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-        h2 {
-            color: #23395d;
-            border-left: 5px solid #2574cc;
-            padding-left: 12px;
-            font-size: 20px;
-        }
-        .word-item {
-            margin: 10px 0;
-            font-size: 16px;
-        }
-        .example-sentence {
-            color: #333;
-            padding-left: 16px;
-            margin: 6px 0;
-            font-style: italic;
-        }
-        .test-block {
-            margin: 14px 0;
-        }
-        .long-sentence-card {
-            background: #f2f6fc;
-            padding: 18px;
-            border-radius: 8px;
-            margin: 16px 0;
-        }
-        .answer-text {
-            color: #0e7c42;
-            font-weight: bold;
-        }
-        button {
-            background: #2574cc;
-            color: white;
-            border: none;
-            padding: 11px 22px;
-            border-radius: 6px;
-            font-size: 15px;
-            cursor: pointer;
-            margin-right: 10px;
-            transition: background 0.2s;
-        }
-        button:hover {
-            background: #1d5fa8;
-        }
-        .tip-text {
-            color: #666;
-            font-size: 14px;
-        }
-    </style>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+        background: #f6f8fa;
+        color: #1f2328;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    /* ===== 顶部深色通栏 ===== */
+    .topbar {
+        background: #24292f;
+        color: #f0f6fc;
+        padding: 14px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #1b1f23;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
+    .topbar-logo {
+        width: 28px; height: 28px;
+        border: 1.5px solid #f0f6fc; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 14px; font-weight: 600;
+    }
+    .topbar-title { font-size: 15px; font-weight: 600; letter-spacing: 0.3px; }
+    .topbar-right { display: flex; align-items: center; gap: 20px; font-size: 13px; color: #adbac7; }
+    .topbar-date { color: #f0f6fc; font-weight: 500; }
+    .topbar-status { color: #7ee787; }
+    .topbar-status.error { color: #f85149; }
+
+    /* ===== 主体容器 ===== */
+    .container {
+        max-width: 1080px;
+        margin: 32px auto;
+        padding: 0 32px;
+    }
+
+    /* ===== 操作栏 ===== */
+    .actions {
+        display: flex; gap: 8px; flex-wrap: wrap;
+        margin-bottom: 24px;
+    }
+    .btn {
+        padding: 6px 14px;
+        font-size: 13px;
+        font-weight: 500;
+        border-radius: 6px;
+        border: 1px solid #d0d7de;
+        background: #f6f8fa;
+        color: #1f2328;
+        cursor: pointer;
+        transition: all 0.15s;
+        display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn:hover { background: #f3f4f6; border-color: #afb8c1; }
+    .btn-primary {
+        background: #1f883d; color: #fff; border-color: rgba(31,35,40,0.15);
+    }
+    .btn-primary:hover { background: #1a7f37; }
+    .btn-danger { color: #cf222e; }
+    .btn-danger:hover { background: #ffebe9; border-color: #cf222e; }
+
+    /* ===== 标签页 Tab ===== */
+    .tabs {
+        display: flex;
+        border-bottom: 1px solid #d0d7de;
+        margin-bottom: 20px;
+        gap: 4px;
+    }
+    .tab {
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #656d76;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        transition: color 0.15s;
+        display: inline-flex; align-items: center; gap: 6px;
+    }
+    .tab:hover { color: #1f2328; }
+    .tab.active { color: #1f2328; border-bottom-color: #fd8c73; }
+    .tab-badge {
+        background: #eaeef2; color: #656d76;
+        border-radius: 20px; padding: 0 6px;
+        font-size: 12px; font-weight: 500;
+        min-width: 20px; text-align: center;
+    }
+    .tab.active .tab-badge { background: #ddf4ff; color: #0969da; }
+
+    /* ===== 卡片 ===== */
+    .card {
+        background: #fff;
+        border: 1px solid #d0d7de;
+        border-radius: 8px;
+        padding: 20px 24px;
+        margin-bottom: 16px;
+    }
+    .card-header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding-bottom: 12px; margin-bottom: 16px;
+        border-bottom: 1px solid #d8dee4;
+    }
+    .card-title {
+        font-size: 15px; font-weight: 600; color: #1f2328;
+        display: flex; align-items: center; gap: 8px;
+    }
+    .card-meta { font-size: 12px; color: #656d76; }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ===== 单词列表 ===== */
+    .word-item {
+        padding: 10px 0;
+        border-bottom: 1px solid #eaeef2;
+        font-size: 14px;
+    }
+    .word-item:last-child { border-bottom: none; }
+    .word-item strong { color: #0969da; font-weight: 600; }
+    .example-sentence {
+        color: #656d76; font-size: 13px; margin-top: 4px;
+        padding-left: 12px; border-left: 2px solid #d0d7de;
+    }
+
+    /* ===== 答案区块（代码块风格） ===== */
+    .answer-text {
+        background: #f6f8fa;
+        border: 1px solid #d0d7de;
+        border-radius: 6px;
+        padding: 12px 16px;
+        margin-top: 12px;
+        font-family: ui-monospace, "SF Mono", Consolas, monospace;
+        font-size: 12.5px;
+        color: #1a7f37;
+        line-height: 1.7;
+    }
+    .answer-text .word-item {
+        border: none; padding: 2px 0; font-size: 12.5px;
+    }
+
+    /* ===== 自测题 ===== */
+    .test-block {
+        padding: 12px 16px;
+        background: #f6f8fa;
+        border-left: 3px solid #0969da;
+        border-radius: 0 6px 6px 0;
+        margin: 10px 0;
+        font-size: 14px;
+        counter-increment: quiz;
+    }
+
+    /* ===== 长难句卡片（代码块风格 + 行号）===== */
+    .long-sentence-card {
+        border: 1px solid #d0d7de;
+        border-radius: 6px;
+        margin: 14px 0;
+        overflow: hidden;
+        background: #fff;
+    }
+    .lsc-header {
+        background: #f6f8fa;
+        padding: 8px 14px;
+        border-bottom: 1px solid #d0d7de;
+        display: flex; justify-content: space-between; align-items: center;
+        font-size: 12.5px;
+    }
+    .lsc-num { font-weight: 600; color: #1f2328; }
+    .lsc-topic {
+        background: #ddf4ff; color: #0969da;
+        padding: 1px 8px; border-radius: 20px;
+        font-size: 11px; font-weight: 500;
+    }
+    .lsc-body { padding: 14px 18px; }
+    .lsc-row {
+        display: grid; grid-template-columns: 90px 1fr;
+        gap: 12px; padding: 6px 0;
+        font-size: 13.5px;
+    }
+    .lsc-label {
+        color: #656d76; font-size: 12px; font-weight: 500;
+        padding-top: 2px;
+    }
+    .lsc-content { color: #1f2328; }
+    .lsc-content.mono {
+        font-family: ui-monospace, "SF Mono", Consolas, monospace;
+        font-size: 13px;
+    }
+
+    /* ===== 空状态 ===== */
+    .empty-state {
+        text-align: center; padding: 48px 20px;
+        color: #656d76; font-size: 14px;
+    }
+    .empty-state-icon { font-size: 32px; margin-bottom: 12px; opacity: 0.5; }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 640px) {
+        .container { padding: 0 16px; margin: 20px auto; }
+        .topbar { padding: 12px 16px; flex-wrap: wrap; gap: 8px; }
+        .lsc-row { grid-template-columns: 1fr; gap: 2px; }
+        .actions { gap: 6px; }
+        .btn { font-size: 12px; padding: 5px 10px; }
+    }
+</style>
 </head>
 <body>
     <div class="header-bar">
