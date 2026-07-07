@@ -123,12 +123,35 @@
     </div>
 
 <script>
-// ============ GitHub Gist 云端存储配置 ============
+// ============ GitHub Gist 云端存储配置（Token存浏览器，安全 & 免费）============
 const GITHUB_CONFIG = {
-    token: "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",
-    gistId: "e21cf32082158da33e233b91b8b58b8d",
-    fileName: "ielts_data.json"
+    fileName: "ielts_data.json",
+    get token() {
+        let t = localStorage.getItem("gh_token");
+        if (!t) {
+            t = prompt("首次使用，请粘贴你的 GitHub Token（github_pat_ 开头）：\n\n填一次即可，浏览器会永久记住。");
+            if (t) localStorage.setItem("gh_token", t.trim());
+        }
+        return t;
+    },
+    get gistId() {
+        let g = localStorage.getItem("gh_gist_id");
+        if (!g) {
+            g = prompt("请粘贴你的 Gist ID（Gist 网址中用户名后面那一长串字母数字）：");
+            if (g) localStorage.setItem("gh_gist_id", g.trim());
+        }
+        return g;
+    }
 };
+
+// 重置配置：如果Token或Gist ID填错了，点[🔧 重置配置]按钮可以重新填
+function resetGitHubConfig() {
+    if (confirm("确认清除已保存的 Token 和 Gist ID？下次点[加载云端]时会重新提示输入。")) {
+        localStorage.removeItem("gh_token");
+        localStorage.removeItem("gh_gist_id");
+        alert("已清除。请重新点[加载云端学习记录]并按提示输入。");
+    }
+}
 
 // 全局学习进度存储
 let cloudStudyData = {
