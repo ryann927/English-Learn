@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal IELTS Learning System | Cloud Sync</title>
-    <!-- Firebase CDN 引入，匹配你的SDK配置 -->
+    <title>个人雅思云端学习平台</title>
+    <!-- Firebase CDN 引入 -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
     <style>
@@ -86,50 +86,51 @@
 <body>
     <div class="header-bar">
         <div>
-            <h1>Personal IELTS Learning Platform</h1>
-            <p class="tip-text">Cloud Sync Enabled | Multi-device Access | No Repeated Words</p>
+            <hdiv>
+            <h1>个人雅思单词学习平台</h1>
+            <p class="tip-text">云端同步 | 多设备互通 | 单词永不重复</p>
         </div>
         <div>
-            <span id="syncStatus">Sync: Loading...</span>
+            <span id="syncStatus">同步状态：加载中...</span>
         </div>
     </div>
 
-    <button onclick="initCloudData()">Load Cloud Learning Record</button>
-    <button onclick="generateTodayContent()">Start Today's Study</button>
-    <button onclick="saveProgressToCloud()">Save Progress to Cloud</button>
+    <button onclick="initCloudData()">加载云端学习记录</button>
+    <button onclick="generateTodayContent()">开始今日学习</button>
+    <button onclick="saveProgressToCloud()">保存进度至云端</button>
 
     <!-- 板块1：D-1 昨日单词复盘 -->
     <div class="section" id="rev1" style="display:none">
-        <h2>1. D-1 Yesterday Words Review (10 words)</h2>
+        <h2>1. D-1 昨日单词复盘（10个）</h2>
         <div id="rev1List"></div>
         <div class="answer-text" id="rev1Ans"></div>
     </div>
 
     <!-- 板块2：D-3 三天间隔复习 -->
     <div class="section" id="rev3" style="display:none">
-        <h2>2. D-3 Interval Review (8 words)</h2>
+        <h2>2. D-3 间隔复习（8个）</h2>
         <div id="rev3List"></div>
         <div class="answer-text" id="rev3Ans"></div>
     </div>
 
     <!-- 板块3：今日25全新词汇+自测 -->
     <div class="section" id="newWordSec" style="display:none">
-        <h2>3. Today 25 Brand New Words (Auto avoid repetition)</h2>
+        <h2>3. 今日25个全新单词（自动过滤已学词汇，无重复）</h2>
         <div id="newWordList"></div>
-        <h3>Blank Fill Quiz</h3>
+        <h3>选词填空自测</h3>
         <div id="quizArea"></div>
-        <button onclick="showQuizAnswer()">Show Quiz Answers</button>
+        <button onclick="showQuizAnswer()">查看自测答案</button>
         <div class="answer-text" id="quizAns" style="display:none"></div>
     </div>
 
     <!-- 板块4：5句雅思长难句拆解 -->
     <div class="section" id="sentSec" style="display:none">
-        <h2>4. 5 IELTS Long Difficult Sentences Analysis</h2>
+        <h2>4. 5句雅思长难句完整解析</h2>
         <div id="sentArea"></div>
     </div>
 
 <script>
-// ===================== 你的Firebase配置（已完整填入，无需修改） =====================
+// ===================== 你的Firebase配置（无需修改） =====================
 const firebaseConfig = {
   apiKey: "AIzaSyBnln4Md9oOenTwoZOK6ZqPqzqR0GTP7_Q",
   authDomain: "english-learn-25e87.firebaseapp.com",
@@ -138,7 +139,7 @@ const firebaseConfig = {
   messagingSenderId: "532557075109",
   appId: "1:532557075109:web:bad03f8dfe5f6f703af34c"
 };
-// 初始化Firebase（网页CDN标准写法，替代import模式）
+// 初始化Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const userDocRef = db.collection("userStudyData").doc("personalIELTSUser01");
@@ -170,12 +171,12 @@ const fullWordBank = [
     {word: "alienate", mean: "疏远、使产生隔阂", topic: "society"},
     {word: "amplify", mean: "放大、加剧负面影响", topic: "general"},
     {word: "annex", mean: "附加、补充条款", topic: "policy"},
-    {word: "apparatus", mean: "实验仪器、行政机构", topic: "science"},
+    {word: "apparatus", mean: "实验仪器；机构", topic: "science"},
     {word: "arbiter", mean: "权威仲裁者、判定标准", topic: "society"},
-    {word: "assert", mean: "坚称、维护合法权益", topic: "society"},
-    {word: "austere", mean: "紧缩的、严苛管控的", topic: "economy"},
+    {word: "assert", mean: "坚称；维护合法权益", topic: "society"},
+    {word: "austere", mean: "紧缩的；严苛管控的", topic: "economy"},
     {word: "backbone", mean: "支柱、核心产业", topic: "economy"},
-    {word: "baffle", mean: "使困惑、阻碍研究进程", topic: "study"},
+    {word: "baffle", mean: "使困惑；阻碍研究进程", topic: "study"},
     {word: "barren", mean: "贫瘠无产出的土地", topic: "environment"},
     {word: "bolster", mean: "提振、扶持产业发展", topic: "economy"},
     {word: "breach", mean: "违反法规、违约", topic: "policy"},
@@ -221,7 +222,7 @@ const topicExamplePool = {
 
 // 1. 从云端读取学习记录
 async function initCloudData() {
-    document.getElementById("syncStatus").innerText = "Sync: Fetching cloud data...";
+    document.getElementById("syncStatus").innerText = "同步状态：正在拉取云端数据...";
     try {
         const doc = await userDocRef.get();
         if (doc.exists) {
@@ -231,19 +232,19 @@ async function initCloudData() {
             cloudStudyData = {learnedWords: [], d1ReviewWords: [], d3ReviewWords: []};
             await userDocRef.set(cloudStudyData);
         }
-        document.getElementById("syncStatus").innerText = "Sync: Cloud data loaded successfully";
-        alert("云端学习记录读取完成，可开始今日学习");
+        document.getElementById("syncStatus").innerText = "同步状态：云端学习记录加载完成";
+        alert("云端学习记录读取完毕，可以开始今日学习");
     } catch (err) {
-        document.getElementById("syncStatus").innerText = "Sync Failed: " + err.message;
+        document.getElementById("syncStatus").innerText = "同步失败：" + err.message;
         alert("云端读取失败，请检查网络，确认Firestore数据库为测试模式");
     }
 }
 
 // 2. 保存今日进度到云端
 async function saveProgressToCloud() {
-    document.getElementById("syncStatus").innerText = "Sync: Uploading progress...";
+    document.getElementById("syncStatus").innerText = "同步状态：正在上传学习进度...";
     await userDocRef.set(cloudStudyData);
-    document.getElementById("syncStatus").innerText = "Sync: Progress saved to cloud";
+    document.getElementById("syncStatus").innerText = "同步状态：进度已保存至云端";
     alert("今日学习进度已同步云端，其他电脑打开网页即可读取");
 }
 
@@ -300,11 +301,11 @@ function renderNewWordList(wordArr) {
     let html = "";
     wordArr.forEach((w, idx) => {
         const topicSentPool = topicExamplePool[w.topic] || topicExamplePool.general;
-        const randomSent = topicSentPool[Math.floor(Math.random() * topicSentPool.length)];
+        const randomSent = topicExamplePool[Math.floor(Math.random() * topicSentPool.length)];
         html += `
         <div class="word-item">
             ${idx+1}. <strong>${w.word}</strong> — ${w.mean}
-            <div class="example-sentence">Example: ${randomSent}</div>
+            <div class="example-sentence">例句：${randomSent}</div>
         </div>`;
     });
     document.getElementById("newWordList").innerHTML = html;
@@ -342,11 +343,11 @@ function createLongSentenceBlock(wordArr) {
         const rawSent = `To protect ecological balance, authorities implement rules that ${w.word} excessive exploitation of natural resources and balance industrial development.`;
         sentHtml += `
         <div class="long-sentence-card">
-            <strong>Sentence ${idx+1}</strong><br>
-            Original: ${rawSent}<br><br>
-            Core Structure: Purpose infinitive + main clause + attributive clause<br>
-            Chinese Translation: 为维护生态平衡，政府出台管控规则，${w.mean}对自然资源的过度开采，平衡产业发展。<br>
-            Imitation Writing Template: We should take measures to ______ social unfairness and promote sustainable development.
+            <strong>长难句 ${idx+1}</strong><br>
+            原句：${rawSent}<br><br>
+            核心句式：目的不定式 + 主句 + 定语从句<br>
+            中文翻译：为维护生态平衡，政府出台管控规则，${w.mean}对自然资源的过度开采，平衡产业发展。<br>
+            仿写模板：We should take measures to ______ social unfairness and promote sustainable development.
         </div>`;
     });
     document.getElementById("sentArea").innerHTML = sentHtml;
