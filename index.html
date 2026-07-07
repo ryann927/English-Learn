@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人雅思云端学习平台</title>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -125,16 +123,12 @@
     </div>
 
 <script>
-// Firebase配置
-const firebaseConfig = {
-  apiKey: "AIzaSyBnln4Md9oOenTwoZOK6ZqPqzqR0GTP7_Q",
-  authDomain: "english-learn-25e87.firebaseapp.com",
-  projectId: "english-learn-25e87",
-  storageBucket: "english-learn-25e87.firebasestorage.app",
-  messagingSenderId: "532557075109",
-  appId: "1:532557075109:web:bad03f8dfe5f6f703af34c"
+// ============ GitHub Gist 云端存储配置 ============
+const GITHUB_CONFIG = {
+    token: "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",
+    gistId: "e21cf32082158da33e233b91b8b58b8d",
+    fileName: "ielts_data.json"
 };
-firebase.initializeApp(firebaseConfig);
 
 // 全局学习进度存储
 let cloudStudyData = {
@@ -1588,39 +1582,66 @@ const topicExamplePool = {
     ]
 };
 
-// 加载云端：函数内部才创建db引用，彻底规避初始化报错
+// 加载云端学习记录（从 GitHub Gist 读取）
 async function initCloudData() {
-    const db = firebase.firestore();
-    const userDocRef = db.collection("userStudyData").doc("personalIELTSUser01");
-    document.getElementById("syncStatus").innerText = "同步状态：正在拉取云端数据...";
+    document.getElementById("syncStatus").innerText = "同步状态：正在从 GitHub 拉取数据...";
     try {
-        const doc = await userDocRef.get();
-       if (doc.exists) {
-            cloudStudyData = doc.data();
-            if (!cloudStudyData.learnedWords) cloudStudyData.learnedWords = [];
-            if (!cloudStudyData.d1ReviewWords) cloudStudyData.d1ReviewWords = [];
-            if (!cloudStudyData.d3ReviewWords) cloudStudyData.d3ReviewWords = [];
-            if (!cloudStudyData.learnedSentences) cloudStudyData.learnedSentences = [];
-        } else {
-            cloudStudyData = {learnedWords: [], d1ReviewWords: [], d3ReviewWords: [], learnedSentences: []};
-            await userDocRef.set(cloudStudyData);
-        }
-        document.getElementById("syncStatus").innerText = "同步状态：云端学习记录加载完成";
-        alert("云端学习记录读取完毕，可以开始今日学习");
+        const res = await fetch(`https://api.github.com/gists/${GITHUB_CONFIG.gistId}`, {
+            headers: {
+                "Authorization": `Bearer ${GITHUB_CONFIG.token}`,
+                "Accept": "application/vnd.github+json"
+            }
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}：${res.statusText}`);
+        const gist = await res.json();
+        const fileContent = gist.files[GITHUB_CONFIG.fileName].content;
+        cloudStudyData = JSON.parse(fileContent);
+
+        // 兼容老数据：缺字段自动补上
+        if (!cloudStudyData.learnedWords) cloudStudyData.learnedWords = [];
+        if (!cloudStudyData.d1ReviewWords) cloudStudyData.d1ReviewWords = [];
+        if (!cloudStudyData.d3ReviewWords) cloudStudyData.d3ReviewWords = [];
+        if (!cloudStudyData.learnedSentences) cloudStudyData.learnedSentences = [];
+        if (!cloudStudyData.lastStudyDate) cloudStudyData.lastStudyDate = "";
+        if (!cloudStudyData.todayWords) cloudStudyData.todayWords = [];
+        if (!cloudStudyData.todaySentences) cloudStudyData.todaySentences = [];
+
+        document.getElementById("syncStatus").innerText = "同步状态：云端数据加载完成 ✅";
+        alert("云端学习记录读取完毕，可以开始今日学习 📚");
     } catch (err) {
         document.getElementById("syncStatus").innerText = "同步失败：" + err.message;
-        alert("云端读取失败，请切换手机流量热点后重试，国内宽带大概率无法访问Firebase");
+        alert("云端读取失败：" + err.message + "\n\n请检查：\n1. Token 是否填对\n2. Gist ID 是否填对\n3. Token 是否有 gist 读写权限");
+        console.error(err);
     }
 }
 
-// 保存云端：同样内部创建db
+// 保存进度到云端（更新 GitHub Gist）
 async function saveProgressToCloud() {
-    const db = firebase.firestore();
-    const userDocRef = db.collection("userStudyData").doc("personalIELTSUser01");
-    document.getElementById("syncStatus").innerText = "同步状态：正在上传学习进度...";
-    await userDocRef.set(cloudStudyData);
-    document.getElementById("syncStatus").innerText = "同步状态：进度已保存至云端";
-    alert("今日学习进度已同步云端，其他电脑打开网页即可读取");
+    document.getElementById("syncStatus").innerText = "同步状态：正在上传到 GitHub...";
+    try {
+        const res = await fetch(`https://api.github.com/gists/${GITHUB_CONFIG.gistId}`, {
+            method: "PATCH",
+            headers: {
+                "Authorization": `Bearer ${GITHUB_CONFIG.token}`,
+                "Accept": "application/vnd.github+json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                files: {
+                    [GITHUB_CONFIG.fileName]: {
+                        content: JSON.stringify(cloudStudyData, null, 2)
+                    }
+                }
+            })
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}：${res.statusText}`);
+        document.getElementById("syncStatus").innerText = "同步状态：进度已保存至云端 ✅";
+        alert("今日学习进度已同步到 GitHub 云端 💾\n其他设备打开网页即可读取到最新进度。");
+    } catch (err) {
+        document.getElementById("syncStatus").innerText = "保存失败：" + err.message;
+        alert("云端保存失败：" + err.message);
+        console.error(err);
+    }
 }
 
 function getUniqueNewWord(count) {
