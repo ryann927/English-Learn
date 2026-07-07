@@ -1591,10 +1591,14 @@ async function initCloudData() {
     document.getElementById("syncStatus").innerText = "同步状态：正在拉取云端数据...";
     try {
         const doc = await userDocRef.get();
-        if (doc.exists) {
+       if (doc.exists) {
             cloudStudyData = doc.data();
+            if (!cloudStudyData.learnedWords) cloudStudyData.learnedWords = [];
+            if (!cloudStudyData.d1ReviewWords) cloudStudyData.d1ReviewWords = [];
+            if (!cloudStudyData.d3ReviewWords) cloudStudyData.d3ReviewWords = [];
+            if (!cloudStudyData.learnedSentences) cloudStudyData.learnedSentences = [];
         } else {
-            cloudStudyData = {learnedWords: [], d1ReviewWords: [], d3ReviewWords: []};
+            cloudStudyData = {learnedWords: [], d1ReviewWords: [], d3ReviewWords: [], learnedSentences: []};
             await userDocRef.set(cloudStudyData);
         }
         document.getElementById("syncStatus").innerText = "同步状态：云端学习记录加载完成";
@@ -1688,6 +1692,7 @@ function showQuizAnswer() {
 }
 
 function createLongSentenceBlock() {
+    if (!cloudStudyData.learnedSentences) cloudStudyData.learnedSentences = [];
     // 从长难句库过滤掉已学过的
     const unused = fullSentenceBank.filter(s => !cloudStudyData.learnedSentences.includes(s.id));
     // 如果剩余不足5句，自动重置（一轮学完后循环）
