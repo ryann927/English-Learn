@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人雅思云端学习平台</title>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -124,7 +124,7 @@
     </div>
 
 <script>
-// 1. 仅配置，不提前创建db引用
+// Firebase配置
 const firebaseConfig = {
   apiKey: "AIzaSyBnln4Md9oOenTwoZOK6ZqPqzqR0GTP7_Q",
   authDomain: "english-learn-25e87.firebaseapp.com",
@@ -135,7 +135,7 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-// 全局学习数据，不绑定数据库
+// 全局学习进度存储
 let cloudStudyData = {
     learnedWords: [],
     d1ReviewWords: [],
@@ -536,7 +536,7 @@ const fullWordBank = [
 {"word":"whereas","mean":"conj.然而，反之","topic":"general","example":"Developed nations cut emissions, whereas developing countries face industrial pressure."},
 {"word":"whereby","mean":"adv.借此，凭此","topic":"policy","example":"A tax system whereby polluting firms pay compensation for environmental damage."},
 {"word":"widespread","mean":"adj.广泛普及的","topic":"society","example":"Widespread public support accelerates the enforcement of green policies."},
-{"word":"withstand","mean":"v.抵御，承受","topic":"science","example":"New composite materials can withstand harsh marine natural environments."}
+{"word":"withstand","mean":"v.抵御，承受","topic":"science","example":"New composite materials can withstand harsh marine natural environments."},
 {"word":"accommodate","mean":"v.容纳；适应","topic":"general","example":"Cities build more public housing to accommodate growing populations."},
 {"word":"anticipate","mean":"v.预期，预见","topic":"study","example":"Scientists anticipate rising sea levels due to global warming."},
 {"word":"behalf","mean":"n.代表，利益","topic":"policy","example":"Volunteers speak on behalf of low-income environmental victims."},
@@ -811,17 +811,15 @@ function renderReviewBlock(wordArr, listDom, ansDom) {
 function renderNewWordList(wordArr) {
     let html = "";
     wordArr.forEach((w, idx) => {
-        const topicSentPool = topicExamplePool[w.topic] || topicExamplePool.general;
-        const randomSent = topicSentPool[Math.floor(Math.random() * topicSentPool.length)];
         html += `
         <div class="word-item">
             ${idx+1}. <strong>${w.word}</strong> — ${w.mean}
-            <div class="example-sentence">例句：${randomSent}</div>
+            <div class="example-sentence">例句：${w.example}</div>
         </div>`;
     });
     document.getElementById("newWordList").innerHTML = html;
 }
-
+ 
 function createQuiz(wordArr) {
     const testTemplate = [
         "The new policy is ______ to cutting industrial pollution nationwide.",
