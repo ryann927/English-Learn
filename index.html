@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人雅思云端学习平台</title>
-    <!-- Firebase CDN 引入 -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
     <style>
@@ -98,21 +97,18 @@
     <button onclick="generateTodayContent()">开始今日学习</button>
     <button onclick="saveProgressToCloud()">保存进度至云端</button>
 
-    <!-- 板块1：D-1 昨日单词复盘 -->
     <div class="section" id="rev1" style="display:none">
         <h2>1. D-1 昨日单词复盘（10个）</h2>
         <div id="rev1List"></div>
         <div class="answer-text" id="rev1Ans"></div>
     </div>
 
-    <!-- 板块2：D-3 三天间隔复习 -->
     <div class="section" id="rev3" style="display:none">
         <h2>2. D-3 间隔复习（8个）</h2>
         <div id="rev3List"></div>
         <div class="answer-text" id="rev3Ans"></div>
     </div>
 
-    <!-- 板块3：今日25全新词汇+自测 -->
     <div class="section" id="newWordSec" style="display:none">
         <h2>3. 今日25个全新单词（自动过滤已学词汇，无重复）</h2>
         <div id="newWordList"></div>
@@ -122,14 +118,13 @@
         <div class="answer-text" id="quizAns" style="display:none"></div>
     </div>
 
-    <!-- 板块4：5句雅思长难句拆解 -->
     <div class="section" id="sentSec" style="display:none">
         <h2>4. 5句雅思长难句完整解析</h2>
         <div id="sentArea"></div>
     </div>
 
 <script>
-// 你的Firebase配置
+// 1. 仅配置，不提前创建db引用
 const firebaseConfig = {
   apiKey: "AIzaSyBnln4Md9oOenTwoZOK6ZqPqzqR0GTP7_Q",
   authDomain: "english-learn-25e87.firebaseapp.com",
@@ -138,20 +133,16 @@ const firebaseConfig = {
   messagingSenderId: "532557075109",
   appId: "1:532557075109:web:bad03f8dfe5f6f703af34c"
 };
-
-// 先初始化Firebase，再定义数据库对象（修复时序报错核心改动）
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const userDocRef = db.collection("userStudyData").doc("personalIELTSUser01");
 
-// 全局学习数据
+// 全局学习数据，不绑定数据库
 let cloudStudyData = {
     learnedWords: [],
     d1ReviewWords: [],
     d3ReviewWords: []
 };
 
-// 完整雅思词库（内置离线可用，分7大话题，无重复）
+// 雅思词库
 const fullWordBank = [
     {word: "coherent", mean: "逻辑连贯的", topic: "general"},
     {word: "coincide", mean: "同时发生；与…契合", topic: "society"},
@@ -188,7 +179,6 @@ const fullWordBank = [
     {word: "bound", mean: "注定的、受法规约束", topic: "general"}
 ];
 
-// 多话题例句库（脱离单一环保主题）
 const topicExamplePool = {
     environment: [
         "Strict policy can effectively curtail industrial toxic discharge.",
@@ -220,15 +210,16 @@ const topicExamplePool = {
     ]
 };
 
-// 1. 从云端读取学习记录
+// 加载云端：函数内部才创建db引用，彻底规避初始化报错
 async function initCloudData() {
+    const db = firebase.firestore();
+    const userDocRef = db.collection("userStudyData").doc("personalIELTSUser01");
     document.getElementById("syncStatus").innerText = "同步状态：正在拉取云端数据...";
     try {
         const doc = await userDocRef.get();
         if (doc.exists) {
             cloudStudyData = doc.data();
         } else {
-            // 云端无记录，自动初始化空文档
             cloudStudyData = {learnedWords: [], d1ReviewWords: [], d3ReviewWords: []};
             await userDocRef.set(cloudStudyData);
         }
@@ -236,55 +227,46 @@ async function initCloudData() {
         alert("云端学习记录读取完毕，可以开始今日学习");
     } catch (err) {
         document.getElementById("syncStatus").innerText = "同步失败：" + err.message;
-        alert("云端读取失败，请确认Firestore数据库为【测试模式】，且网络可访问谷歌服务");
+        alert("云端读取失败，请切换手机流量热点后重试，国内宽带大概率无法访问Firebase");
     }
 }
 
-// 2. 保存今日进度到云端
+// 保存云端：同样内部创建db
 async function saveProgressToCloud() {
+    const db = firebase.firestore();
+    const userDocRef = db.collection("userStudyData").doc("personalIELTSUser01");
     document.getElementById("syncStatus").innerText = "同步状态：正在上传学习进度...";
     await userDocRef.set(cloudStudyData);
     document.getElementById("syncStatus").innerText = "同步状态：进度已保存至云端";
     alert("今日学习进度已同步云端，其他电脑打开网页即可读取");
 }
 
-// 3. 筛选从未学习过的全新单词（自动去重）
 function getUniqueNewWord(count) {
     const unused = fullWordBank.filter(item => !cloudStudyData.learnedWords.includes(item.word));
     const randomPick = unused.sort(() => Math.random() - 0.5).slice(0, count);
     return randomPick;
 }
 
-// 4. 生成当日完整学习内容
 function generateTodayContent() {
-    // 展示所有板块
     document.getElementById("rev1").style.display = "block";
     document.getElementById("rev3").style.display = "block";
     document.getElementById("newWordSec").style.display = "block";
     document.getElementById("sentSec").style.display = "block";
 
-    // 渲染D1昨日复习
     renderReviewBlock(cloudStudyData.d1ReviewWords, "rev1List", "rev1Ans");
-    // 渲染D3间隔复习
     renderReviewBlock(cloudStudyData.d3ReviewWords, "rev3List", "rev3Ans");
 
-    // 获取今日25新词
     const todayNewWords = getUniqueNewWord(25);
     renderNewWordList(todayNewWords);
-
-    // 生成选词自测（抽取中间5个词）
     createQuiz(todayNewWords.slice(10, 15));
-    // 生成5句长难句
     createLongSentenceBlock(todayNewWords.slice(0,5));
 
-    // 更新云端学习数据
     const wordNameList = todayNewWords.map(w => w.word);
     cloudStudyData.d3ReviewWords = cloudStudyData.d1ReviewWords;
     cloudStudyData.d1ReviewWords = todayNewWords.slice(0,10);
     cloudStudyData.learnedWords = [...new Set([...cloudStudyData.learnedWords, ...wordNameList])];
 }
 
-// 渲染复习单词板块
 function renderReviewBlock(wordArr, listDom, ansDom) {
     let listHtml = "";
     let ansHtml = "";
@@ -296,7 +278,6 @@ function renderReviewBlock(wordArr, listDom, ansDom) {
     document.getElementById(ansDom).innerHTML = "释义答案：<br>" + ansHtml;
 }
 
-// 渲染今日新词+分话题例句
 function renderNewWordList(wordArr) {
     let html = "";
     wordArr.forEach((w, idx) => {
@@ -311,7 +292,6 @@ function renderNewWordList(wordArr) {
     document.getElementById("newWordList").innerHTML = html;
 }
 
-// 生成选词填空测试
 function createQuiz(wordArr) {
     const testTemplate = [
         "The new policy is ______ to cutting industrial pollution nationwide.",
@@ -328,7 +308,6 @@ function createQuiz(wordArr) {
     document.getElementById("quizArea").innerHTML = quizHtml;
 }
 
-// 展示自测答案
 function showQuizAnswer() {
     let ansText = "";
     window.globalQuizAns.forEach((ans, idx) => ansText += `${idx+1}. ${ans}<br>`);
@@ -336,7 +315,6 @@ function showQuizAnswer() {
     document.getElementById("quizAns").innerHTML = "自测答案：<br>" + ansText;
 }
 
-// 生成雅思长难句拆解
 function createLongSentenceBlock(wordArr) {
     let sentHtml = "";
     wordArr.forEach((w, idx) => {
