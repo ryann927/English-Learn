@@ -86,12 +86,11 @@
 <body>
     <div class="header-bar">
         <div>
-            <hdiv>
             <h1>个人雅思单词学习平台</h1>
             <p class="tip-text">云端同步 | 多设备互通 | 单词永不重复</p>
         </div>
         <div>
-            <span id="syncStatus">同步状态：加载中...</span>
+            <span id="syncStatus">同步状态：等待操作</span>
         </div>
     </div>
 
@@ -130,7 +129,7 @@
     </div>
 
 <script>
-// ===================== 你的Firebase配置（无需修改） =====================
+// 你的Firebase配置
 const firebaseConfig = {
   apiKey: "AIzaSyBnln4Md9oOenTwoZOK6ZqPqzqR0GTP7_Q",
   authDomain: "english-learn-25e87.firebaseapp.com",
@@ -139,7 +138,8 @@ const firebaseConfig = {
   messagingSenderId: "532557075109",
   appId: "1:532557075109:web:bad03f8dfe5f6f703af34c"
 };
-// 初始化Firebase
+
+// 先初始化Firebase，再定义数据库对象（修复时序报错核心改动）
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const userDocRef = db.collection("userStudyData").doc("personalIELTSUser01");
@@ -228,7 +228,7 @@ async function initCloudData() {
         if (doc.exists) {
             cloudStudyData = doc.data();
         } else {
-            // 云端无记录，初始化空数据
+            // 云端无记录，自动初始化空文档
             cloudStudyData = {learnedWords: [], d1ReviewWords: [], d3ReviewWords: []};
             await userDocRef.set(cloudStudyData);
         }
@@ -236,7 +236,7 @@ async function initCloudData() {
         alert("云端学习记录读取完毕，可以开始今日学习");
     } catch (err) {
         document.getElementById("syncStatus").innerText = "同步失败：" + err.message;
-        alert("云端读取失败，请检查网络，确认Firestore数据库为测试模式");
+        alert("云端读取失败，请确认Firestore数据库为【测试模式】，且网络可访问谷歌服务");
     }
 }
 
@@ -301,7 +301,7 @@ function renderNewWordList(wordArr) {
     let html = "";
     wordArr.forEach((w, idx) => {
         const topicSentPool = topicExamplePool[w.topic] || topicExamplePool.general;
-        const randomSent = topicExamplePool[Math.floor(Math.random() * topicSentPool.length)];
+        const randomSent = topicSentPool[Math.floor(Math.random() * topicSentPool.length)];
         html += `
         <div class="word-item">
             ${idx+1}. <strong>${w.word}</strong> — ${w.mean}
