@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal IELTS Learning System | Cloud Sync</title>
+    <!-- Firebase CDN 引入，匹配你的SDK配置 -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", Arial, sans-serif;
+        }
+        body {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px;
+            line-height: 1.7;
+            background-color: #f7f9fc;
+        }
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #d0d7e3;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin: 32px 0;
+            padding: 22px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        h2 {
+            color: #23395d;
+            border-left: 5px solid #2574cc;
+            padding-left: 12px;
+            font-size: 20px;
+        }
+        .word-item {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .example-sentence {
+            color: #333;
+            padding-left: 16px;
+            margin: 6px 0;
+            font-style: italic;
+        }
+        .test-block {
+            margin: 14px 0;
+        }
+        .long-sentence-card {
+            background: #f2f6fc;
+            padding: 18px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        .answer-text {
+            color: #0e7c42;
+            font-weight: bold;
+        }
+        button {
+            background: #2574cc;
+            color: white;
+            border: none;
+            padding: 11px 22px;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #1d5fa8;
+        }
+        .tip-text {
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-bar">
+        <div>
+            <h1>Personal IELTS Learning Platform</h1>
+            <p class="tip-text">Cloud Sync Enabled | Multi-device Access | No Repeated Words</p>
+        </div>
+        <div>
+            <span id="syncStatus">Sync: Loading...</span>
+        </div>
+    </div>
+
+    <button onclick="initCloudData()">Load Cloud Learning Record</button>
+    <button onclick="generateTodayContent()">Start Today's Study</button>
+    <button onclick="saveProgressToCloud()">Save Progress to Cloud</button>
+
+    <!-- 板块1：D-1 昨日单词复盘 -->
+    <div class="section" id="rev1" style="display:none">
+        <h2>1. D-1 Yesterday Words Review (10 words)</h2>
+        <div id="rev1List"></div>
+        <div class="answer-text" id="rev1Ans"></div>
+    </div>
+
+    <!-- 板块2：D-3 三天间隔复习 -->
+    <div class="section" id="rev3" style="display:none">
+        <h2>2. D-3 Interval Review (8 words)</h2>
+        <div id="rev3List"></div>
+        <div class="answer-text" id="rev3Ans"></div>
+    </div>
+
+    <!-- 板块3：今日25全新词汇+自测 -->
+    <div class="section" id="newWordSec" style="display:none">
+        <h2>3. Today 25 Brand New Words (Auto avoid repetition)</h2>
+        <div id="newWordList"></div>
+        <h3>Blank Fill Quiz</h3>
+        <div id="quizArea"></div>
+        <button onclick="showQuizAnswer()">Show Quiz Answers</button>
+        <div class="answer-text" id="quizAns" style="display:none"></div>
+    </div>
+
+    <!-- 板块4：5句雅思长难句拆解 -->
+    <div class="section" id="sentSec" style="display:none">
+        <h2>4. 5 IELTS Long Difficult Sentences Analysis</h2>
+        <div id="sentArea"></div>
+    </div>
+
+<script>
+// ===================== 你的Firebase配置（已完整填入，无需修改） =====================
+const firebaseConfig = {
+  apiKey: "AIzaSyBnln4Md9oOenTwoZOK6ZqPqzqR0GTP7_Q",
+  authDomain: "english-learn-25e87.firebaseapp.com",
+  projectId: "english-learn-25e87",
+  storageBucket: "english-learn-25e87.firebasestorage.app",
+  messagingSenderId: "532557075109",
+  appId: "1:532557075109:web:bad03f8dfe5f6f703af34c"
+};
+// 初始化Firebase（网页CDN标准写法，替代import模式）
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const userDocRef = db.collection("userStudyData").doc("personalIELTSUser01");
+
+// 全局学习数据
+let cloudStudyData = {
+    learnedWords: [],
+    d1ReviewWords: [],
+    d3ReviewWords: []
+};
+
+// 完整雅思词库（内置离线可用，分7大话题，无重复）
+const fullWordBank = [
+    {word: "coherent", mean: "逻辑连贯的", topic: "general"},
+    {word: "coincide", mean: "同时发生；与…契合", topic: "society"},
+    {word: "collate", mean: "汇总、核对资料", topic: "study"},
+    {word: "composite", mean: "复合的、合成的", topic: "science"},
+    {word: "conceive", mean: "构思、设计方案", topic: "general"},
+    {word: "consensus", mean: "共识、一致意见", topic: "society"},
+    {word: "considerable", mean: "大量的、可观的", topic: "general"},
+    {word: "contrive", mean: "设法实现、研发", topic: "science"},
+    {word: "controversial", mean: "有争议的", topic: "society"},
+    {word: "converge", mean: "汇聚、观点趋同", topic: "general"},
+    {word: "crucial", mean: "至关重要的", topic: "general"},
+    {word: "curtail", mean: "削减、缩减排放/开支", topic: "environment"},
+    {word: "deduct", mean: "扣除、减除补贴", topic: "economy"},
+    {word: "delineate", mean: "清晰界定、划定标准", topic: "policy"},
+    {word: "depict", mean: "描绘、客观描述现状", topic: "general"},
+    {word: "alienate", mean: "疏远、使产生隔阂", topic: "society"},
+    {word: "amplify", mean: "放大、加剧负面影响", topic: "general"},
+    {word: "annex", mean: "附加、补充条款", topic: "policy"},
+    {word: "apparatus", mean: "实验仪器、行政机构", topic: "science"},
+    {word: "arbiter", mean: "权威仲裁者、判定标准", topic: "society"},
+    {word: "assert", mean: "坚称、维护合法权益", topic: "society"},
+    {word: "austere", mean: "紧缩的、严苛管控的", topic: "economy"},
+    {word: "backbone", mean: "支柱、核心产业", topic: "economy"},
+    {word: "baffle", mean: "使困惑、阻碍研究进程", topic: "study"},
+    {word: "barren", mean: "贫瘠无产出的土地", topic: "environment"},
+    {word: "bolster", mean: "提振、扶持产业发展", topic: "economy"},
+    {word: "breach", mean: "违反法规、违约", topic: "policy"},
+    {word: "buoy", mean: "支撑、拉动经济增长", topic: "economy"},
+    {word: "cardinal", mean: "核心的、首要的", topic: "general"},
+    {word: "champion", mean: "大力倡导、支持环保", topic: "society"},
+    {word: "benchmark", mean: "评判基准、对标标准", topic: "policy"},
+    {word: "boom", mean: "行业蓬勃扩张、激增", topic: "economy"},
+    {word: "bound", mean: "注定的、受法规约束", topic: "general"}
+];
+
+// 多话题例句库（脱离单一环保主题）
+const topicExamplePool = {
+    environment: [
+        "Strict policy can effectively curtail industrial toxic discharge.",
+        "Long-term chemical pollution turns once fertile farmland barren."
+    ],
+    society: [
+        "Citizens have the right to assert their legitimate public interests.",
+        "Unbalanced resource allocation may alienate low-income groups."
+    ],
+    study: [
+        "Researchers collate thousands of samples to depict pollution trends.",
+        "This core skill is crucial for academic paper writing."
+    ],
+    science: [
+        "Scientists contrive new composite materials to replace plastic.",
+        "Special testing apparatus is used to measure underground water quality."
+    ],
+    economy: [
+        "Financial subsidies bolster small manufacturers’ green transformation.",
+        "Investment in clean energy helps buoy regional economic growth."
+    ],
+    policy: [
+        "The official document delineates clear emission limits for factories.",
+        "Enterprises that breach environmental laws will deduct financial allowances."
+    ],
+    general: [
+        "There is a broad global consensus on carbon emission reduction.",
+        "A coherent set of rules is the backbone of effective governance."
+    ]
+};
+
+// 1. 从云端读取学习记录
+async function initCloudData() {
+    document.getElementById("syncStatus").innerText = "Sync: Fetching cloud data...";
+    try {
+        const doc = await userDocRef.get();
+        if (doc.exists) {
+            cloudStudyData = doc.data();
+        } else {
+            // 云端无记录，初始化空数据
+            cloudStudyData = {learnedWords: [], d1ReviewWords: [], d3ReviewWords: []};
+            await userDocRef.set(cloudStudyData);
+        }
+        document.getElementById("syncStatus").innerText = "Sync: Cloud data loaded successfully";
+        alert("云端学习记录读取完成，可开始今日学习");
+    } catch (err) {
+        document.getElementById("syncStatus").innerText = "Sync Failed: " + err.message;
+        alert("云端读取失败，请检查网络，确认Firestore数据库为测试模式");
+    }
+}
+
+// 2. 保存今日进度到云端
+async function saveProgressToCloud() {
+    document.getElementById("syncStatus").innerText = "Sync: Uploading progress...";
+    await userDocRef.set(cloudStudyData);
+    document.getElementById("syncStatus").innerText = "Sync: Progress saved to cloud";
+    alert("今日学习进度已同步云端，其他电脑打开网页即可读取");
+}
+
+// 3. 筛选从未学习过的全新单词（自动去重）
+function getUniqueNewWord(count) {
+    const unused = fullWordBank.filter(item => !cloudStudyData.learnedWords.includes(item.word));
+    const randomPick = unused.sort(() => Math.random() - 0.5).slice(0, count);
+    return randomPick;
+}
+
+// 4. 生成当日完整学习内容
+function generateTodayContent() {
+    // 展示所有板块
+    document.getElementById("rev1").style.display = "block";
+    document.getElementById("rev3").style.display = "block";
+    document.getElementById("newWordSec").style.display = "block";
+    document.getElementById("sentSec").style.display = "block";
+
+    // 渲染D1昨日复习
+    renderReviewBlock(cloudStudyData.d1ReviewWords, "rev1List", "rev1Ans");
+    // 渲染D3间隔复习
+    renderReviewBlock(cloudStudyData.d3ReviewWords, "rev3List", "rev3Ans");
+
+    // 获取今日25新词
+    const todayNewWords = getUniqueNewWord(25);
+    renderNewWordList(todayNewWords);
+
+    // 生成选词自测（抽取中间5个词）
+    createQuiz(todayNewWords.slice(10, 15));
+    // 生成5句长难句
+    createLongSentenceBlock(todayNewWords.slice(0,5));
+
+    // 更新云端学习数据
+    const wordNameList = todayNewWords.map(w => w.word);
+    cloudStudyData.d3ReviewWords = cloudStudyData.d1ReviewWords;
+    cloudStudyData.d1ReviewWords = todayNewWords.slice(0,10);
+    cloudStudyData.learnedWords = [...new Set([...cloudStudyData.learnedWords, ...wordNameList])];
+}
+
+// 渲染复习单词板块
+function renderReviewBlock(wordArr, listDom, ansDom) {
+    let listHtml = "";
+    let ansHtml = "";
+    wordArr.forEach((item, idx) => {
+        listHtml += `<div class="word-item">${idx+1}. ${item.word}</div>`;
+        ansHtml += `<div class="word-item">${idx+1}. ${item.mean}</div>`;
+    });
+    document.getElementById(listDom).innerHTML = listHtml;
+    document.getElementById(ansDom).innerHTML = "释义答案：<br>" + ansHtml;
+}
+
+// 渲染今日新词+分话题例句
+function renderNewWordList(wordArr) {
+    let html = "";
+    wordArr.forEach((w, idx) => {
+        const topicSentPool = topicExamplePool[w.topic] || topicExamplePool.general;
+        const randomSent = topicSentPool[Math.floor(Math.random() * topicSentPool.length)];
+        html += `
+        <div class="word-item">
+            ${idx+1}. <strong>${w.word}</strong> — ${w.mean}
+            <div class="example-sentence">Example: ${randomSent}</div>
+        </div>`;
+    });
+    document.getElementById("newWordList").innerHTML = html;
+}
+
+// 生成选词填空测试
+function createQuiz(wordArr) {
+    const testTemplate = [
+        "The new policy is ______ to cutting industrial pollution nationwide.",
+        "Global nations finally reached a ______ on carbon emission limits.",
+        "Manufacturers must ______ unnecessary fossil fuel consumption.",
+        "Official documents ______ strict standards for factory waste discharge.",
+        "The rapid ______ of renewable energy changes traditional industrial patterns."
+    ];
+    let quizHtml = "";
+    window.globalQuizAns = wordArr.map(w => w.word);
+    wordArr.forEach((w, idx) => {
+        quizHtml += `<div class="test-block">${idx+1}. ${testTemplate[idx]}</div>`;
+    });
+    document.getElementById("quizArea").innerHTML = quizHtml;
+}
+
+// 展示自测答案
+function showQuizAnswer() {
+    let ansText = "";
+    window.globalQuizAns.forEach((ans, idx) => ansText += `${idx+1}. ${ans}<br>`);
+    document.getElementById("quizAns").style.display = "block";
+    document.getElementById("quizAns").innerHTML = "自测答案：<br>" + ansText;
+}
+
+// 生成雅思长难句拆解
+function createLongSentenceBlock(wordArr) {
+    let sentHtml = "";
+    wordArr.forEach((w, idx) => {
+        const rawSent = `To protect ecological balance, authorities implement rules that ${w.word} excessive exploitation of natural resources and balance industrial development.`;
+        sentHtml += `
+        <div class="long-sentence-card">
+            <strong>Sentence ${idx+1}</strong><br>
+            Original: ${rawSent}<br><br>
+            Core Structure: Purpose infinitive + main clause + attributive clause<br>
+            Chinese Translation: 为维护生态平衡，政府出台管控规则，${w.mean}对自然资源的过度开采，平衡产业发展。<br>
+            Imitation Writing Template: We should take measures to ______ social unfairness and promote sustainable development.
+        </div>`;
+    });
+    document.getElementById("sentArea").innerHTML = sentHtml;
+}
+</script>
+</body>
+</html>
