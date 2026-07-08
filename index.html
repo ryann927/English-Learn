@@ -168,8 +168,8 @@ let cloudStudyData = {
     learnedSentences: [],
     lastStudyDate: "",      // 上一次学习的日期（YYYY-MM-DD）
     todayWords: [],         // 当天已生成的25个单词（防重复刷新）
-    todaySentences: []      // 当天已生成的5句长难句ID
-    history: {}   // 新增：按日期存储每天的学习内容
+    todaySentences: [],     // 当天已生成的5句长难句ID
+    history: {}             // 新增：按日期存储每天的学习内容
 };
 
 // 雅思词库
@@ -1636,7 +1636,7 @@ async function initCloudData() {
         if (!cloudStudyData.lastStudyDate) cloudStudyData.lastStudyDate = "";
         if (!cloudStudyData.todayWords) cloudStudyData.todayWords = [];
         if (!cloudStudyData.todaySentences) cloudStudyData.todaySentences = [];
-        if (!cloudStudyData.history) cloudStudyData.history = {}
+        if !cloudStudyData.history) cloudStudyData.history = }；
 
         document.getElementById("syncStatus").innerText = "同步状态：云端数据加载完成 ✅";
         alert("云端学习记录读取完毕，可以开始今日学习 📚");
