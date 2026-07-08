@@ -118,12 +118,17 @@
         <button onclick="showQuizAnswer()">查看自测答案</button>
         <div class="answer-text" id="quizAns" style="display:none"></div>
     </div>
-
-   <div class="section" id="historySec" style="display:none">
-        <h2>📚 学习历史（点击日期查看内容）</h2>
+    <div class="section" id="historySec" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <h2 style="margin:0;">📚 学习历史（点击日期查看内容）</h2>
+          <button onclick="hideHistory()" style="background:#999;padding:7px 14px;font-size:14px;">
+            ✕ 关闭
+          </button>
+        </div>
         <div id="historyList" style="margin-bottom:16px;"></div>
         <div id="historyDetail"></div>
     </div>
+
     <div class="section" id="sentSec" style="display:none">
         <h2>4. 5句雅思长难句完整解析</h2>
         <div id="sentArea"></div>
@@ -1783,6 +1788,11 @@ function createQuiz(wordArr) {
     document.getElementById("quizArea").innerHTML = quizHtml;
 }
 // 打开历史记录页面
+
+// 关闭历史记录页面
+function hideHistory() {
+    document.getElementById("historySec").style.display = "none";
+}
 function showHistory() {
     document.getElementById("historySec").style.display = "block";
     document.getElementById("historySec").scrollIntoView({ behavior: "smooth" });
