@@ -1636,7 +1636,7 @@ async function initCloudData() {
         if (!cloudStudyData.lastStudyDate) cloudStudyData.lastStudyDate = "";
         if (!cloudStudyData.todayWords) cloudStudyData.todayWords = [];
         if (!cloudStudyData.todaySentences) cloudStudyData.todaySentences = [];
-        if !cloudStudyData.history) cloudStudyData.history = }；
+        if (!cloudStudyData.history) cloudStudyData.history = {};
 
         document.getElementById("syncStatus").innerText = "同步状态：云端数据加载完成 ✅";
         alert("云端学习记录读取完毕，可以开始今日学习 📚");
@@ -1858,6 +1858,7 @@ function showQuizAnswer() {
 function createLongSentenceBlock(isNewDay) {
     if (!cloudStudyData.learnedSentences) cloudStudyData.learnedSentences = [];
     if (!cloudStudyData.todaySentences) cloudStudyData.todaySentences = [];
+
 
     let todaySentences;
 
