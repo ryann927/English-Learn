@@ -614,26 +614,35 @@ body {
     margin: 0 !important;
 }
 
+
 .hero-actions {
     display: flex;
-    gap: 12px;
+    align-items: center;
+    gap: 10px;
 }
 
+
 .primary-action,
-.secondary-action {
-    border-radius: 16px !important;
-    padding: 13px 22px !important;
-    font-size: 15px !important;
-    font-weight: 700 !important;
+.secondary-action,
+.text-action {
+    border-radius: 12px !important;
+    padding: 9px 16px !important;
+    font-size: 14px !important;
+    font-weight: 650 !important;
     box-shadow: none !important;
     margin: 0 !important;
+    height: 40px !important;
+    line-height: 1 !important;
 }
+
 
 .primary-action {
     background: #ff5a3c !important;
     color: #fff !important;
     border: 1px solid #ff5a3c !important;
+    min-width: 118px !important;
 }
+
 
 .primary-action:hover {
     background: #f04d31 !important;
@@ -641,11 +650,14 @@ body {
     transform: none !important;
 }
 
+
 .secondary-action {
     background: #f4f4f5 !important;
     color: #1f2937 !important;
     border: 1px solid #ededee !important;
+    min-width: 96px !important;
 }
+
 
 .secondary-action:hover {
     background: #ececef !important;
@@ -783,23 +795,26 @@ body > button {
     }
 }
     .account-area {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 6px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 4px;
 }
+
 
 .login-top-btn {
     background: #ff5a3c !important;
     color: #fff !important;
     border: 1px solid #ff5a3c !important;
-    border-radius: 14px !important;
-    padding: 10px 18px !important;
-    font-size: 14px !important;
+    border-radius: 12px !important;
+    padding: 8px 15px !important;
+    font-size: 13px !important;
     font-weight: 700 !important;
     box-shadow: none !important;
     margin: 0 !important;
+    height: 36px !important;
 }
+
 
 .sync-mini {
     color: #8b8f97 !important;
@@ -809,13 +824,20 @@ body > button {
     padding: 0 !important;
 }
 
+
 .text-action {
     background: transparent !important;
     color: #8b8f97 !important;
     border: none !important;
     box-shadow: none !important;
-    padding: 13px 8px !important;
+    padding: 9px 6px !important;
+    min-width: auto !important;
 }
+
+.text-action:hover {
+    background: transparent !important;
+    color: #ff5a3c !important;
+  
 
 .plan-card {
     display: flex;
@@ -887,7 +909,7 @@ body > button {
     <section class="hero-panel">
         <div>
             <h1>雅思单词学习平台</h1>
-            <p class="tip-text" id="welcomeText">云端同步 | 多设备互通 | 单词永不重复</p>
+            <p class="tip-text" id="welcomeText">欢迎登录，开启你的今日雅思学习</p>
         </div>
 
         <div class="hero-actions">
