@@ -4,61 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人雅思云端学习平台</title>
-/* ===== 学习日历 ===== */
 
-.calendar-card {
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 20px;
-    padding: 20px;
-    margin-top: 12px;
-}
-
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
-}
-
-.calendar-weekday {
-    text-align: center;
-    font-weight: 600;
-    color: #6b7280;
-    padding: 10px 0;
-}
-
-.calendar-day {
-    min-height: 72px;
-    border-radius: 12px;
-    padding: 8px;
-    text-align: center;
-    border: 1px solid #e5e7eb;
-}
-
-.calendar-day.studied {
-    background: #ecfdf5;
-    border-color: #86efac;
-}
-
-.calendar-day.missed {
-    background: #fef2f2;
-    border-color: #fca5a5;
-}
-
-.calendar-day.future {
-    background: #f3f4f6;
-    color: #9ca3af;
-}
-
-.calendar-date {
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.calendar-status {
-    font-size: 12px;
-    margin-top: 4px;
-}
 <style>
     * {
         box-sizing: border-box;
@@ -356,6 +302,61 @@
             border-radius: 22px;
         }
     }
+    /* ===== 学习日历 ===== */
+
+.calendar-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 12px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.calendar-weekday {
+    text-align: center;
+    font-weight: 600;
+    color: #6b7280;
+    padding: 10px 0;
+}
+
+.calendar-day {
+    min-height: 72px;
+    border-radius: 12px;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+}
+
+.calendar-day.studied {
+    background: #ecfdf5;
+    border-color: #86efac;
+}
+
+.calendar-day.missed {
+    background: #fef2f2;
+    border-color: #fca5a5;
+}
+
+.calendar-day.future {
+    background: #f3f4f6;
+    color: #9ca3af;
+}
+
+.calendar-date {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.calendar-status {
+    font-size: 12px;
+    margin-top: 4px;
+}
 </style>
 </head>
 <body>
