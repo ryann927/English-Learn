@@ -2103,6 +2103,8 @@ function hideHistory() {
 }
 let calendarViewDate = new Date();
 
+let calendarViewDate = new Date();
+
 // 打开历史日历
 function showHistory() {
     if (!cloudStudyData.history) cloudStudyData.history = {};
@@ -2200,7 +2202,107 @@ function renderHistoryCalendar() {
 
         if (isFuture) {
             cls += " future";
+            status = "未来";
+        } else if (hasStudy) {
+            cls += " studied";
+            const wordCount = (history[dateKey].words || []).length;
+            const sentCount = (history[dateKey].sentences || []).length;
+            status = `${wordCount}词 · ${sentCount}句`;
+        } else {
+            cls += " missed";
+            status = isToday ? "今天" : "未学习";
+        }
 
+        html += `
+        <div class="${cls}" onclick="handleCalendarDayClick('${dateKey}')">
+            <div class="calendar-date">${day}</div>
+            <div class="calendar-status">${status}</div>
+        </div>`;
+    }
+
+    // 下个月补位，补满 6 行
+    const totalCells = startOffset + daysInMonth;
+    const nextCells = 42 - totalCells;
+
+    for (let i = 1; i <= nextCells; i++) {
+        html += `
+        <div class="calendar-day future">
+            <div class="calendar-date">${i}</div>
+            <div class="calendar-status">—</div>
+        </div>`;
+    }
+
+    grid.innerHTML = html;
+}
+
+// 点击某一天
+function handleCalendarDayClick(date) {
+    const todayRaw = new Date();
+    const todayOnly = new Date(
+        todayRaw.getFullYear(),
+        todayRaw.getMonth(),
+        todayRaw.getDate()
+    );
+
+    const clickedDate = new Date(date);
+
+    if (clickedDate > todayOnly) {
+        return;
+    }
+
+    const dayData = (cloudStudyData.history || {})[date];
+
+    if (!dayData) {
+        document.getElementById("historyDetail").innerHTML = `
+            <div class="long-sentence-card" style="background:#fff7f7;border-color:#fecaca;">
+                <strong>📅 ${date}</strong><br><br>
+                这一天没有学习记录。
+            </div>
+        `;
+        document.getElementById("historyDetail").scrollIntoView({ behavior: "smooth" });
+        return;
+    }
+
+    showHistoryDay(date);
+}
+
+// 显示某一天的具体学习内容
+function showHistoryDay(date) {
+    const dayData = (cloudStudyData.history || {})[date];
+
+    if (!dayData) {
+        document.getElementById("historyDetail").innerHTML = "<p>该日期无数据</p>";
+        return;
+    }
+
+    let html = `<h3 style="color:#23395d;margin-top:24px;">📖 ${date} 学习内容</h3>`;
+
+    html += `<h4 style="margin-top:16px;">🔤 当日学习的 ${(dayData.words || []).length} 个单词：</h4>`;
+
+    (dayData.words || []).forEach((w, idx) => {
+        html += `
+        <div class="word-item">
+            ${idx + 1}. <strong>${w.word}</strong> — ${w.mean}
+            <div class="example-sentence">例句：${w.example}</div>
+        </div>`;
+    });
+
+    html += `<h4 style="margin-top:20px;">📝 当日学习的 ${(dayData.sentences || []).length} 句长难句：</h4>`;
+
+    (dayData.sentences || []).forEach((s, idx) => {
+        html += `
+        <div class="long-sentence-card">
+            <strong>长难句 ${idx + 1}（话题：${s.topic}）</strong><br><br>
+            <strong>原句：</strong>${s.sentence}<br><br>
+            <strong>核心句式：</strong>${s.structure}<br>
+            <strong>中文翻译：</strong>${s.translation}<br>
+            <strong>仿写模板：</strong>${s.template}
+        </div>`;
+    });
+
+    document.getElementById("historyDetail").innerHTML = html;
+    document.getElementById("historyDetail").scrollIntoView({ behavior: "smooth" });
+}
 function showQuizAnswer() {
     let ansText = "";
     window.globalQuizAns.forEach((ans, idx) => ansText += `${idx+1}. ${ans}<br>`);
