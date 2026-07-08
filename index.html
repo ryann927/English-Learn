@@ -2941,6 +2941,7 @@ function generateTodayContent() {
         alert("请先登录账号，再开始今日学习。");
         return;
     }
+
     document.getElementById("rev1").style.display = "block";
     document.getElementById("rev3").style.display = "block";
     document.getElementById("newWordSec").style.display = "block";
@@ -2950,34 +2951,62 @@ function generateTodayContent() {
     let todayNewWords;
     let isNewDay = (cloudStudyData.lastStudyDate !== today);
 
+    // 先保存“进入今天之前”的复习内容
+    const reviewD1BeforeUpdate = cloudStudyData.d1ReviewWords || [];
+    const reviewD3BeforeUpdate = cloudStudyData.d3ReviewWords || [];
+
     if (isNewDay) {
-        todayNewWords = getUniqueNewWord(25);
-        cloudStudyData.d3ReviewWords = cloudStudyData.d1ReviewWords;
-        cloudStudyData.d1ReviewWords = todayNewWords.slice(0, 10);
+        const plan = getStudyPlan ? getStudyPlan() : { newWordCount: 25, sentenceCount: 5 };
+
+        // 新的一天：生成今日新词
+        todayNewWords = getUniqueNewWord(plan.newWordCount || 25);
+
+        // 先显示今天内容，但不要立刻把今天新词显示成 D-1
         const wordNameList = todayNewWords.map(w => w.word);
         cloudStudyData.learnedWords = [...new Set([...cloudStudyData.learnedWords, ...wordNameList])];
+
         cloudStudyData.todayWords = todayNewWords;
         cloudStudyData.lastStudyDate = today;
         cloudStudyData.todaySentences = [];
-        // 保存到历史记录
+
+        if (!cloudStudyData.history) cloudStudyData.history = {};
         cloudStudyData.history[today] = {
             words: todayNewWords,
-            sentences: []   // 长难句稍后由 createLongSentenceBlock 填入
+            sentences: []
         };
-        alert(`今天是 ${today}，已为你生成新一天的学习内容 ✅`);
+
+        // 关键：更新“明天/后天要用的复习队列”
+        // 今天页面上仍然显示 reviewD1BeforeUpdate / reviewD3BeforeUpdate
+        cloudStudyData.d3ReviewWords = reviewD1BeforeUpdate;
+        cloudStudyData.d1ReviewWords = todayNewWords.slice(0, 10);
+
+        alert(`今天是 ${today}，已为你生成新一天的学习内容。`);
     } else {
-        todayNewWords = cloudStudyData.todayWords;
+        // 同一天再次点击：读取当天缓存
+        todayNewWords = cloudStudyData.todayWords || [];
+
         if (!todayNewWords || todayNewWords.length === 0) {
-            todayNewWords = getUniqueNewWord(25);
+            const plan = getStudyPlan ? getStudyPlan() : { newWordCount: 25, sentenceCount: 5 };
+            todayNewWords = getUniqueNewWord(plan.newWordCount || 25);
             cloudStudyData.todayWords = todayNewWords;
+
             const wordNameList = todayNewWords.map(w => w.word);
             cloudStudyData.learnedWords = [...new Set([...cloudStudyData.learnedWords, ...wordNameList])];
+
+            if (!cloudStudyData.history) cloudStudyData.history = {};
+            cloudStudyData.history[today] = {
+                words: todayNewWords,
+                sentences: []
+            };
         }
-        alert(`今天（${today}）已学过，为你显示当天的学习内容 📖`);
+
+        alert(`今天（${today}）已生成过内容，为你显示当天学习内容。`);
     }
 
-    renderReviewBlock(cloudStudyData.d1ReviewWords, "rev1List", "rev1Ans");
-    renderReviewBlock(cloudStudyData.d3ReviewWords, "rev3List", "rev3Ans");
+    // 重点：页面上显示的是“更新之前”的复习内容
+    renderReviewBlock(reviewD1BeforeUpdate, "rev1List", "rev1Ans");
+    renderReviewBlock(reviewD3BeforeUpdate, "rev3List", "rev3Ans");
+
     renderNewWordList(todayNewWords);
     createQuiz(todayNewWords.slice(10, 15));
     createLongSentenceBlock(isNewDay);
@@ -2986,10 +3015,18 @@ function generateTodayContent() {
 function renderReviewBlock(wordArr, listDom, ansDom) {
     let listHtml = "";
     let ansHtml = "";
+
+    if (!wordArr || wordArr.length === 0) {
+        document.getElementById(listDom).innerHTML = `<div class="word-item" style="color:#8b8f97;">暂无复习内容</div>`;
+        document.getElementById(ansDom).innerHTML = "";
+        return;
+    }
+
     wordArr.forEach((item, idx) => {
-        listHtml += `<div class="word-item">${idx+1}. ${item.word}</div>`;
-        ansHtml += `<div class="word-item">${idx+1}. ${item.mean}</div>`;
+        listHtml += `<div class="word-item">${idx + 1}. ${item.word}</div>`;
+        ansHtml += `<div class="word-item">${idx + 1}. ${item.mean}</div>`;
     });
+
     document.getElementById(listDom).innerHTML = listHtml;
     document.getElementById(ansDom).innerHTML = "释义答案：<br>" + ansHtml;
 }
