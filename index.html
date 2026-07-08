@@ -4,6 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人雅思云端学习平台</title>
+/* ===== 学习日历 ===== */
+
+.calendar-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 12px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.calendar-weekday {
+    text-align: center;
+    font-weight: 600;
+    color: #6b7280;
+    padding: 10px 0;
+}
+
+.calendar-day {
+    min-height: 72px;
+    border-radius: 12px;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+}
+
+.calendar-day.studied {
+    background: #ecfdf5;
+    border-color: #86efac;
+}
+
+.calendar-day.missed {
+    background: #fef2f2;
+    border-color: #fca5a5;
+}
+
+.calendar-day.future {
+    background: #f3f4f6;
+    color: #9ca3af;
+}
+
+.calendar-date {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.calendar-status {
+    font-size: 12px;
+    margin-top: 4px;
+}
 <style>
     * {
         box-sizing: border-box;
@@ -341,16 +396,45 @@
         <button onclick="showQuizAnswer()">查看自测答案</button>
         <div class="answer-text" id="quizAns" style="display:none"></div>
     </div>
-    <div class="section" id="historySec" style="display:none">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-          <h2 style="margin:0;">📚 学习历史（点击日期查看内容）</h2>
-          <button onclick="hideHistory()" style="background:#999;padding:7px 14px;font-size:14px;">
+<div class="section" id="historySec" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+        <h2 style="margin:0;">📚 学习日历</h2>
+        <button onclick="hideHistory()" style="background:#999;padding:7px 14px;font-size:14px;">
             ✕ 关闭
-          </button>
-        </div>
-        <div id="historyList" style="margin-bottom:16px;"></div>
-        <div id="historyDetail"></div>
+        </button>
     </div>
+
+    <div class="calendar-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <div id="calendarTitle" style="font-size:20px;font-weight:700;color:#111827;">
+                2026年7月
+            </div>
+
+            <div>
+                <button onclick="changeCalendarMonth(-1)" style="padding:7px 12px;font-size:14px;">
+                    ‹ 上个月
+                </button>
+                <button onclick="goCurrentMonth()" style="padding:7px 12px;font-size:14px;">
+                    本月
+                </button>
+                <button onclick="changeCalendarMonth(1)" style="padding:7px 12px;font-size:14px;">
+                    下个月 ›
+                </button>
+            </div>
+        </div>
+
+        <div id="calendarGrid" class="calendar-grid"></div>
+
+        <div style="margin-top:16px;color:#6b7280;font-size:13px;">
+            <span style="display:inline-block;margin-right:14px;">🟢 已学习</span>
+            <span style="display:inline-block;margin-right:14px;">🔴 未学习</span>
+            <span style="display:inline-block;margin-right:14px;">⚪ 未来日期</span>
+            <span>点击日期可查看当天学习内容</span>
+        </div>
+    </div>
+
+    <div id="historyDetail" style="margin-top:20px;"></div>
+</div>
 
     <div class="section" id="sentSec" style="display:none">
         <h2>4. 5句雅思长难句完整解析</h2>
@@ -2016,71 +2100,106 @@ function createQuiz(wordArr) {
 function hideHistory() {
     document.getElementById("historySec").style.display = "none";
 }
+let calendarViewDate = new Date();
+
+// 打开历史日历
 function showHistory() {
+    if (!cloudStudyData.history) cloudStudyData.history = {};
+
     document.getElementById("historySec").style.display = "block";
     document.getElementById("historySec").scrollIntoView({ behavior: "smooth" });
 
+    calendarViewDate = new Date();
+    renderHistoryCalendar();
+}
+
+// 关闭历史日历
+function hideHistory() {
+    document.getElementById("historySec").style.display = "none";
+    document.getElementById("historyDetail").innerHTML = "";
+}
+
+// 切换月份
+function changeCalendarMonth(offset) {
+    calendarViewDate.setMonth(calendarViewDate.getMonth() + offset);
+    renderHistoryCalendar();
+}
+
+// 回到当前月份
+function goCurrentMonth() {
+    calendarViewDate = new Date();
+    renderHistoryCalendar();
+}
+
+// 日期格式化：YYYY-MM-DD
+function formatDateKey(dateObj) {
+    const y = dateObj.getFullYear();
+    const m = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const d = String(dateObj.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+}
+
+// 渲染日历
+function renderHistoryCalendar() {
     const history = cloudStudyData.history || {};
-    const dates = Object.keys(history).sort().reverse(); // 最新的日期排前面
+    const grid = document.getElementById("calendarGrid");
+    const title = document.getElementById("calendarTitle");
 
-    if (dates.length === 0) {
-        document.getElementById("historyList").innerHTML = '<p style="color:#666;">暂无学习记录，先学一天试试吧 📖</p>';
-        document.getElementById("historyDetail").innerHTML = "";
-        return;
+    const year = calendarViewDate.getFullYear();
+    const month = calendarViewDate.getMonth();
+
+    title.innerText = `${year}年${month + 1}月`;
+
+    const weekdays = ["一", "二", "三", "四", "五", "六", "日"];
+    let html = "";
+
+    weekdays.forEach(w => {
+        html += `<div class="calendar-weekday">${w}</div>`;
+    });
+
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+
+    let startOffset = firstDay.getDay();
+    startOffset = startOffset === 0 ? 6 : startOffset - 1;
+
+    const daysInMonth = lastDay.getDate();
+
+    const todayRaw = new Date();
+    const todayOnly = new Date(
+        todayRaw.getFullYear(),
+        todayRaw.getMonth(),
+        todayRaw.getDate()
+    );
+    const todayKey = formatDateKey(todayOnly);
+
+    // 上个月补位
+    const prevMonthLastDay = new Date(year, month, 0).getDate();
+
+    for (let i = startOffset - 1; i >= 0; i--) {
+        const dayNum = prevMonthLastDay - i;
+        html += `
+        <div class="calendar-day future">
+            <div class="calendar-date">${dayNum}</div>
+            <div class="calendar-status">—</div>
+        </div>`;
     }
 
-    let listHtml = "";
-    dates.forEach(date => {
-        const dayData = history[date];
-        const wordCount = (dayData.words || []).length;
-        const sentCount = (dayData.sentences || []).length;
-        listHtml += `
-        <button onclick="showHistoryDay('${date}')" 
-                style="background:#f2f6fc;color:#23395d;border:1px solid #d0d7e3;
-                       padding:8px 14px;margin:4px;border-radius:6px;font-size:14px;">
-            📅 ${date} <span style="color:#666;font-size:12px;">（${wordCount}词 + ${sentCount}句）</span>
-        </button>`;
-    });
-    document.getElementById("historyList").innerHTML = listHtml;
-    document.getElementById("historyDetail").innerHTML = '<p style="color:#666;">👆 点击上面任意日期查看当天内容</p>';
-}
+    // 当前月日期
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dateObj = new Date(year, month, day);
+        const dateKey = formatDateKey(dateObj);
 
-// 显示某一天的具体内容
-function showHistoryDay(date) {
-    const dayData = (cloudStudyData.history || {})[date];
-    if (!dayData) {
-        document.getElementById("historyDetail").innerHTML = '<p>该日期无数据</p>';
-        return;
-    }
+        const hasStudy = !!history[dateKey];
+        const isFuture = dateObj > todayOnly;
+        const isToday = dateKey === todayKey;
 
-    let html = `<h3 style="color:#23395d;margin-top:20px;">📖 ${date} 学习内容</h3>`;
+        let cls = "calendar-day";
+        let status = "";
 
-    // 单词部分
-    html += `<h4 style="margin-top:16px;">🔤 当日学习的 ${(dayData.words || []).length} 个单词：</h4>`;
-    (dayData.words || []).forEach((w, idx) => {
-        html += `
-        <div class="word-item">
-            ${idx+1}. <strong>${w.word}</strong> — ${w.mean}
-            <div class="example-sentence">例句：${w.example}</div>
-        </div>`;
-    });
+        if (isFuture) {
+            cls += " future";
 
-    // 长难句部分
-    html += `<h4 style="margin-top:20px;">📝 当日学习的 ${(dayData.sentences || []).length} 句长难句：</h4>`;
-    (dayData.sentences || []).forEach((s, idx) => {
-        html += `
-        <div class="long-sentence-card">
-            <strong>长难句 ${idx+1}（话题：${s.topic}）</strong><br><br>
-            <strong>原句：</strong>${s.sentence}<br><br>
-            <strong>核心句式：</strong>${s.structure}<br>
-            <strong>中文翻译：</strong>${s.translation}<br>
-            <strong>仿写模板：</strong>${s.template}
-        </div>`;
-    });
-
-    document.getElementById("historyDetail").innerHTML = html;
-    document.getElementById("historyDetail").scrollIntoView({ behavior: "smooth" });
-}
 function showQuizAnswer() {
     let ansText = "";
     window.globalQuizAns.forEach((ans, idx) => ansText += `${idx+1}. ${ans}<br>`);
