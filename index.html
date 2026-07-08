@@ -96,6 +96,7 @@
     <button onclick="generateTodayContent()">开始今日学习</button>
     <button onclick="saveProgressToCloud()">💾 保存今日进度</button>
     <button onclick="resetGitHubConfig()" style="background:#999;">🚪 退出登录</button>
+    <button onclick="showHistory()">📚 查看学习历史</button>
 
     <div class="section" id="rev1" style="display:none">
         <h2>1. D-1 昨日单词复盘（10个）</h2>
@@ -118,6 +119,11 @@
         <div class="answer-text" id="quizAns" style="display:none"></div>
     </div>
 
+   <div class="section" id="historySec" style="display:none">
+        <h2>📚 学习历史（点击日期查看内容）</h2>
+        <div id="historyList" style="margin-bottom:16px;"></div>
+        <div id="historyDetail"></div>
+    </div>
     <div class="section" id="sentSec" style="display:none">
         <h2>4. 5句雅思长难句完整解析</h2>
         <div id="sentArea"></div>
@@ -163,6 +169,7 @@ let cloudStudyData = {
     lastStudyDate: "",      // 上一次学习的日期（YYYY-MM-DD）
     todayWords: [],         // 当天已生成的25个单词（防重复刷新）
     todaySentences: []      // 当天已生成的5句长难句ID
+    history: {}   // 新增：按日期存储每天的学习内容
 };
 
 // 雅思词库
@@ -1629,6 +1636,7 @@ async function initCloudData() {
         if (!cloudStudyData.lastStudyDate) cloudStudyData.lastStudyDate = "";
         if (!cloudStudyData.todayWords) cloudStudyData.todayWords = [];
         if (!cloudStudyData.todaySentences) cloudStudyData.todaySentences = [];
+        if (!cloudStudyData.history) cloudStudyData.history = {}
 
         document.getElementById("syncStatus").innerText = "同步状态：云端数据加载完成 ✅";
         alert("云端学习记录读取完毕，可以开始今日学习 📚");
@@ -1712,6 +1720,11 @@ function generateTodayContent() {
         cloudStudyData.todayWords = todayNewWords;
         cloudStudyData.lastStudyDate = today;
         cloudStudyData.todaySentences = [];
+        // 保存到历史记录
+        cloudStudyData.history[today] = {
+            words: todayNewWords,
+            sentences: []   // 长难句稍后由 createLongSentenceBlock 填入
+        };
         alert(`今天是 ${today}，已为你生成新一天的学习内容 ✅`);
     } else {
         todayNewWords = cloudStudyData.todayWords;
@@ -1769,7 +1782,72 @@ function createQuiz(wordArr) {
     });
     document.getElementById("quizArea").innerHTML = quizHtml;
 }
+// 打开历史记录页面
+function showHistory() {
+    document.getElementById("historySec").style.display = "block";
+    document.getElementById("historySec").scrollIntoView({ behavior: "smooth" });
 
+    const history = cloudStudyData.history || {};
+    const dates = Object.keys(history).sort().reverse(); // 最新的日期排前面
+
+    if (dates.length === 0) {
+        document.getElementById("historyList").innerHTML = '<p style="color:#666;">暂无学习记录，先学一天试试吧 📖</p>';
+        document.getElementById("historyDetail").innerHTML = "";
+        return;
+    }
+
+    let listHtml = "";
+    dates.forEach(date => {
+        const dayData = history[date];
+        const wordCount = (dayData.words || []).length;
+        const sentCount = (dayData.sentences || []).length;
+        listHtml += `
+        <button onclick="showHistoryDay('${date}')" 
+                style="background:#f2f6fc;color:#23395d;border:1px solid #d0d7e3;
+                       padding:8px 14px;margin:4px;border-radius:6px;font-size:14px;">
+            📅 ${date} <span style="color:#666;font-size:12px;">（${wordCount}词 + ${sentCount}句）</span>
+        </button>`;
+    });
+    document.getElementById("historyList").innerHTML = listHtml;
+    document.getElementById("historyDetail").innerHTML = '<p style="color:#666;">👆 点击上面任意日期查看当天内容</p>';
+}
+
+// 显示某一天的具体内容
+function showHistoryDay(date) {
+    const dayData = (cloudStudyData.history || {})[date];
+    if (!dayData) {
+        document.getElementById("historyDetail").innerHTML = '<p>该日期无数据</p>';
+        return;
+    }
+
+    let html = `<h3 style="color:#23395d;margin-top:20px;">📖 ${date} 学习内容</h3>`;
+
+    // 单词部分
+    html += `<h4 style="margin-top:16px;">🔤 当日学习的 ${(dayData.words || []).length} 个单词：</h4>`;
+    (dayData.words || []).forEach((w, idx) => {
+        html += `
+        <div class="word-item">
+            ${idx+1}. <strong>${w.word}</strong> — ${w.mean}
+            <div class="example-sentence">例句：${w.example}</div>
+        </div>`;
+    });
+
+    // 长难句部分
+    html += `<h4 style="margin-top:20px;">📝 当日学习的 ${(dayData.sentences || []).length} 句长难句：</h4>`;
+    (dayData.sentences || []).forEach((s, idx) => {
+        html += `
+        <div class="long-sentence-card">
+            <strong>长难句 ${idx+1}（话题：${s.topic}）</strong><br><br>
+            <strong>原句：</strong>${s.sentence}<br><br>
+            <strong>核心句式：</strong>${s.structure}<br>
+            <strong>中文翻译：</strong>${s.translation}<br>
+            <strong>仿写模板：</strong>${s.template}
+        </div>`;
+    });
+
+    document.getElementById("historyDetail").innerHTML = html;
+    document.getElementById("historyDetail").scrollIntoView({ behavior: "smooth" });
+}
 function showQuizAnswer() {
     let ansText = "";
     window.globalQuizAns.forEach((ans, idx) => ansText += `${idx+1}. ${ans}<br>`);
@@ -1790,6 +1868,11 @@ function createLongSentenceBlock(isNewDay) {
         const todayIds = todaySentences.map(s => s.id);
         cloudStudyData.learnedSentences = [...new Set([...cloudStudyData.learnedSentences, ...todayIds])];
         cloudStudyData.todaySentences = todaySentences;
+        // 也存到今天的历史记录里
+        const today = getTodayStr();
+        if (!cloudStudyData.history) cloudStudyData.history = {};
+        if (!cloudStudyData.history[today]) cloudStudyData.history[today] = { words: [], sentences: [] };
+        cloudStudyData.history[today].sentences = todaySentences;
     } else {
         todaySentences = cloudStudyData.todaySentences;
     }
