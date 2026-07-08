@@ -434,27 +434,410 @@ button:nth-of-type(5) {
     color: #374151 !important;
     border-color: #e5e7eb !important;
 }
+/* ===== ZCOOL-inspired clean layout ===== */
+
+body {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #f7f7f8 !important;
+    color: #1f1f1f;
+}
+
+.app-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+}
+
+/* 左侧导航 */
+.side-nav {
+    background: #ffffff;
+    border-right: 1px solid #eeeeef;
+    padding: 26px 14px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.brand-block {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 34px;
+    padding: 0 8px;
+}
+
+.cat-logo-group {
+    display: flex;
+    align-items: center;
+}
+
+.cat-mark {
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+    background: #1f1f1f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    border: 2px solid #fff;
+}
+
+.cat-mark.silver {
+    background: #e8eaed;
+    color: #111827;
+    margin-left: -8px;
+}
+
+.brand-name {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+}
+
+.brand-sub {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 2px;
+}
+
+.nav-item {
+    width: 100%;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    color: #333 !important;
+    text-align: left;
+    padding: 13px 18px !important;
+    border-radius: 14px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    margin: 3px 0 !important;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    background: #f3f4f6 !important;
+    transform: none !important;
+}
+
+.nav-item.active {
+    background: #fff1ed !important;
+    color: #ff5a3c !important;
+}
+
+.nav-item.muted {
+    color: #8b8f97 !important;
+}
+
+.nav-divider {
+    height: 1px;
+    background: #eeeeef;
+    margin: 18px 10px;
+}
+
+/* 主体 */
+.main-content {
+    padding: 28px 46px 70px;
+}
+
+/* 顶部栏 */
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.search-pill {
+    width: 460px;
+    height: 48px;
+    border-radius: 999px;
+    background: #ffffff;
+    border: 1px solid #eeeeef;
+    display: flex;
+    align-items: center;
+    padding: 0 22px;
+    color: #a1a1aa;
+    font-size: 15px;
+}
+
+.top-status {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.date-text {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: #27272a !important;
+    margin: 0 !important;
+}
+
+.sync-pill {
+    background: #ffffff !important;
+    border: 1px solid #eeeeef !important;
+    color: #71717a !important;
+    border-radius: 999px !important;
+    padding: 8px 14px !important;
+    font-size: 13px !important;
+}
+
+/* 首页大卡片 */
+.hero-panel {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 44px 52px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+}
+
+.hero-panel h1 {
+    font-size: 48px !important;
+    line-height: 1.05 !important;
+    letter-spacing: -1.6px !important;
+    margin: 0 0 16px !important;
+    color: #111827 !important;
+}
+
+.tip-text {
+    font-size: 17px !important;
+    color: #7b7f87 !important;
+    margin: 0 !important;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.primary-action,
+.secondary-action {
+    border-radius: 16px !important;
+    padding: 13px 22px !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+}
+
+.primary-action {
+    background: #ff5a3c !important;
+    color: #fff !important;
+    border: 1px solid #ff5a3c !important;
+}
+
+.primary-action:hover {
+    background: #f04d31 !important;
+    border-color: #f04d31 !important;
+    transform: none !important;
+}
+
+.secondary-action {
+    background: #f4f4f5 !important;
+    color: #1f2937 !important;
+    border: 1px solid #ededee !important;
+}
+
+.secondary-action:hover {
+    background: #ececef !important;
+    transform: none !important;
+}
+
+/* 内容卡片 */
+.section {
+    background: #ffffff !important;
+    border-radius: 24px !important;
+    border: 1px solid #eeeeef !important;
+    box-shadow: none !important;
+    padding: 30px 34px !important;
+    margin: 24px 0 !important;
+}
+
+.section h2 {
+    border-left: none !important;
+    padding-left: 0 !important;
+    color: #111827 !important;
+    font-size: 24px !important;
+    letter-spacing: -0.5px;
+}
+
+.section h2::before {
+    display: none !important;
+}
+
+/* 学习内容 */
+.word-item {
+    border-bottom: 1px solid #f1f1f2 !important;
+    padding: 11px 0 !important;
+}
+
+.word-item strong {
+    color: #111827 !important;
+}
+
+.example-sentence {
+    background: #f8f8f9 !important;
+    border-left: 3px solid #ff6b4a !important;
+    color: #6b7280 !important;
+}
+
+.long-sentence-card {
+    background: #f8f8f9 !important;
+    border: 1px solid #eeeeef !important;
+    border-radius: 18px !important;
+    box-shadow: none !important;
+}
+
+.answer-text {
+    background: #f7fbf8 !important;
+    border: 1px solid #d8efdf !important;
+    color: #247045 !important;
+}
+
+/* 学习日历适配 */
+.calendar-card {
+    background: #ffffff !important;
+    border: 1px solid #eeeeef !important;
+    border-radius: 22px !important;
+    box-shadow: none !important;
+}
+
+.calendar-day {
+    border-radius: 16px !important;
+}
+
+.calendar-day.studied {
+    background: #ecfdf5 !important;
+    border-color: #86efac !important;
+}
+
+.calendar-day.missed {
+    background: #fff1f1 !important;
+    border-color: #fecaca !important;
+}
+
+.calendar-day.future {
+    background: #f4f4f5 !important;
+    color: #a1a1aa !important;
+}
+
+/* 避免旧 body 直属按钮样式干扰 */
+body > button {
+    display: none !important;
+}
+
+/* 响应式 */
+@media (max-width: 900px) {
+    .app-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .side-nav {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #eeeeef;
+    }
+
+    .main-content {
+        padding: 22px 18px 50px;
+    }
+
+    .top-nav {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .search-pill {
+        width: 100%;
+    }
+
+    .hero-panel {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+        padding: 34px 28px;
+    }
+
+    .hero-panel h1 {
+        font-size: 36px !important;
+    }
+
+    .hero-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .hero-actions button {
+        width: 100%;
+    }
+}
 </style>
 </head>
 <body>
-    <div class="header-bar">
-        <div>
-            <h1>雅思单词学习平台</h1>
-            <p class="tip-text" id="welcomeText">云端同步 |</p>
-        </div>
-       <div style="text-align:right;">
-            <div id="todayDate" style="font-size:16px;font-weight:bold;color:#23395d;margin-bottom:4px;"></div>
-            <span id="syncStatus">同步状态：等待操作</span>
-        </div>
-    </div>
+<div class="app-layout">
 
-<div class="action-bar">
-    <button class="btn-primary" onclick="initCloudData()">登录账号</button>
-    <button class="btn-primary" onclick="generateTodayContent()">开始学习</button>
-    <button class="btn-secondary" onclick="saveProgressToCloud()">保存进度</button>
-    <button class="btn-secondary" onclick="showHistory()">学习日历</button>
-    <button class="btn-ghost" onclick="resetGitHubConfig()">退出登录</button>
-</div>
+    <!-- 左侧导航 -->
+    <aside class="side-nav">
+        <div class="brand-block">
+            <div class="cat-logo-group">
+                <div class="cat-mark">M</div>
+                <div class="cat-mark silver">S</div>
+            </div>
+            <div>
+                <div class="brand-name">IELTS Learn</div>
+                <div class="brand-sub">Ryann's Study Space</div>
+            </div>
+        </div>
+
+        <button class="nav-item active" onclick="window.scrollTo({top:0, behavior:'smooth'})">首页</button>
+        <button class="nav-item" onclick="initCloudData()">登录账号</button>
+        <button class="nav-item" onclick="generateTodayContent()">开始学习</button>
+        <button class="nav-item" onclick="saveProgressToCloud()">保存进度</button>
+        <button class="nav-item" onclick="showHistory()">学习日历</button>
+
+        <div class="nav-divider"></div>
+
+        <button class="nav-item muted" onclick="resetGitHubConfig()">退出登录</button>
+    </aside>
+
+    <!-- 主体区域 -->
+    <main class="main-content">
+
+        <!-- 顶部栏 -->
+        <div class="top-nav">
+            <div class="search-pill">
+                <span>雅思单词 / 长难句 / 学习记录</span>
+            </div>
+
+            <div class="top-status">
+                <div id="todayDate" class="date-text"></div>
+                <span id="syncStatus" class="sync-pill">同步状态：等待操作</span>
+            </div>
+        </div>
+
+        <!-- 首页大卡片 -->
+        <section class="hero-panel">
+            <div>
+                <h1>雅思单词学习平台</h1>
+                <p class="tip-text" id="welcomeText">云端同步 | 多设备互通 | 单词永不重复</p>
+            </div>
+
+            <div class="hero-actions">
+                <button class="primary-action" onclick="generateTodayContent()">开始今日学习</button>
+                <button class="secondary-action" onclick="showHistory()">查看学习日历</button>
+            </div>
+        </section>
 
     <div class="section" id="rev1" style="display:none">
         <h2>1. D-1 昨日单词复盘（10个）</h2>
@@ -520,6 +903,12 @@ button:nth-of-type(5) {
         <h2>4. 5句雅思长难句完整解析</h2>
         <div id="sentArea"></div>
     </div>
+
+    </main>
+    </div>
+
+    <script>
+
 
 <script>
 // ============ GitHub Gist 云端存储配置（Token存浏览器，安全 & 免费）============
