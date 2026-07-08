@@ -782,6 +782,71 @@ body > button {
         width: 100%;
     }
 }
+    .account-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.login-top-btn {
+    background: #ff5a3c !important;
+    color: #fff !important;
+    border: 1px solid #ff5a3c !important;
+    border-radius: 14px !important;
+    padding: 10px 18px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+}
+
+.sync-mini {
+    color: #8b8f97 !important;
+    font-size: 12px !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.text-action {
+    background: transparent !important;
+    color: #8b8f97 !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 13px 8px !important;
+}
+
+.plan-card {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.plan-card label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.plan-card input {
+    width: 180px;
+    height: 44px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 0 14px;
+    font-size: 15px;
+    outline: none;
+    background: #fff;
+}
+
+.plan-card input:focus {
+    border-color: #ff5a3c;
+    box-shadow: 0 0 0 3px rgba(255, 90, 60, 0.12);
+}
 </style>
 </head>
 <body>
@@ -789,55 +854,49 @@ body > button {
 
     <!-- 左侧导航 -->
     <aside class="side-nav">
-        <div class="brand-block">
-            <div class="cat-logo-group">
-                <div class="cat-mark">M</div>
-                <div class="cat-mark silver">S</div>
-            </div>
-            <div>
-                <div class="brand-name">IELTS Learn</div>
-                <div class="brand-sub">Ryann's Study Space</div>
-            </div>
+    <div class="brand-block">
+        <div class="cat-logo-group">
+            <div class="cat-mark">M</div>
+            <div class="cat-mark silver">S</div>
+        </div>
+        <div>
+            <div class="brand-name">IELTS Learn</div>
+            <div class="brand-sub">Ryann's Study Space</div>
+        </div>
+    </div>
+
+    <button class="nav-item active" onclick="showStudyPanel('review')">知识复盘</button>
+    <button class="nav-item" onclick="showStudyPanel('words')">今日单词</button>
+    <button class="nav-item" onclick="showStudyPanel('sentences')">今日难句</button>
+    <button class="nav-item" onclick="showStudyPanel('plan')">自定义学习计划</button>
+</aside>
+
+<main class="main-content">
+
+    <div class="top-nav">
+        <div class="search-pill">
+            <span>雅思单词 / 长难句 / 学习记录</span>
         </div>
 
-        <button class="nav-item active" onclick="window.scrollTo({top:0, behavior:'smooth'})">首页</button>
-        <button class="nav-item" onclick="initCloudData()">登录账号</button>
-        <button class="nav-item" onclick="generateTodayContent()">开始学习</button>
-        <button class="nav-item" onclick="saveProgressToCloud()">保存进度</button>
-        <button class="nav-item" onclick="showHistory()">学习日历</button>
+        <div class="account-area">
+            <button class="login-top-btn" onclick="initCloudData()">登录账号</button>
+            <div id="syncStatus" class="sync-mini">同步状态：等待操作</div>
+        </div>
+    </div>
 
-        <div class="nav-divider"></div>
-
-        <button class="nav-item muted" onclick="resetGitHubConfig()">退出登录</button>
-    </aside>
-
-    <!-- 主体区域 -->
-    <main class="main-content">
-
-        <!-- 顶部栏 -->
-        <div class="top-nav">
-            <div class="search-pill">
-                <span>雅思单词 / 长难句 / 学习记录</span>
-            </div>
-
-            <div class="top-status">
-                <div id="todayDate" class="date-text"></div>
-                <span id="syncStatus" class="sync-pill">同步状态：等待操作</span>
-            </div>
+    <section class="hero-panel">
+        <div>
+            <h1>雅思单词学习平台</h1>
+            <p class="tip-text" id="welcomeText">云端同步 | 多设备互通 | 单词永不重复</p>
         </div>
 
-        <!-- 首页大卡片 -->
-        <section class="hero-panel">
-            <div>
-                <h1>雅思单词学习平台</h1>
-                <p class="tip-text" id="welcomeText">云端同步 | 多设备互通 | 单词永不重复</p>
-            </div>
-
-            <div class="hero-actions">
-                <button class="primary-action" onclick="generateTodayContent()">开始今日学习</button>
-                <button class="secondary-action" onclick="showHistory()">查看学习日历</button>
-            </div>
-        </section>
+        <div class="hero-actions">
+            <button class="primary-action" onclick="generateTodayContent()">开始今日学习</button>
+            <button class="secondary-action" onclick="saveProgressToCloud()">保存进度</button>
+            <button class="secondary-action" onclick="showHistory()">学习日历</button>
+            <button class="text-action" onclick="resetGitHubConfig()">退出登录</button>
+        </div>
+    </section>
 
     <div class="section" id="rev1" style="display:none">
         <h2>1. D-1 昨日单词复盘（10个）</h2>
@@ -859,6 +918,28 @@ body > button {
         <button onclick="showQuizAnswer()">查看自测答案</button>
         <div class="answer-text" id="quizAns" style="display:none"></div>
     </div>
+<div class="section" id="planSec" style="display:none">
+    <h2>自定义单词学习计划</h2>
+
+    <div class="plan-card">
+        <label>
+            每日新单词数量
+            <input id="newWordCountInput" type="number" min="5" max="100" value="25">
+        </label>
+
+        <label>
+            每日长难句数量
+            <input id="sentenceCountInput" type="number" min="1" max="20" value="5">
+        </label>
+
+        <button class="primary-action" onclick="saveStudyPlan()">保存计划</button>
+    </div>
+
+    <p class="tip-text" style="margin-top:12px;">
+        说明：D-1 和 D-3 复习逻辑保持不变，只调整每日新增内容数量。
+    </p>
+</div>
+``
 <div class="section" id="historySec" style="display:none">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
         <h2 style="margin:0;">📚 学习日历</h2>
@@ -2483,6 +2564,90 @@ async function saveProgressToCloud() {
     }
 }
 
+function showStudyPanel(type) {
+    const sections = ["rev1", "rev3", "newWordSec", "sentSec", "planSec", "historySec"];
+
+    sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = "none";
+    });
+
+    if (type === "review") {
+        document.getElementById("rev1").style.display = "block";
+        document.getElementById("rev3").style.display = "block";
+    }
+
+    if (type === "words") {
+        document.getElementById("newWordSec").style.display = "block";
+    }
+
+    if (type === "sentences") {
+        document.getElementById("sentSec").style.display = "block";
+    }
+
+    if (type === "plan") {
+        document.getElementById("planSec").style.display = "block";
+        loadStudyPlanToInputs();
+    }
+
+    document.querySelectorAll(".nav-item").forEach(btn => btn.classList.remove("active"));
+    event.currentTarget.classList.add("active");
+} 
+
+// 获取学习计划
+function getStudyPlan() {
+    if (!cloudStudyData.studyPlan) {
+        cloudStudyData.studyPlan = {
+            newWordCount: 25,
+            sentenceCount: 5
+        };
+    }
+
+    return cloudStudyData.studyPlan;
+}
+
+// 把学习计划显示到输入框里
+function loadStudyPlanToInputs() {
+    const plan = getStudyPlan();
+
+    const wordInput = document.getElementById("newWordCountInput");
+    const sentenceInput = document.getElementById("sentenceCountInput");
+
+    if (wordInput) {
+        wordInput.value = plan.newWordCount || 25;
+    }
+
+    if (sentenceInput) {
+        sentenceInput.value = plan.sentenceCount || 5;
+    }
+}
+
+// 保存学习计划
+function saveStudyPlan() {
+    const wordInput = document.getElementById("newWordCountInput");
+    const sentenceInput = document.getElementById("sentenceCountInput");
+
+    const wordCount = Number(wordInput.value);
+    const sentenceCount = Number(sentenceInput.value);
+
+    if (wordCount < 5 || wordCount > 100) {
+        alert("每日新单词数量建议设置在 5 到 100 之间。");
+        return;
+    }
+
+    if (sentenceCount < 1 || sentenceCount > 20) {
+        alert("每日长难句数量建议设置在 1 到 20 之间。");
+        return;
+    }
+
+    cloudStudyData.studyPlan = {
+        newWordCount: wordCount,
+        sentenceCount: sentenceCount
+    };
+
+    alert("学习计划已保存。记得点击【保存进度】同步到云端。");
+}
+        
 function getUniqueNewWord(count) {
     const unused = fullWordBank.filter(item => !cloudStudyData.learnedWords.includes(item.word));
     const randomPick = unused.sort(() => Math.random() - 0.5).slice(0, count);
@@ -2595,7 +2760,13 @@ let calendarViewDate = new Date();
 function showHistory() {
 
     if (!cloudStudyData.history) cloudStudyData.history = {};
-
+    if (!cloudStudyData.studyPlan) {
+    cloudStudyData.studyPlan = {
+        newWordCount: 25,
+        sentenceCount: 5
+    };
+}
+    
     document.getElementById("historySec").style.display = "block";
     document.getElementById("historySec").scrollIntoView({ behavior: "smooth" });
 
