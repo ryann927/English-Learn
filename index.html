@@ -817,11 +817,13 @@ body > button {
 
 
 .sync-mini {
-    color: #8b8f97 !important;
-    font-size: 12px !important;
+    color: #9ca3af !important;
+    font-size: 11px !important;
     background: transparent !important;
     border: none !important;
     padding: 0 !important;
+    line-height: 1.25 !important;
+    font-weight: 400 !important;
 }
 
 
@@ -883,7 +885,7 @@ body > button {
         </div>
         <div>
             <div class="brand-name">IELTS Learn</div>
-            <div class="brand-sub">Ryann's Study Space</div>
+            <div class="brand-sub" id="brandSubText
         </div>
     </div>
 
@@ -1048,6 +1050,17 @@ function updateWelcomeText() {
     }
 
     const welcomeEl = document.getElementById("welcomeText");
+    const brandSubEl = document.getElementById("brandSubText");
+
+    if (welcomeEl && nickname) {
+        welcomeEl.innerText = `${nickname} 你好，欢迎来到雅思学习平台`;
+    }
+
+    if (brandSubEl && nickname) {
+        brandSubEl.innerText = `${nickname}'s Study Space`;
+    }
+}
+    const welcomeEl = document.getElementById("welcomeText");
 
     if (welcomeEl && nickname) {
         welcomeEl.innerText = `${nickname} 你好，欢迎来到雅思学习平台`;
@@ -1061,8 +1074,14 @@ function resetGitHubConfig() {
         localStorage.removeItem("ielts_user_nickname");
 
         const welcomeEl = document.getElementById("welcomeText");
+        const brandSubEl = document.getElementById("brandSubText");
+
         if (welcomeEl) {
-            welcomeEl.innerText = "云端同步 | 多设备互通 | 单词永不重复";
+            welcomeEl.innerText = "欢迎登录，开启你的今日雅思学习";
+        }
+
+        if (brandSubEl) {
+            brandSubEl.innerText = "Welcome to Study Space";
         }
 
         alert("已退出登录。请重新点击【登录账号】。");
@@ -2693,6 +2712,18 @@ function getTodayDisplay() {
 document.addEventListener("DOMContentLoaded", () => {
     const dateEl = document.getElementById("todayDate");
     if (dateEl) dateEl.innerText = getTodayDisplay();
+
+    const nickname = localStorage.getItem("ielts_user_nickname");
+    const welcomeEl = document.getElementById("welcomeText");
+    const brandSubEl = document.getElementById("brandSubText");
+
+    if (nickname) {
+        if (welcomeEl) welcomeEl.innerText = `${nickname} 你好，欢迎来到雅思学习平台`;
+        if (brandSubEl) brandSubEl.innerText = `${nickname}'s Study Space`;
+    } else {
+        if (welcomeEl) welcomeEl.innerText = "欢迎登录，开启你的今日雅思学习";
+        if (brandSubEl) brandSubEl.innerText = "Welcome to Study Space";
+    }
 });
 
 function generateTodayContent() {
