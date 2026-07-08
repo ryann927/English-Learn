@@ -871,28 +871,98 @@ body > button {
     border-color: #ff5a3c;
     box-shadow: 0 0 0 3px rgba(255, 90, 60, 0.12);
 }
+    /* ===== 修正左上角品牌区 ===== */
+
+.side-nav {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+}
+
+.brand-block {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin-bottom: 34px !important;
+    padding: 0 8px !important;
+}
+
+.cat-logo-group {
+    display: flex !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+}
+
+.cat-mark {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 14px !important;
+    background: #1f1f1f !important;
+    color: #fff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-weight: 800 !important;
+    font-size: 18px !important;
+    border: 2px solid #fff !important;
+    line-height: 1 !important;
+}
+
+.cat-mark.silver {
+    background: #e8eaed !important;
+    color: #111827 !important;
+    margin-left: -10px !important;
+}
+
+.brand-text {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+
+.brand-name {
+    font-size: 24px !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+    line-height: 1.1 !important;
+}
+
+.brand-sub {
+    font-size: 16px !important;
+    color: #9ca3af !important;
+    margin-top: 6px !important;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
 </style>
 </head>
 <body>
 <div class="app-layout">
 
     <!-- 左侧导航 -->
-    <aside class="side-nav">
+   <aside class="side-nav">
     <div class="brand-block">
         <div class="cat-logo-group">
             <div class="cat-mark">M</div>
             <div class="cat-mark silver">S</div>
         </div>
-        <div>
+
+        <div class="brand-text">
             <div class="brand-name">IELTS Learn</div>
-            <div class="brand-sub" id="brandSubText
+            <div class="brand-sub" id="brandSubText">Welcome to Study Space</div>
         </div>
     </div>
 
-    <button class="nav-item active" onclick="showStudyPanel('review')">知识复盘</button>
-    <button class="nav-item" onclick="showStudyPanel('words')">今日单词</button>
-    <button class="nav-item" onclick="showStudyPanel('sentences')">今日难句</button>
-    <button class="nav-item" onclick="showStudyPanel('plan')">自定义学习计划</button>
+    <nav class="nav-menu">
+        <button class="nav-item active" onclick="showStudyPanel('review', this)">知识复盘</button>
+        <button class="nav-item" onclick="showStudyPanel('words', this)">今日单词</button>
+        <button class="nav-item" onclick="showStudyPanel('sentences', this)">今日难句</button>
+        <button class="nav-item" onclick="showStudyPanel('plan', this)">自定义学习计划</button>
+    </nav>
 </aside>
 
 <main class="main-content">
