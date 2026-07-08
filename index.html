@@ -440,7 +440,7 @@ button:nth-of-type(5) {
     <div class="header-bar">
         <div>
             <h1>雅思单词学习平台</h1>
-            <p class="tip-text">云端同步 | 多设备互通 | 单词永不重复</p>
+            <p class="tip-text" id="welcomeText">云端同步 |</p>
         </div>
        <div style="text-align:right;">
             <div id="todayDate" style="font-size:16px;font-weight:bold;color:#23395d;margin-bottom:4px;"></div>
@@ -543,12 +543,37 @@ const GITHUB_CONFIG = {
     }
 };
 
+// 获取并显示用户昵称
+function updateWelcomeText() {
+    let nickname = localStorage.getItem("ielts_user_nickname");
+
+    if (!nickname) {
+        nickname = prompt("请输入你的学习昵称，例如：Ryann");
+        if (nickname) {
+            nickname = nickname.trim();
+            localStorage.setItem("ielts_user_nickname", nickname);
+        }
+    }
+
+    const welcomeEl = document.getElementById("welcomeText");
+
+    if (welcomeEl && nickname) {
+        welcomeEl.innerText = `${nickname} 你好，欢迎来到雅思学习平台`;
+    }
+}
 // 重置配置：如果Token或Gist ID填错了，点[🔧 重置配置]按钮可以重新填
 function resetGitHubConfig() {
-    if (confirm("确认清除已保存的 Token 和 Gist ID？下次点[加载云端]时会重新提示输入。")) {
+    if (confirm("确认退出当前账号？\n\n退出后需要重新登录，学习昵称也会清除。云端学习数据不会丢失。")) {
         localStorage.removeItem("gh_token");
         localStorage.removeItem("gh_gist_id");
-        alert("已清除。请重新点[加载云端学习记录]并按提示输入。");
+        localStorage.removeItem("ielts_user_nickname");
+
+        const welcomeEl = document.getElementById("welcomeText");
+        if (welcomeEl) {
+            welcomeEl.innerText = "云端同步 | 多设备互通 | 单词永不重复";
+        }
+
+        alert("已退出登录。请重新点击【登录账号】。");
     }
 }
 
@@ -2031,6 +2056,7 @@ async function initCloudData() {
         if (!cloudStudyData.history) cloudStudyData.history = {};
 
         document.getElementById("syncStatus").innerText = "同步状态：云端数据加载完成 ";
+        updateWelcomeText();
         alert("云端学习记录读取完毕，可以开始今日学习 📚");
     } catch (err) {
         document.getElementById("syncStatus").innerText = "同步失败：" + err.message;
