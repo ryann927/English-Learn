@@ -2095,14 +2095,6 @@ function createQuiz(wordArr) {
     });
     document.getElementById("quizArea").innerHTML = quizHtml;
 }
-// 打开历史记录页面
-
-// 关闭历史记录页面
-function hideHistory() {
-    document.getElementById("historySec").style.display = "none";
-}
-let calendarViewDate = new Date();
-
 let calendarViewDate = new Date();
 
 // 打开历史日历
@@ -2174,6 +2166,7 @@ function renderHistoryCalendar() {
         todayRaw.getMonth(),
         todayRaw.getDate()
     );
+
     const todayKey = formatDateKey(todayOnly);
 
     // 上个月补位
