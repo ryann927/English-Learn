@@ -839,7 +839,7 @@ body > button {
 .text-action:hover {
     background: transparent !important;
     color: #ff5a3c !important;
-  
+ } 
 
 .plan-card {
     display: flex;
@@ -1033,7 +1033,7 @@ body > button {
         说明：D-1 和 D-3 复习逻辑保持不变，只调整每日新增内容数量。
     </p>
 </div>
-``
+    
 <div class="section" id="historySec" style="display:none">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
         <h2 style="margin:0;">📚 学习日历</h2>
@@ -1085,7 +1085,6 @@ body > button {
     <script>
 
 
-<script>
 // ============ GitHub Gist 云端存储配置（Token存浏览器，安全 & 免费）============
 const GITHUB_CONFIG = {
     fileName: "ielts_data.json",
@@ -1130,13 +1129,6 @@ function updateWelcomeText() {
         brandSubEl.innerText = `${nickname}'s Study Space`;
     }
 }
-    const welcomeEl = document.getElementById("welcomeText");
-
-    if (welcomeEl && nickname) {
-        welcomeEl.innerText = `${nickname} 你好，欢迎来到雅思学习平台`;
-    }
-}
-// 重置配置：如果Token或Gist ID填错了，点[🔧 重置配置]按钮可以重新填
 function resetGitHubConfig() {
     if (confirm("确认退出当前账号？\n\n退出后需要重新登录，学习昵称也会清除。云端学习数据不会丢失。")) {
         localStorage.removeItem("gh_token");
