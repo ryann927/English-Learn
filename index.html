@@ -938,6 +938,65 @@ body > button {
     flex-direction: column;
     gap: 16px;
 }
+/* ===== 右上角登录状态 ===== */
+
+.account-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.login-top-btn {
+    background: #ff5a3c !important;
+    color: #fff !important;
+    border: 1px solid #ff5a3c !important;
+    border-radius: 14px !important;
+    padding: 9px 16px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+}
+
+.user-chip {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: #ffffff;
+    border: 1px solid #eeeeef;
+    border-radius: 999px;
+    padding: 7px 12px 7px 8px;
+}
+
+.user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #ff5a3c;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.sync-mini {
+    color: #9ca3af !important;
+    font-size: 11px !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    line-height: 1.25 !important;
+    font-weight: 400 !important;
+}
 </style>
 </head>
 <body>
@@ -973,8 +1032,13 @@ body > button {
         </div>
 
         <div class="account-area">
-            <button class="login-top-btn" onclick="initCloudData()">登录账号</button>
-            <div id="syncStatus" class="sync-mini">同步状态：等待操作</div>
+            <button id="loginBtn" class="login-top-btn" onclick="initCloudData()">登录账号</button>
+            <div id="userChip" class="user-chip" style="display:none;">
+                <div id="userAvatar" class="user-avatar">R</div>
+                <div id="userName" class="user-name">Ryann</div>
+            </div>
+
+           <div id="syncStatus" class="sync-mini">同步状态：等待操作</div>
         </div>
     </div>
 
@@ -1120,6 +1184,10 @@ function updateWelcomeText() {
 
     const welcomeEl = document.getElementById("welcomeText");
     const brandSubEl = document.getElementById("brandSubText");
+    const loginBtn = document.getElementById("loginBtn");
+    const userChip = document.getElementById("userChip");
+    const userAvatar = document.getElementById("userAvatar");
+    const userName = document.getElementById("userName");
 
     if (welcomeEl && nickname) {
         welcomeEl.innerText = `${nickname} 你好，欢迎来到雅思学习平台`;
@@ -1127,6 +1195,19 @@ function updateWelcomeText() {
 
     if (brandSubEl && nickname) {
         brandSubEl.innerText = `${nickname}'s Study Space`;
+    }
+
+    if (loginBtn && userChip && nickname) {
+        loginBtn.style.display = "none";
+        userChip.style.display = "flex";
+    }
+
+    if (userAvatar && nickname) {
+        userAvatar.innerText = nickname.slice(0, 1).toUpperCase();
+    }
+
+    if (userName && nickname) {
+        userName.innerText = nickname;
     }
 }
 function resetGitHubConfig() {
@@ -1137,6 +1218,8 @@ function resetGitHubConfig() {
 
         const welcomeEl = document.getElementById("welcomeText");
         const brandSubEl = document.getElementById("brandSubText");
+        const loginBtn = document.getElementById("loginBtn");
+        const userChip = document.getElementById("userChip");
 
         if (welcomeEl) {
             welcomeEl.innerText = "欢迎登录，开启你的今日雅思学习";
@@ -1144,6 +1227,14 @@ function resetGitHubConfig() {
 
         if (brandSubEl) {
             brandSubEl.innerText = "Welcome to Study Space";
+        }
+
+        if (loginBtn) {
+            loginBtn.style.display = "block";
+        }
+
+        if (userChip) {
+            userChip.style.display = "none";
         }
 
         alert("已退出登录。请重新点击【登录账号】。");
@@ -2776,15 +2867,28 @@ document.addEventListener("DOMContentLoaded", () => {
     if (dateEl) dateEl.innerText = getTodayDisplay();
 
     const nickname = localStorage.getItem("ielts_user_nickname");
+
     const welcomeEl = document.getElementById("welcomeText");
     const brandSubEl = document.getElementById("brandSubText");
+    const loginBtn = document.getElementById("loginBtn");
+    const userChip = document.getElementById("userChip");
+    const userAvatar = document.getElementById("userAvatar");
+    const userName = document.getElementById("userName");
 
     if (nickname) {
         if (welcomeEl) welcomeEl.innerText = `${nickname} 你好，欢迎来到雅思学习平台`;
         if (brandSubEl) brandSubEl.innerText = `${nickname}'s Study Space`;
+
+        if (loginBtn) loginBtn.style.display = "none";
+        if (userChip) userChip.style.display = "flex";
+        if (userAvatar) userAvatar.innerText = nickname.slice(0, 1).toUpperCase();
+        if (userName) userName.innerText = nickname;
     } else {
         if (welcomeEl) welcomeEl.innerText = "欢迎登录，开启你的今日雅思学习";
         if (brandSubEl) brandSubEl.innerText = "Welcome to Study Space";
+
+        if (loginBtn) loginBtn.style.display = "block";
+        if (userChip) userChip.style.display = "none";
     }
 });
 
