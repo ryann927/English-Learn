@@ -1169,7 +1169,11 @@ const GITHUB_CONFIG = {
         return g;
     }
 };
-
+function isLoggedIn() {
+    const token = localStorage.getItem("gh_token");
+    const gistId = localStorage.getItem("gh_gist_id");
+    return !!(token && gistId);
+}
 // 获取并显示用户昵称
 function updateWelcomeText() {
     let nickname = localStorage.getItem("ielts_user_nickname");
@@ -2730,7 +2734,12 @@ async function initCloudData() {
 }
 
 // 保存进度到云端（更新 GitHub Gist）
-async function saveProgressToCloud() {
+async function saveProgressToCloud() {    
+if (!isLoggedIn()) {
+        alert("请先登录账号，再保存学习进度。");
+        return;
+    }
+
     document.getElementById("syncStatus").innerText = "同步状态：正在上传到 GitHub...";
     try {
         const res = await fetch(`https://api.github.com/gists/${GITHUB_CONFIG.gistId}`, {
@@ -2841,7 +2850,42 @@ function saveStudyPlan() {
 
     alert("学习计划已保存。记得点击【保存进度】同步到云端。");
 }
-        
+
+function showStudyPanel(type, btn) {
+    if (!isLoggedIn()) {
+        alert("请先登录账号，再查看学习内容。");
+        return;
+    }
+
+    const sections = ["rev1", "rev3", "newWordSec", "sentSec", "planSec", "historySec"];
+
+    sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = "none";
+    });
+
+    if (type === "review") {
+        document.getElementById("rev1").style.display = "block";
+        document.getElementById("rev3").style.display = "block";
+    }
+
+    if (type === "words") {
+        document.getElementById("newWordSec").style.display = "block";
+    }
+
+    if (type === "sentences") {
+        document.getElementById("sentSec").style.display = "block";
+    }
+
+    if (type === "plan") {
+        document.getElementById("planSec").style.display = "block";
+        loadStudyPlanToInputs();
+    }
+
+    document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active"));
+    if (btn) btn.classList.add("active");
+}
+
 function getUniqueNewWord(count) {
     const unused = fullWordBank.filter(item => !cloudStudyData.learnedWords.includes(item.word));
     const randomPick = unused.sort(() => Math.random() - 0.5).slice(0, count);
@@ -2893,6 +2937,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function generateTodayContent() {
+    if (!isLoggedIn()) {
+        alert("请先登录账号，再开始今日学习。");
+        return;
+    }
     document.getElementById("rev1").style.display = "block";
     document.getElementById("rev3").style.display = "block";
     document.getElementById("newWordSec").style.display = "block";
@@ -2977,6 +3025,12 @@ let calendarViewDate = new Date();
 
 // 打开历史日历
 function showHistory() {
+    
+    if (!isLoggedIn()) {
+        alert("请先登录账号，再查看学习日历。");
+        return;
+    }
+
 
     if (!cloudStudyData.history) cloudStudyData.history = {};
     if (!cloudStudyData.studyPlan) {
