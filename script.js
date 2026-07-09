@@ -2083,6 +2083,7 @@ function renderNewWordList(wordArr) {
         actions.className = "word-status-actions";
 
         var unfamiliarBtn = document.createElement("button");
+        unfamiliarBtn.type = "button";
         unfamiliarBtn.className = "status-btn status-unfamiliar";
         unfamiliarBtn.textContent = "陌生";
         unfamiliarBtn.onclick = function() {
@@ -2090,6 +2091,7 @@ function renderNewWordList(wordArr) {
         };
 
         var fuzzyBtn = document.createElement("button");
+        fuzzyBtn.type = "button";
         fuzzyBtn.className = "status-btn status-fuzzy";
         fuzzyBtn.textContent = "模糊";
         fuzzyBtn.onclick = function() {
@@ -2097,6 +2099,7 @@ function renderNewWordList(wordArr) {
         };
 
         var familiarBtn = document.createElement("button");
+        familiarBtn.type = "button";
         familiarBtn.className = "status-btn status-familiar";
         familiarBtn.textContent = "熟悉";
         familiarBtn.onclick = function() {
