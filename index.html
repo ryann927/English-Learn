@@ -1246,6 +1246,7 @@ function resetGitHubConfig() {
 }
 
 // 全局学习进度存储
+
 let cloudStudyData = {
     learnedWords: [],
     d1ReviewWords: [],
@@ -1253,8 +1254,10 @@ let cloudStudyData = {
     learnedSentences: [],
     lastStudyDate: "",
     todayWords: [],
-    todaySentences: [],     // 当天已生成的5句长难句ID
-    history: {}             // 新增：按日期存储每天的学习内容
+    todaySentences: [],
+    todayReviewD1: [],      // 今天页面显示用的 D-1 快照
+    todayReviewD3: [],      // 今天页面显示用的 D-3 快照
+    history: {}
 };
 
 // 雅思词库
@@ -2721,6 +2724,8 @@ async function initCloudData() {
         if (!cloudStudyData.lastStudyDate) cloudStudyData.lastStudyDate = "";
         if (!cloudStudyData.todayWords) cloudStudyData.todayWords = [];
         if (!cloudStudyData.todaySentences) cloudStudyData.todaySentences = [];
+        if (!cloudStudyData.todayReviewD1) cloudStudyData.todayReviewD1 = [];
+        if (!cloudStudyData.todayReviewD3) cloudStudyData.todayReviewD3 = [];
         if (!cloudStudyData.history) cloudStudyData.history = {};
 
         document.getElementById("syncStatus").innerText = "同步状态：云端数据加载完成 ";
@@ -2951,19 +2956,25 @@ function generateTodayContent() {
     let todayNewWords;
     let isNewDay = (cloudStudyData.lastStudyDate !== today);
 
-    // 先保存“进入今天之前”的复习内容
-    const reviewD1BeforeUpdate = cloudStudyData.d1ReviewWords || [];
-    const reviewD3BeforeUpdate = cloudStudyData.d3ReviewWords || [];
-
     if (isNewDay) {
-        const plan = getStudyPlan ? getStudyPlan() : { newWordCount: 25, sentenceCount: 5 };
+        // 关键：先保存“进入今天之前”的复习内容快照
+        const reviewD1Snapshot = cloudStudyData.d1ReviewWords || [];
+        const reviewD3Snapshot = cloudStudyData.d3ReviewWords || [];
 
-        // 新的一天：生成今日新词
+        cloudStudyData.todayReviewD1 = reviewD1Snapshot;
+        cloudStudyData.todayReviewD3 = reviewD3Snapshot;
+
+        const plan = typeof getStudyPlan === "function"
+            ? getStudyPlan()
+            : { newWordCount: 25, sentenceCount: 5 };
+
+        // 生成今日新词
         todayNewWords = getUniqueNewWord(plan.newWordCount || 25);
 
-        // 先显示今天内容，但不要立刻把今天新词显示成 D-1
         const wordNameList = todayNewWords.map(w => w.word);
-        cloudStudyData.learnedWords = [...new Set([...cloudStudyData.learnedWords, ...wordNameList])];
+        cloudStudyData.learnedWords = [
+            ...new Set([...cloudStudyData.learnedWords, ...wordNameList])
+        ];
 
         cloudStudyData.todayWords = todayNewWords;
         cloudStudyData.lastStudyDate = today;
@@ -2975,23 +2986,33 @@ function generateTodayContent() {
             sentences: []
         };
 
-        // 关键：更新“明天/后天要用的复习队列”
-        // 今天页面上仍然显示 reviewD1BeforeUpdate / reviewD3BeforeUpdate
-        cloudStudyData.d3ReviewWords = reviewD1BeforeUpdate;
+        // 关键：这里更新的是“未来复习队列”
+        // 今天页面不要直接显示这个更新后的 d1ReviewWords
+        cloudStudyData.d3ReviewWords = reviewD1Snapshot;
         cloudStudyData.d1ReviewWords = todayNewWords.slice(0, 10);
 
         alert(`今天是 ${today}，已为你生成新一天的学习内容。`);
     } else {
-        // 同一天再次点击：读取当天缓存
+        // 同一天再次点击：读取当天缓存，不重新生成
         todayNewWords = cloudStudyData.todayWords || [];
 
+        // 兼容旧数据：如果今天已经生成过，但没有保存 today's review snapshot
+        // 那今天的 D-1 / D-3 默认认为是空，避免把今天的新词误显示成昨日复盘
+        if (!cloudStudyData.todayReviewD1) cloudStudyData.todayReviewD1 = [];
+        if (!cloudStudyData.todayReviewD3) cloudStudyData.todayReviewD3 = [];
+
         if (!todayNewWords || todayNewWords.length === 0) {
-            const plan = getStudyPlan ? getStudyPlan() : { newWordCount: 25, sentenceCount: 5 };
+            const plan = typeof getStudyPlan === "function"
+                ? getStudyPlan()
+                : { newWordCount: 25, sentenceCount: 5 };
+
             todayNewWords = getUniqueNewWord(plan.newWordCount || 25);
             cloudStudyData.todayWords = todayNewWords;
 
             const wordNameList = todayNewWords.map(w => w.word);
-            cloudStudyData.learnedWords = [...new Set([...cloudStudyData.learnedWords, ...wordNameList])];
+            cloudStudyData.learnedWords = [
+                ...new Set([...cloudStudyData.learnedWords, ...wordNameList])
+            ];
 
             if (!cloudStudyData.history) cloudStudyData.history = {};
             cloudStudyData.history[today] = {
@@ -3003,9 +3024,9 @@ function generateTodayContent() {
         alert(`今天（${today}）已生成过内容，为你显示当天学习内容。`);
     }
 
-    // 重点：页面上显示的是“更新之前”的复习内容
-    renderReviewBlock(reviewD1BeforeUpdate, "rev1List", "rev1Ans");
-    renderReviewBlock(reviewD3BeforeUpdate, "rev3List", "rev3Ans");
+    // 关键：页面显示的是“今天进入时的复习快照”
+    renderReviewBlock(cloudStudyData.todayReviewD1 || [], "rev1List", "rev1Ans");
+    renderReviewBlock(cloudStudyData.todayReviewD3 || [], "rev3List", "rev3Ans");
 
     renderNewWordList(todayNewWords);
     createQuiz(todayNewWords.slice(10, 15));
@@ -3017,7 +3038,8 @@ function renderReviewBlock(wordArr, listDom, ansDom) {
     let ansHtml = "";
 
     if (!wordArr || wordArr.length === 0) {
-        document.getElementById(listDom).innerHTML = `<div class="word-item" style="color:#8b8f97;">暂无复习内容</div>`;
+        document.getElementById(listDom).innerHTML =
+            `<div class="word-item" style="color:#8b8f97;">暂无复习内容</div>`;
         document.getElementById(ansDom).innerHTML = "";
         return;
     }
