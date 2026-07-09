@@ -1931,24 +1931,51 @@ function renderReviewBlock(wordArr, listDom, ansDom) {
 }
 
 function renderNewWordList(wordArr) {
-     let html = '<div class="word-card-grid">';
+    var container = document.getElementById("newWordList");
+    container.innerHTML = "";
 
-    wordArr.forEach((w, idx) => {
-         html += `
-         <div class="word-card">
-             <div class="word-card-index">${String(idx + 1).padStart(2, "0")}</div>
-             <div class="word-card-word">${w.word}</div>
-             <div class="word-card-meaning">${w.mean}</div>
-             <div class="word-card-example">
-                 <span class="word-card-example-label">Example</span>
-                 ${w.example}
-             </div>
-         </div>`;
-     });
+    var grid = document.createElement("div");
+    grid.className = "word-card-grid";
 
-    html += '</div>';
-     document.getElementById("newWordList").innerHTML = html;
- }
+    wordArr.forEach(function(w, idx) {
+        var card = document.createElement("div");
+        card.className = "word-card";
+
+        var index = document.createElement("div");
+        index.className = "word-card-index";
+        index.textContent = String(idx + 1).padStart(2, "0");
+
+        var word = document.createElement("div");
+        word.className = "word-card-word";
+        word.textContent = w.word;
+
+        var meaning = document.createElement("div");
+        meaning.className = "word-card-meaning";
+        meaning.textContent = w.mean;
+
+        var example = document.createElement("div");
+        example.className = "word-card-example";
+
+        var label = document.createElement("span");
+        label.className = "word-card-example-label";
+        label.textContent = "Example";
+
+        var exampleText = document.createElement("div");
+        exampleText.textContent = w.example;
+
+        example.appendChild(label);
+        example.appendChild(exampleText);
+
+        card.appendChild(index);
+        card.appendChild(word);
+        card.appendChild(meaning);
+        card.appendChild(example);
+
+        grid.appendChild(card);
+    });
+
+    container.appendChild(grid);
+}
  
 function createQuiz(wordArr) {
     const testTemplate = [
