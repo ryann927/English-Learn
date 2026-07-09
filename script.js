@@ -1728,12 +1728,25 @@ function showStudyPanel(type, btn) {
         return;
     }
 
-    const sections = ["rev1", "rev3", "newWordSec", "sentSec", "planSec", "historySec"];
+    var sections = [
+        "homeSec",
+        "rev1",
+        "rev3",
+        "newWordSec",
+        "sentSec",
+        "weakWordsSec",
+        "planSec",
+        "historySec"
+    ];
 
-    sections.forEach(id => {
-        const el = document.getElementById(id);
+    sections.forEach(function(id) {
+        var el = document.getElementById(id);
         if (el) el.style.display = "none";
     });
+
+    if (type === "home") {
+        document.getElementById("homeSec").style.display = "flex";
+    }
 
     if (type === "review") {
         document.getElementById("rev1").style.display = "block";
@@ -1742,10 +1755,27 @@ function showStudyPanel(type, btn) {
 
     if (type === "words") {
         document.getElementById("newWordSec").style.display = "block";
+
+        if (cloudStudyData.todayWords && cloudStudyData.todayWords.length > 0) {
+            renderNewWordList(cloudStudyData.todayWords);
+        } else {
+            document.getElementById("newWordList").innerHTML =
+                '<div class="word-item" style="color:#8b8f97;">今天还没有生成单词，请先点击「开始今日学习」。</div>';
+        }
     }
 
     if (type === "sentences") {
         document.getElementById("sentSec").style.display = "block";
+
+        if (!cloudStudyData.todaySentences || cloudStudyData.todaySentences.length === 0) {
+            document.getElementById("sentArea").innerHTML =
+                '<div class="word-item" style="color:#8b8f97;">今天还没有生成长难句，请先点击「开始今日学习」。</div>';
+        }
+    }
+
+    if (type === "weakWords") {
+        document.getElementById("weakWordsSec").style.display = "block";
+        renderWeakWordsList();
     }
 
     if (type === "plan") {
@@ -1753,7 +1783,10 @@ function showStudyPanel(type, btn) {
         loadStudyPlanToInputs();
     }
 
-    document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active"));
+    document.querySelectorAll(".nav-item").forEach(function(item) {
+        item.classList.remove("active");
+    });
+
     if (btn) btn.classList.add("active");
 }
 
@@ -1921,6 +1954,9 @@ window.generateTodayContent = generateTodayContent;
 
 
 function renderReviewBlock(wordArr, listDom, ansDom) {
+    wordArr = (wordArr || []).filter(function(item) {
+    return !cloudStudyData.wordStatus || cloudStudyData.wordStatus[item.word] !== "familiar";
+});
     let listHtml = "";
     let ansHtml = "";
 
@@ -1944,9 +1980,97 @@ function ensureWordStatusData() {
         cloudStudyData.wordStatus = {};
     }
 
-    if (!cloudStudyData.weakWords) {
+    if (!cloudStudyData.weakWordRecords) {
+        cloudStudyData.weakWordRecords = {};
+    }
+
+    // 兼容旧数据：如果之前有 weakWords 数组，迁移到今天的「模糊」分类
+    if (Array.isArray(cloudStudyData.weakWords) && cloudStudyData.weakWords.length > 0) {
+        var today = getTodayStr();
+
+        if (!cloudStudyData.weakWordRecords[today]) {
+            cloudStudyData.weakWordRecords[today] = {
+                unfamiliar: [],
+                fuzzy: []
+            };
+        }
+
+        cloudStudyData.weakWords.forEach(function(w) {
+            var exists = cloudStudyData.weakWordRecords[today].fuzzy.some(function(item) {
+                return item.word === w.word;
+            });
+
+            if (!exists) {
+                cloudStudyData.weakWordRecords[today].fuzzy.push(w);
+            }
+
+            if (!cloudStudyData.wordStatus[w.word]) {
+                cloudStudyData.wordStatus[w.word] = "fuzzy";
+            }
+        });
+
         cloudStudyData.weakWords = [];
     }
+}
+
+function ensureWeakDate(date) {
+    ensureWordStatusData();
+
+    if (!cloudStudyData.weakWordRecords[date]) {
+        cloudStudyData.weakWordRecords[date] = {
+            unfamiliar: [],
+            fuzzy: []
+        };
+    }
+}
+
+function removeWordFromWeakRecords(word) {
+    ensureWordStatusData();
+
+    Object.keys(cloudStudyData.weakWordRecords).forEach(function(date) {
+        cloudStudyData.weakWordRecords[date].unfamiliar =
+            (cloudStudyData.weakWordRecords[date].unfamiliar || []).filter(function(item) {
+                return item.word !== word;
+            });
+
+        cloudStudyData.weakWordRecords[date].fuzzy =
+            (cloudStudyData.weakWordRecords[date].fuzzy || []).filter(function(item) {
+                return item.word !== word;
+            });
+    });
+}
+
+function addWordToWeakRecords(wordObj, status) {
+    var today = getTodayStr();
+
+    ensureWeakDate(today);
+
+    // 同一个词如果从陌生改为模糊，或从模糊改为陌生，先从所有日期移除，再放入今天的新分类
+    removeWordFromWeakRecords(wordObj.word);
+
+    var targetList = status === "unfamiliar"
+        ? cloudStudyData.weakWordRecords[today].unfamiliar
+        : cloudStudyData.weakWordRecords[today].fuzzy;
+
+    targetList.push(wordObj);
+}
+
+function removeWordFromReviewQueues(word) {
+    cloudStudyData.d1ReviewWords = (cloudStudyData.d1ReviewWords || []).filter(function(item) {
+        return item.word !== word;
+    });
+
+    cloudStudyData.d3ReviewWords = (cloudStudyData.d3ReviewWords || []).filter(function(item) {
+        return item.word !== word;
+    });
+
+    cloudStudyData.todayReviewD1 = (cloudStudyData.todayReviewD1 || []).filter(function(item) {
+        return item.word !== word;
+    });
+
+    cloudStudyData.todayReviewD3 = (cloudStudyData.todayReviewD3 || []).filter(function(item) {
+        return item.word !== word;
+    });
 }
 
 function markWordStatus(wordObj, status) {
@@ -1955,40 +2079,40 @@ function markWordStatus(wordObj, status) {
     cloudStudyData.wordStatus[wordObj.word] = status;
 
     if (status === "unfamiliar" || status === "fuzzy") {
-        var exists = cloudStudyData.weakWords.some(function(item) {
-            return item.word === wordObj.word;
-        });
+        addWordToWeakRecords(wordObj, status);
 
-        if (!exists) {
-            cloudStudyData.weakWords.push(wordObj);
-        }
-
-        alert("已标记为「" + (status === "unfamiliar" ? "陌生" : "模糊") + "」，已加入生词自查。");
+        alert(
+            "已标记为「" +
+            (status === "unfamiliar" ? "陌生" : "模糊") +
+            "」，已加入生词自查。记得点击【保存进度】同步云端。"
+        );
     }
 
     if (status === "familiar") {
-    cloudStudyData.weakWords = cloudStudyData.weakWords.filter(function(item) {
-        return item.word !== wordObj.word;
-    });
+        removeWordFromWeakRecords(wordObj.word);
+        removeWordFromReviewQueues(wordObj.word);
 
-    cloudStudyData.d1ReviewWords = (cloudStudyData.d1ReviewWords || []).filter(function(item) {
-        return item.word !== wordObj.word;
-    });
+        alert("已标记为「熟悉」，未来将不再复习。记得点击【保存进度】同步云端。");
+    }
 
-    cloudStudyData.d3ReviewWords = (cloudStudyData.d3ReviewWords || []).filter(function(item) {
-        return item.word !== wordObj.word;
-    });
-
-    cloudStudyData.todayReviewD1 = (cloudStudyData.todayReviewD1 || []).filter(function(item) {
-        return item.word !== wordObj.word;
-    });
-
-    cloudStudyData.todayReviewD3 = (cloudStudyData.todayReviewD3 || []).filter(function(item) {
-        return item.word !== wordObj.word;
-    });
-
-    alert("已标记为「熟悉」，未来将不再复习。");
+    // 如果当前正在生词自查页，立即刷新列表
+    var weakSec = document.getElementById("weakWordsSec");
+    if (weakSec && weakSec.style.display !== "none") {
+        renderWeakWordsList();
+    }
 }
+
+function markWeakWordAsFamiliar(word) {
+    ensureWordStatusData();
+
+    cloudStudyData.wordStatus[word] = "familiar";
+
+    removeWordFromWeakRecords(word);
+    removeWordFromReviewQueues(word);
+
+    renderWeakWordsList();
+
+    alert("已标记为「熟悉」，该单词已从生词自查中移除。记得点击【保存进度】同步云端。");
 }
 
 function renderWeakWordsList() {
@@ -1997,37 +2121,75 @@ function renderWeakWordsList() {
     var container = document.getElementById("weakWordsList");
     if (!container) return;
 
-    var weakWords = cloudStudyData.weakWords || [];
+    var records = cloudStudyData.weakWordRecords || {};
+    var dates = Object.keys(records).sort().reverse();
 
-    if (weakWords.length === 0) {
-        container.innerHTML = '<div class="word-item" style="color:#8b8f97;">暂无生词。你可以在今日单词中将单词标记为「陌生」或「模糊」。</div>';
+    if (dates.length === 0) {
+        container.innerHTML =
+            '<div class="word-item" style="color:#8b8f97;">暂无生词。你可以在今日单词中将单词标记为「陌生」或「模糊」。</div>';
         return;
     }
 
-    var html = '<div class="word-card-grid">';
+    var html = "";
 
-    weakWords.forEach(function(w, idx) {
-        var status = cloudStudyData.wordStatus[w.word] || "fuzzy";
-        var statusText = status === "unfamiliar" ? "陌生" : "模糊";
+    dates.forEach(function(date) {
+        var unfamiliarList = records[date].unfamiliar || [];
+        var fuzzyList = records[date].fuzzy || [];
 
-        html += ''
-            + '<div class="word-card">'
-            + '<div class="word-card-index">' + String(idx + 1).padStart(2, "0") + ' · ' + statusText + '</div>'
-            + '<div class="word-card-word">' + w.word + '</div>'
-            + '<div class="word-card-meaning">' + w.mean + '</div>'
-            + '<div class="word-card-example">'
-            + '<span class="word-card-example-label">Example</span>'
-            + w.example
-            + '</div>'
-            + '<div class="word-status-actions">'
-            + '<button class="status-btn status-familiar" onclick="markWeakWordAsFamiliar(\'' + w.word + '\')">标记熟悉</button>'
-            + '</div>'
-            + '</div>';
+        if (unfamiliarList.length === 0 && fuzzyList.length === 0) {
+            return;
+        }
+
+        html += '<div class="weak-date-group">';
+        html += '<h3 class="weak-date-title">' + date + '</h3>';
+
+        if (unfamiliarList.length > 0) {
+            html += '<h4 class="weak-status-title">陌生</h4>';
+            html += '<div class="word-card-grid">';
+
+            unfamiliarList.forEach(function(w, idx) {
+                html += buildWeakWordCard(w, idx, "陌生");
+            });
+
+            html += '</div>';
+        }
+
+        if (fuzzyList.length > 0) {
+            html += '<h4 class="weak-status-title">模糊</h4>';
+            html += '<div class="word-card-grid">';
+
+            fuzzyList.forEach(function(w, idx) {
+                html += buildWeakWordCard(w, idx, "模糊");
+            });
+
+            html += '</div>';
+        }
+
+        html += '</div>';
     });
 
-    html += '</div>';
+    if (!html) {
+        html =
+            '<div class="word-item" style="color:#8b8f97;">暂无生词。你可以在今日单词中将单词标记为「陌生」或「模糊」。</div>';
+    }
 
     container.innerHTML = html;
+}
+
+function buildWeakWordCard(w, idx, statusText) {
+    return ''
+        + '<div class="word-card">'
+        + '<div class="word-card-index">' + String(idx + 1).padStart(2, "0") + ' · ' + statusText + '</div>'
+        + '<div class="word-card-word">' + w.word + '</div>'
+        + '<div class="word-card-meaning">' + w.mean + '</div>'
+        + '<div class="word-card-example">'
+        + '<span class="word-card-example-label">Example</span>'
+        + w.example
+        + '</div>'
+        + '<div class="word-status-actions">'
+        + '<button class="status-btn status-familiar" onclick="markWeakWordAsFamiliar(\'' + w.word + '\')">标记熟悉</button>'
+        + '</div>'
+        + '</div>';
 }
 
 function markWeakWordAsFamiliar(word) {
@@ -2149,6 +2311,8 @@ function showHistory() {
 
 
     if (!cloudStudyData.history) cloudStudyData.history = {};
+    if (!cloudStudyData.wordStatus) cloudStudyData.wordStatus = {};
+    if (!cloudStudyData.weakWordRecords) cloudStudyData.weakWordRecords = {};
     if (!cloudStudyData.studyPlan) {
     cloudStudyData.studyPlan = {
         newWordCount: 25,
