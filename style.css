@@ -1118,3 +1118,57 @@ body > button {
     background: #ecfdf5 !important;
     color: #15803d !important;
 }
+/* ===== 生词状态按钮 ===== */
+
+.word-status-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.status-btn {
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 7px 12px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    cursor: pointer;
+}
+
+.status-unfamiliar {
+    background: #fff1f1 !important;
+    color: #dc2626 !important;
+}
+
+.status-fuzzy {
+    background: #fff7ed !important;
+    color: #ea580c !important;
+}
+
+.status-familiar {
+    background: #ecfdf5 !important;
+    color: #15803d !important;
+}
+
+/* ===== 生词自查分组 ===== */
+
+.weak-date-group {
+    margin-bottom: 34px;
+}
+
+.weak-date-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #111827;
+    margin: 18px 0 14px;
+}
+
+.weak-status-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #ff5a3c;
+    margin: 16px 0 10px;
+}
