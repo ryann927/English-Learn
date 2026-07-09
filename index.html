@@ -2951,16 +2951,18 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-if (!cloudDataLoaded) {
-    alert("请先点击【登录账号】，加载云端学习记录后再开始今日学习。");
-    return;
-}
+
 
 function generateTodayContent() {
     if (!isLoggedIn()) {
         alert("请先登录账号，再开始今日学习。");
         return;
     }
+    
+    if (!cloudDataLoaded) {
+    alert("请先点击【登录账号】，加载云端学习记录后再开始今日学习。");
+    return;
+}
 
     document.getElementById("rev1").style.display = "block";
     document.getElementById("rev3").style.display = "block";
