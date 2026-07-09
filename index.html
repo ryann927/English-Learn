@@ -24,12 +24,14 @@
     </div>
 
 <nav class="nav-menu">
-    <button class="nav-item active" onclick="showStudyPanel('review', this)">知识复盘</button>
+    <button class="nav-item active" onclick="showStudyPanel('home', this)">首页</button>
+    <button class="nav-item" onclick="showStudyPanel('review', this)">知识复盘</button>
     <button class="nav-item" onclick="showStudyPanel('words', this)">今日单词</button>
     <button class="nav-item" onclick="showStudyPanel('sentences', this)">今日难句</button>
     <button class="nav-item" onclick="showStudyPanel('weakWords', this)">生词自查</button>
     <button class="nav-item" onclick="showStudyPanel('plan', this)">自定义学习计划</button>
 </nav>
+
 </aside>
 
 <main class="main-content">
@@ -50,7 +52,7 @@
         </div>
     </div>
 
-    <section class="hero-panel">
+    <section class="hero-panel" id="homeSec">
         <div>
             <h1>雅思单词学习平台</h1>
             <p class="tip-text" id="welcomeText">欢迎登录，开启你的今日雅思学习</p>
