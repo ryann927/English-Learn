@@ -1907,6 +1907,8 @@ function generateTodayContent() {
     createQuiz(todayNewWords.slice(10, 15));
     createLongSentenceBlock(isNewDay);
 }
+window.generateTodayContent = generateTodayContent;
+
 
 function renderReviewBlock(wordArr, listDom, ansDom) {
     let listHtml = "";
