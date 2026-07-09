@@ -23,12 +23,13 @@
         </div>
     </div>
 
-    <nav class="nav-menu">
-        <button class="nav-item active" onclick="showStudyPanel('review', this)">知识复盘</button>
-        <button class="nav-item" onclick="showStudyPanel('words', this)">今日单词</button>
-        <button class="nav-item" onclick="showStudyPanel('sentences', this)">今日难句</button>
-        <button class="nav-item" onclick="showStudyPanel('plan', this)">自定义学习计划</button>
-    </nav>
+<nav class="nav-menu">
+    <button class="nav-item active" onclick="showStudyPanel('review', this)">知识复盘</button>
+    <button class="nav-item" onclick="showStudyPanel('words', this)">今日单词</button>
+    <button class="nav-item" onclick="showStudyPanel('sentences', this)">今日难句</button>
+    <button class="nav-item" onclick="showStudyPanel('weakWords', this)">生词自查</button>
+    <button class="nav-item" onclick="showStudyPanel('plan', this)">自定义学习计划</button>
+</nav>
 </aside>
 
 <main class="main-content">
@@ -83,6 +84,13 @@
         <button onclick="showQuizAnswer()">查看自测答案</button>
         <div class="answer-text" id="quizAns" style="display:none"></div>
     </div>
+    <div class="section" id="weakWordsSec" style="display:none">
+    <h2>生词自查</h2>
+    <p class="tip-text" style="margin-bottom:16px;">
+        这里会显示你标记为「陌生」或「模糊」的单词，方便休息时随时复习。
+    </p>
+    <div id="weakWordsList"></div>
+</div>
 <div class="section" id="planSec" style="display:none">
     <h2>自定义单词学习计划</h2>
 
