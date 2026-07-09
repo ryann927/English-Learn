@@ -990,3 +990,65 @@ body > button {
     line-height: 1.25 !important;
     font-weight: 400 !important;
 }
+/* ===== 今日单词卡片 ===== */
+
+.word-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.word-card {
+    background: #ffffff;
+    border: 1px solid #eeeeef;
+    border-radius: 20px;
+    padding: 18px 18px 16px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+    transition: all 0.18s ease;
+}
+
+.word-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
+}
+
+.word-card-index {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ff5a3c;
+    margin-bottom: 8px;
+}
+
+.word-card-word {
+    font-size: 22px;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: -0.4px;
+    margin-bottom: 6px;
+}
+
+.word-card-meaning {
+    font-size: 15px;
+    color: #374151;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.word-card-example {
+    background: #f8f8f9;
+    border-left: 3px solid #ff6b4a;
+    border-radius: 10px;
+    padding: 10px 12px;
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.word-card-example-label {
+    display: block;
+    font-size: 12px;
+    color: #9ca3af;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
