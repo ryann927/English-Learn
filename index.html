@@ -1247,6 +1247,8 @@ function resetGitHubConfig() {
 
 // 全局学习进度存储
 
+let cloudDataLoaded = false; 
+        
 let cloudStudyData = {
     learnedWords: [],
     d1ReviewWords: [],
@@ -2704,6 +2706,7 @@ const topicExamplePool = {
 // 加载云端学习记录（从 GitHub Gist 读取）
 async function initCloudData() {
     document.getElementById("syncStatus").innerText = "同步状态：正在从 GitHub 拉取数据...";
+    
     try {
         const res = await fetch(`https://api.github.com/gists/${GITHUB_CONFIG.gistId}`, {
             headers: {
@@ -2729,6 +2732,7 @@ async function initCloudData() {
         if (!cloudStudyData.history) cloudStudyData.history = {};
 
         document.getElementById("syncStatus").innerText = "同步状态：云端数据加载完成 ";
+        cloudDataLoaded = true;
         updateWelcomeText();
         alert("云端学习记录读取完毕，可以开始今日学习 📚");
     } catch (err) {
@@ -2745,6 +2749,11 @@ if (!isLoggedIn()) {
         return;
     }
 
+if (!cloudDataLoaded) {
+    alert("请先点击【登录账号】，加载云端学习记录后再保存进度。");
+    return;
+}
+    
     document.getElementById("syncStatus").innerText = "同步状态：正在上传到 GitHub...";
     try {
         const res = await fetch(`https://api.github.com/gists/${GITHUB_CONFIG.gistId}`, {
@@ -2940,6 +2949,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (userChip) userChip.style.display = "none";
     }
 });
+
+
+if (!cloudDataLoaded) {
+    alert("请先点击【登录账号】，加载云端学习记录后再开始今日学习。");
+    return;
+}
 
 function generateTodayContent() {
     if (!isLoggedIn()) {
