@@ -2948,6 +2948,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (loginBtn) loginBtn.style.display = "block";
         if (userChip) userChip.style.display = "none";
     }
+    // 如果已经保存过 Token 和 Gist ID，页面打开后自动加载云端数据
+    const token = localStorage.getItem("gh_token");
+    const gistId = localStorage.getItem("gh_gist_id");
+
+    if (token && gistId) {
+        initCloudData();
+    }
 });
 
 
