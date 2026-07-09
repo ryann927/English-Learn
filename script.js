@@ -1929,14 +1929,23 @@ function renderReviewBlock(wordArr, listDom, ansDom) {
 }
 
 function renderNewWordList(wordArr) {
-    let html = "";
+    let html = '<div class="word-card-grid">';
+
     wordArr.forEach((w, idx) => {
         html += `
-        <div class="word-item">
-            ${idx+1}. <strong>${w.word}</strong> — ${w.mean}
-            <div class="example-sentence">例句：${w.example}</div>
+        <div class="word-card">
+            <div class="word-card-index">${String(idx + 1).padStart(2, "0")}</div>
+            <div class="word-card-word">${w.word}</div>
+            <div class="word-card-meaning">${w.mean}</div>
+            <div class="word-card-example">
+                <span class="word-card-example-label">Example</span>
+                ${w.example}
+            </div>
         </div>`;
     });
+
+    html += '</div>';
+
     document.getElementById("newWordList").innerHTML = html;
 }
  
