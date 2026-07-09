@@ -1929,25 +1929,24 @@ function renderReviewBlock(wordArr, listDom, ansDom) {
 }
 
 function renderNewWordList(wordArr) {
-    let html = '<div class="word-card-grid">';
+     let html = '<div class="word-card-grid">';
 
-    wordArr.forEach((w, idx) => {
-        html += `
-        <div class="word-card">
-            <div class="word-card-index">${String(idx + 1).padStart(2, "0")}</div>
-            <div class="word-card-word">${w.word}</div>
-            <div class="word-card-meaning">${w.mean}</div>
-            <div class="word-card-example">
-                <span class="word-card-example-label">Example</span>
-                ${w.example}
-            </div>
-        </div>`;
-    });
+    wordArr.forEach((w, idx) => {
+         html += `
+         <div class="word-card">
+             <div class="word-card-index">${String(idx + 1).padStart(2, "0")}</div>
+             <div class="word-card-word">${w.word}</div>
+             <div class="word-card-meaning">${w.mean}</div>
+             <div class="word-card-example">
+                 <span class="word-card-example-label">Example</span>
+                 ${w.example}
+             </div>
+         </div>`;
+     });
 
-    html += '</div>';
-
-    document.getElementById("newWordList").innerHTML = html;
-}
+    html += '</div>';
+     document.getElementById("newWordList").innerHTML = html;
+ }
  
 function createQuiz(wordArr) {
     const testTemplate = [
