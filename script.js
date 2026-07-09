@@ -1633,7 +1633,7 @@ if (!cloudDataLoaded) {
 }
 
 function showStudyPanel(type) {
-    const sections = ["rev1", "rev3", "newWordSec", "sentSec", "planSec", "historySec"];
+    const sections = ["rev1", "rev3", "newWordSec", "sentSec", "weakWordsSec", "planSec", "historySec"];
 
     sections.forEach(id => {
         const el = document.getElementById(id);
@@ -1652,6 +1652,12 @@ function showStudyPanel(type) {
     if (type === "sentences") {
         document.getElementById("sentSec").style.display = "block";
     }
+
+    
+if (type === "weakWords") {
+    document.getElementById("weakWordsSec").style.display = "block";
+    renderWeakWordsList();
+}
 
     if (type === "plan") {
         document.getElementById("planSec").style.display = "block";
@@ -1856,6 +1862,8 @@ function generateTodayContent() {
         cloudStudyData.todaySentences = [];
 
         if (!cloudStudyData.history) cloudStudyData.history = {};
+        if (!cloudStudyData.wordStatus) cloudStudyData.wordStatus = {};
+        if (!cloudStudyData.weakWords) cloudStudyData.weakWords = [];
         cloudStudyData.history[today] = {
             words: todayNewWords,
             sentences: []
@@ -1864,7 +1872,9 @@ function generateTodayContent() {
         // 关键：这里更新的是“未来复习队列”
         // 今天页面不要直接显示这个更新后的 d1ReviewWords
         cloudStudyData.d3ReviewWords = reviewD1Snapshot;
-        cloudStudyData.d1ReviewWords = todayNewWords.slice(0, 10);
+        cloudStudyData.d1ReviewWords = todayNewWords.filter(function(w) {
+    return !cloudStudyData.wordStatus || cloudStudyData.wordStatus[w.word] !== "familiar";
+}).slice(0, 10);
 
         alert(`今天是 ${today}，已为你生成新一天的学习内容。`);
     } else {
@@ -1929,7 +1939,110 @@ function renderReviewBlock(wordArr, listDom, ansDom) {
     document.getElementById(listDom).innerHTML = listHtml;
     document.getElementById(ansDom).innerHTML = "释义答案：<br>" + ansHtml;
 }
+function ensureWordStatusData() {
+    if (!cloudStudyData.wordStatus) {
+        cloudStudyData.wordStatus = {};
+    }
 
+    if (!cloudStudyData.weakWords) {
+        cloudStudyData.weakWords = [];
+    }
+}
+
+function markWordStatus(wordObj, status) {
+    ensureWordStatusData();
+
+    cloudStudyData.wordStatus[wordObj.word] = status;
+
+    if (status === "unfamiliar" || status === "fuzzy") {
+        var exists = cloudStudyData.weakWords.some(function(item) {
+            return item.word === wordObj.word;
+        });
+
+        if (!exists) {
+            cloudStudyData.weakWords.push(wordObj);
+        }
+
+        alert("已标记为「" + (status === "unfamiliar" ? "陌生" : "模糊") + "」，已加入生词自查。");
+    }
+
+    if (status === "familiar") {
+    cloudStudyData.weakWords = cloudStudyData.weakWords.filter(function(item) {
+        return item.word !== wordObj.word;
+    });
+
+    cloudStudyData.d1ReviewWords = (cloudStudyData.d1ReviewWords || []).filter(function(item) {
+        return item.word !== wordObj.word;
+    });
+
+    cloudStudyData.d3ReviewWords = (cloudStudyData.d3ReviewWords || []).filter(function(item) {
+        return item.word !== wordObj.word;
+    });
+
+    cloudStudyData.todayReviewD1 = (cloudStudyData.todayReviewD1 || []).filter(function(item) {
+        return item.word !== wordObj.word;
+    });
+
+    cloudStudyData.todayReviewD3 = (cloudStudyData.todayReviewD3 || []).filter(function(item) {
+        return item.word !== wordObj.word;
+    });
+
+    alert("已标记为「熟悉」，未来将不再复习。");
+}
+}
+
+function renderWeakWordsList() {
+    ensureWordStatusData();
+
+    var container = document.getElementById("weakWordsList");
+    if (!container) return;
+
+    var weakWords = cloudStudyData.weakWords || [];
+
+    if (weakWords.length === 0) {
+        container.innerHTML = '<div class="word-item" style="color:#8b8f97;">暂无生词。你可以在今日单词中将单词标记为「陌生」或「模糊」。</div>';
+        return;
+    }
+
+    var html = '<div class="word-card-grid">';
+
+    weakWords.forEach(function(w, idx) {
+        var status = cloudStudyData.wordStatus[w.word] || "fuzzy";
+        var statusText = status === "unfamiliar" ? "陌生" : "模糊";
+
+        html += ''
+            + '<div class="word-card">'
+            + '<div class="word-card-index">' + String(idx + 1).padStart(2, "0") + ' · ' + statusText + '</div>'
+            + '<div class="word-card-word">' + w.word + '</div>'
+            + '<div class="word-card-meaning">' + w.mean + '</div>'
+            + '<div class="word-card-example">'
+            + '<span class="word-card-example-label">Example</span>'
+            + w.example
+            + '</div>'
+            + '<div class="word-status-actions">'
+            + '<button class="status-btn status-familiar" onclick="markWeakWordAsFamiliar(\'' + w.word + '\')">标记熟悉</button>'
+            + '</div>'
+            + '</div>';
+    });
+
+    html += '</div>';
+
+    container.innerHTML = html;
+}
+
+function markWeakWordAsFamiliar(word) {
+    ensureWordStatusData();
+
+    cloudStudyData.wordStatus[word] = "familiar";
+
+    cloudStudyData.weakWords = cloudStudyData.weakWords.filter(function(item) {
+        return item.word !== word;
+    });
+
+    renderWeakWordsList();
+
+    alert("已标记为「熟悉」，该单词已从生词自查中移除。记得点击【保存进度】同步云端。");
+}
 function renderNewWordList(wordArr) {
     var container = document.getElementById("newWordList");
     container.innerHTML = "";
@@ -1966,10 +2079,39 @@ function renderNewWordList(wordArr) {
         example.appendChild(label);
         example.appendChild(exampleText);
 
+        var actions = document.createElement("div");
+        actions.className = "word-status-actions";
+
+        var unfamiliarBtn = document.createElement("button");
+        unfamiliarBtn.className = "status-btn status-unfamiliar";
+        unfamiliarBtn.textContent = "陌生";
+        unfamiliarBtn.onclick = function() {
+            markWordStatus(w, "unfamiliar");
+        };
+
+        var fuzzyBtn = document.createElement("button");
+        fuzzyBtn.className = "status-btn status-fuzzy";
+        fuzzyBtn.textContent = "模糊";
+        fuzzyBtn.onclick = function() {
+            markWordStatus(w, "fuzzy");
+        };
+
+        var familiarBtn = document.createElement("button");
+        familiarBtn.className = "status-btn status-familiar";
+        familiarBtn.textContent = "熟悉";
+        familiarBtn.onclick = function() {
+            markWordStatus(w, "familiar");
+        };
+
+        actions.appendChild(unfamiliarBtn);
+        actions.appendChild(fuzzyBtn);
+        actions.appendChild(familiarBtn);
+
         card.appendChild(index);
         card.appendChild(word);
         card.appendChild(meaning);
         card.appendChild(example);
+        card.appendChild(actions);
 
         grid.appendChild(card);
     });
