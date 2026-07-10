@@ -1703,7 +1703,6 @@ function showStudyPanel(type, btn) {
         btn.classList.add("active");
     }
 }
-``
 function getStudyPlan() {
     if (!cloudStudyData.studyPlan) {
         cloudStudyData.studyPlan = {
