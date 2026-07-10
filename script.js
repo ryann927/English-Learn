@@ -2544,7 +2544,7 @@ const pool = unused.length >= sentenceCount
     ? unused
     : fullSentenceBank;
 
-        todaySentences = pool.sort(() => Math.random() - 0.5)..slice(0, sentenceCount);
+        todaySentences = pool.sort(() => Math.random() - 0.5).slice(0, sentenceCount);
         const todayIds = todaySentences.map(s => s.id);
         cloudStudyData.learnedSentences = [...new Set([...cloudStudyData.learnedSentences, ...todayIds])];
         cloudStudyData.todaySentences = todaySentences;
