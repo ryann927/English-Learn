@@ -2017,34 +2017,6 @@ function ensureWordStatusData() {
     if (!cloudStudyData.weakWordRecords) {
         cloudStudyData.weakWordRecords = {};
     }
-
-    // 兼容旧数据：如果之前有 weakWords 数组，迁移到今天的「模糊」分类
-    if (Array.isArray(cloudStudyData.weakWords) && cloudStudyData.weakWords.length > 0) {
-        var today = getTodayStr();
-
-        if (!cloudStudyData.weakWordRecords[today]) {
-            cloudStudyData.weakWordRecords[today] = {
-                unfamiliar: [],
-                fuzzy: []
-            };
-        }
-
-        cloudStudyData.weakWords.forEach(function(w) {
-            var exists = cloudStudyData.weakWordRecords[today].fuzzy.some(function(item) {
-                return item.word === w.word;
-            });
-
-            if (!exists) {
-                cloudStudyData.weakWordRecords[today].fuzzy.push(w);
-            }
-
-            if (!cloudStudyData.wordStatus[w.word]) {
-                cloudStudyData.wordStatus[w.word] = "fuzzy";
-            }
-        });
-
-        cloudStudyData.weakWords = [];
-    }
 }
 
 function ensureWeakDate(date) {
@@ -2079,14 +2051,15 @@ function addWordToWeakRecords(wordObj, status) {
 
     ensureWeakDate(today);
 
-    // 同一个词如果从陌生改为模糊，或从模糊改为陌生，先从所有日期移除，再放入今天的新分类
     removeWordFromWeakRecords(wordObj.word);
 
-    var targetList = status === "unfamiliar"
-        ? cloudStudyData.weakWordRecords[today].unfamiliar
-        : cloudStudyData.weakWordRecords[today].fuzzy;
+    if (status === "unfamiliar") {
+        cloudStudyData.weakWordRecords[today].unfamiliar.push(wordObj);
+    }
 
-    targetList.push(wordObj);
+    if (status === "fuzzy") {
+        cloudStudyData.weakWordRecords[today].fuzzy.push(wordObj);
+    }
 }
 
 function removeWordFromReviewQueues(word) {
@@ -2129,7 +2102,6 @@ function markWordStatus(wordObj, status) {
         alert("已标记为「熟悉」，未来将不再复习。记得点击【保存进度】同步云端。");
     }
 
-    // 如果当前正在生词自查页，立即刷新列表
     var weakSec = document.getElementById("weakWordsSec");
     if (weakSec && weakSec.style.display !== "none") {
         renderWeakWordsList();
