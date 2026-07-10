@@ -1982,7 +1982,8 @@ function generateTodayContent() {
 
     renderNewWordList(todayNewWords);
     createQuiz(todayNewWords.slice(10, 15));
-    createLongSentenceBlock(isNewDay);
+    const sentenceCount = getStudyPlan().sentenceCount || 5;
+createLongSentenceBlock(isNewDay, sentenceCount);
 }
 window.generateTodayContent = generateTodayContent;
 
@@ -2528,7 +2529,8 @@ function showQuizAnswer() {
     document.getElementById("quizAns").innerHTML = "自测答案：<br>" + ansText;
 }
 
-function createLongSentenceBlock(isNewDay) {
+function createLongSentenceBlock(isNewDay, sentenceCount) {
+    sentenceCount = sentenceCount || 5;
     if (!cloudStudyData.learnedSentences) cloudStudyData.learnedSentences = [];
     if (!cloudStudyData.todaySentences) cloudStudyData.todaySentences = [];
 
@@ -2537,8 +2539,12 @@ function createLongSentenceBlock(isNewDay) {
 
     if (isNewDay || cloudStudyData.todaySentences.length === 0) {
         const unused = fullSentenceBank.filter(s => !cloudStudyData.learnedSentences.includes(s.id));
-        const pool = unused.length >= 5 ? unused : fullSentenceBank;
-        todaySentences = pool.sort(() => Math.random() - 0.5).slice(0, 5);
+       
+const pool = unused.length >= sentenceCount
+    ? unused
+    : fullSentenceBank;
+
+        todaySentences = pool.sort(() => Math.random() - 0.5)..slice(0, sentenceCount);
         const todayIds = todaySentences.map(s => s.id);
         cloudStudyData.learnedSentences = [...new Set([...cloudStudyData.learnedSentences, ...todayIds])];
         cloudStudyData.todaySentences = todaySentences;
