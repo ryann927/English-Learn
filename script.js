@@ -2125,62 +2125,33 @@ function markWeakWordAsFamiliar(word) {
 function renderWeakWordsList() {
     ensureWordStatusData();
 
+    var select = document.getElementById("weakDateSelect");
     var container = document.getElementById("weakWordsList");
-    if (!container) return;
+
+    if (!select || !container) return;
 
     var records = cloudStudyData.weakWordRecords || {};
     var dates = Object.keys(records).sort().reverse();
 
+    select.innerHTML = "";
+
     if (dates.length === 0) {
+        select.innerHTML = '<option value="">暂无日期</option>';
         container.innerHTML =
             '<div class="word-item" style="color:#8b8f97;">暂无生词。你可以在今日单词中将单词标记为「陌生」或「模糊」。</div>';
         return;
     }
 
-    var html = "";
-
     dates.forEach(function(date) {
-        var unfamiliarList = records[date].unfamiliar || [];
-        var fuzzyList = records[date].fuzzy || [];
-
-        if (unfamiliarList.length === 0 && fuzzyList.length === 0) {
-            return;
-        }
-
-        html += '<div class="weak-date-group">';
-        html += '<h3 class="weak-date-title">' + date + '</h3>';
-
-        if (unfamiliarList.length > 0) {
-            html += '<h4 class="weak-status-title">陌生</h4>';
-            html += '<div class="word-card-grid">';
-
-            unfamiliarList.forEach(function(w, idx) {
-                html += buildWeakWordCard(w, idx, "陌生");
-            });
-
-            html += '</div>';
-        }
-
-        if (fuzzyList.length > 0) {
-            html += '<h4 class="weak-status-title">模糊</h4>';
-            html += '<div class="word-card-grid">';
-
-            fuzzyList.forEach(function(w, idx) {
-                html += buildWeakWordCard(w, idx, "模糊");
-            });
-
-            html += '</div>';
-        }
-
-        html += '</div>';
+        var option = document.createElement("option");
+        option.value = date;
+        option.textContent = date;
+        select.appendChild(option);
     });
 
-    if (!html) {
-        html =
-            '<div class="word-item" style="color:#8b8f97;">暂无生词。你可以在今日单词中将单词标记为「陌生」或「模糊」。</div>';
-    }
+    select.value = dates[0];
 
-    container.innerHTML = html;
+    renderWeakWordsBySelectedDate();
 }
 
 function buildWeakWordCard(w, idx, statusText) {
