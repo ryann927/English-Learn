@@ -1256,3 +1256,51 @@ body > button {
     border-color: #ff5a3c !important;
     color: #ff5a3c !important;
 }
+/* ===== 顶部单词搜索 ===== */
+
+.real-search {
+    gap: 10px;
+}
+
+.real-search input {
+    flex: 1;
+    min-width: 260px;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 15px;
+    color: #111827;
+    font-weight: 600;
+}
+
+.real-search input::placeholder {
+    color: #a1a1aa;
+    font-weight: 500;
+}
+
+.real-search button {
+    border: none !important;
+    background: #ff5a3c !important;
+    color: #ffffff !important;
+    border-radius: 999px !important;
+    padding: 8px 15px !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+}
+
+.real-search button:hover {
+    background: #f04d31 !important;
+    transform: none !important;
+}
+
+.word-search-status {
+    margin-top: 12px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: #fff7ed;
+    color: #ea580c;
+    font-size: 13px;
+    font-weight: 800;
+}
