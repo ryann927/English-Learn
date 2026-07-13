@@ -1555,7 +1555,7 @@ const topicExamplePool = {
 };
 
 // 加载云端学习记录（从 GitHub Gist 读取）
-async function initCloudData() {
+async function initCloudData(autoStart) {
     document.getElementById("syncStatus").innerText = "同步状态：正在从 GitHub 拉取数据...";
     
     try {
@@ -1582,10 +1582,17 @@ async function initCloudData() {
         if (!cloudStudyData.todayReviewD3) cloudStudyData.todayReviewD3 = [];
         if (!cloudStudyData.history) cloudStudyData.history = {};
 
-        document.getElementById("syncStatus").innerText = "同步状态：云端数据加载完成 ";
+
+        document.getElementById("syncStatus").innerText = "同步状态：云端数据加载完成";
         cloudDataLoaded = true;
         updateWelcomeText();
-        alert("云端学习记录读取完毕，可以开始今日学习 📚");
+
+        if (autoStart) {
+            autoStartTodayLearning();
+        } else {
+            alert("云端学习记录读取完毕，可以开始今日学习");
+        }
+
     } catch (err) {
         document.getElementById("syncStatus").innerText = "同步失败：" + err.message;
         alert("云端读取失败：" + err.message + "\n\n请检查：\n1. Token 是否填对\n2. Gist ID 是否填对\n3. Token 是否有 gist 读写权限");
@@ -1877,13 +1884,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const gistId = localStorage.getItem("gh_gist_id");
 
     if (token && gistId) {
-        initCloudData();
+    initCloudData(true);
     }
+
 });
 
 
 
 
+function autoStartTodayLearning() {
+    if (!isLoggedIn()) {
+        return;
+    }
+
+    if (!cloudDataLoaded) {
+        return;
+    }
+
+    generateTodayContent();
+}
 function generateTodayContent() {
     if (!isLoggedIn()) {
         alert("请先登录账号，再开始今日学习。");
@@ -1891,7 +1910,7 @@ function generateTodayContent() {
     }
     
     if (!cloudDataLoaded) {
-    alert("请先点击【登录账号】，加载云端学习记录后再开始今日学习。");
+    alert("正在加载云端学习记录，请稍后再开始学习。"");
     return;
 }
 
