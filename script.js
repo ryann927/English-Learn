@@ -2290,6 +2290,68 @@ function renderNewWordList(wordArr) {
 
     container.appendChild(grid);
 }
+function renderWeakWordsBySelectedDate() {
+    ensureWordStatusData();
+
+    var select = document.getElementById("weakDateSelect");
+    var container = document.getElementById("weakWordsList");
+
+    if (!select || !container) return;
+
+    var selectedDate = select.value;
+
+    if (!selectedDate) {
+        container.innerHTML =
+            '<div class="word-item" style="color:#8b8f97;">暂无生词。</div>';
+        return;
+    }
+
+    var records = cloudStudyData.weakWordRecords || {};
+    var dayRecord = records[selectedDate];
+
+    if (!dayRecord) {
+        container.innerHTML =
+            '<div class="word-item" style="color:#8b8f97;">该日期暂无生词。</div>';
+        return;
+    }
+
+    var unfamiliarList = dayRecord.unfamiliar || [];
+    var fuzzyList = dayRecord.fuzzy || [];
+
+    var html = "";
+
+    html += '<h3 class="weak-date-title">' + selectedDate + ' 生词</h3>';
+
+    if (unfamiliarList.length > 0) {
+        html += '<h4 class="weak-status-title">陌生</h4>';
+        html += '<div class="word-card-grid">';
+
+        unfamiliarList.forEach(function(w, idx) {
+            html += buildWeakWordCard(w, idx, "陌生");
+        });
+
+        html += '</div>';
+    } else {
+        html += '<h4 class="weak-status-title">陌生</h4>';
+        html += '<div class="word-item" style="color:#8b8f97;">暂无陌生单词。</div>';
+    }
+
+    if (fuzzyList.length > 0) {
+        html += '<h4 class="weak-status-title">模糊</h4>';
+        html += '<div class="word-card-grid">';
+
+        fuzzyList.forEach(function(w, idx) {
+            html += buildWeakWordCard(w, idx, "模糊");
+        });
+
+        html += '</div>';
+    } else {
+        html += '<h4 class="weak-status-title">模糊</h4>';
+        html += '<div class="word-item" style="color:#8b8f97;">暂无模糊单词。</div>';
+    }
+
+    container.innerHTML = html;
+}
  
 function createQuiz(wordArr) {
     const testTemplate = [
