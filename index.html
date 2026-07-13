@@ -38,18 +38,19 @@
 
     <div class="top-nav">
 
-<div class="search-box">
+
+<form class="search-box" id="globalSearchForm">
     <div class="search-icon">⌕</div>
 
     <input
         id="globalWordSearchInput"
         type="text"
         placeholder="搜索单词库，例如 finite"
-        onkeydown="handleSearchEnter(event)"
+        autocomplete="off"
     >
 
-    <button type="button" onclick="searchLearnedWord()">搜索</button>
-</div>
+    <button type="submit">搜索</button>
+</form>
 
 
         <div class="account-area">
