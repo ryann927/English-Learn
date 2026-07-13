@@ -544,28 +544,25 @@ function searchLearnedWord() {
    
 
 function showSearchResults(query, results) {
-    var resultBox = document.getElementById("wordSearchResult");
-    var resultSec = document.getElementById("searchResultSec");
+    var modal = document.getElementById("searchModal");
+    var subtitle = document.getElementById("searchModalSubtitle");
+    var body = document.getElementById("searchModalBody");
 
-    if (!resultBox || !resultSec) return;
+    if (!modal || !subtitle || !body) return;
 
-    var homeSec = document.getElementById("homeSec");
-    if (homeSec) {
-        homeSec.style.display = "none";
-    }
-
-    resultSec.style.display = "block";
-    resultSec.scrollIntoView({ behavior: "smooth", block: "start" });
+    subtitle.textContent = "搜索词：" + query;
 
     if (results.length === 0) {
-        resultBox.innerHTML =
-            '<div class="word-item" style="color:#8b8f97;">词库中没有找到包含 “' +
-            query +
-            '” 的单词。</div>';
+        body.innerHTML =
+            '<div class="search-empty-card">' +
+            '词库中没有找到包含 “' + query + '” 的单词。' +
+            '</div>';
+
+        modal.style.display = "flex";
         return;
     }
 
-    var html = '<div class="word-card-grid">';
+    var html = "";
 
     results.forEach(function(item, idx) {
         var learnedInfo = "";
@@ -590,9 +587,7 @@ function showSearchResults(query, results) {
             item.examples.forEach(function(example, exampleIdx) {
                 exampleHtml +=
                     '<div class="search-example-item">' +
-                    '<span class="search-example-num">' +
-                    (exampleIdx + 1) +
-                    '.</span> ' +
+                    '<span class="search-example-num">' + (exampleIdx + 1) + '.</span> ' +
                     example +
                     '</div>';
             });
@@ -601,24 +596,33 @@ function showSearchResults(query, results) {
         }
 
         html += ''
-            + '<div class="word-card">'
-            + '<div class="word-card-index">' + String(idx + 1).padStart(2, "0") + '</div>'
-            + '<div class="word-card-word">' + item.word + '</div>'
-            + '<div class="word-card-meaning">' + meaningInfo + '</div>'
-            + '<div class="word-card-example">'
+            + '<div class="search-result-card">'
+            + '<div class="search-result-index">' + String(idx + 1).padStart(2, "0") + '</div>'
+            + '<div class="search-result-word">' + item.word + '</div>'
+            + '<div class="search-result-meaning">' + meaningInfo + '</div>'
+            + '<div class="search-result-example-box">'
             + '<span class="word-card-example-label">Examples</span>'
             + exampleHtml
             + '</div>'
-            + '<div class="word-search-status">' + learnedInfo + '</div>'
-            + '<div class="word-search-status">当前状态：' + item.status + '</div>'
-            + '<div class="word-search-status">' + topicInfo + '</div>'
+            + '<div class="search-meta-list">'
+            + '<div class="search-meta-pill">' + learnedInfo + '</div>'
+            + '<div class="search-meta-pill">当前状态：' + item.status + '</div>'
+            + '<div class="search-meta-pill">' + topicInfo + '</div>'
+            + '</div>'
             + '</div>';
     });
 
-    html += '</div>';
-
-    resultBox.innerHTML = html;
+    body.innerHTML = html;
+    modal.style.display = "flex";
 }
+function closeSearchModal() {
+    var modal = document.getElementById("searchModal");
+
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
 function getTodayStr() {
     const d = new Date();
     const y = d.getFullYear();
@@ -668,10 +672,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (token && gistId) {
     initCloudData(true);
     }
+    document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+        closeSearchModal();
+    }
+});
 
     
 
 });
+
 
 
 
