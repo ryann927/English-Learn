@@ -1347,3 +1347,20 @@ body > button {
         0 0 0 4px rgba(255, 90, 60, 0.10),
         0 10px 26px rgba(15, 23, 42, 0.05);
 }
+/* ===== 搜索结果多个例句 ===== */
+
+.search-example-item {
+    margin-top: 6px;
+    color: #6b7280;
+    line-height: 1.6;
+}
+
+.search-example-item:first-of-type {
+    margin-top: 0;
+}
+
+.search-example-num {
+    color: #ff5a3c;
+    font-weight: 800;
+    margin-right: 4px;
+}
