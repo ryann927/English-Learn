@@ -38,15 +38,18 @@
 
     <div class="top-nav">
 
-       <div class="search-pill real-search">
-           <input
-               id="globalWordSearchInput"
-               type="text"
-               placeholder="搜索已学单词，例如 finite"
-               onkeydown="handleSearchEnter(event)"
-           >
-           <button type="button" onclick="searchLearnedWord()">搜索</button>
-       </div>
+<div class="search-box">
+    <div class="search-icon">⌕</div>
+
+    <input
+        id="globalWordSearchInput"
+        type="text"
+        placeholder="搜索单词库，例如 finite"
+        onkeydown="handleSearchEnter(event)"
+    >
+
+    <button type="button" onclick="searchLearnedWord()">搜索</button>
+</div>
 
 
         <div class="account-area">
