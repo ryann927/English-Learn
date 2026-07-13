@@ -540,8 +540,6 @@ function searchLearnedWord() {
     showSearchResults(query, results);
 }
 
-    showSearchResults(query, results);
-}
 
    
 
