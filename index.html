@@ -92,11 +92,9 @@
         请选择日期查看当天标记为「陌生」或「模糊」的单词。
     </p>
 
-    <div class="weak-date-selector">
-        <label for="weakDateSelect">选择日期</label>
-        <select id="weakDateSelect" onchange="renderWeakWordsBySelectedDate()">
-            <option value="">暂无日期</option>
-        </select>
+    <div class="weak-date-panel">
+        <div class="weak-date-label">选择日期</div>
+        <div id="weakDateButtons" class="weak-date-buttons"></div>
     </div>
 
     <div id="weakWordsList"></div>
