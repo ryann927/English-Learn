@@ -188,7 +188,23 @@
 </div>
 
 
+<div id="searchModal" class="search-modal" style="display:none;">
+    <div class="search-modal-mask" onclick="closeSearchModal()"></div>
 
+    <div class="search-modal-card">
+        <div class="search-modal-header">
+            <div>
+                <div class="search-modal-title">单词搜索结果</div>
+                <div id="searchModalSubtitle" class="search-modal-subtitle"></div>
+            </div>
+
+            <button type="button" class="search-modal-close" onclick="closeSearchModal()">×</button>
+        </div>
+
+        <div id="searchModalBody" class="search-modal-body"></div>
+    </div>
+</div>
+    
 <script src="word-bank.js"></script>
 <script src="sentence-bank.js"></script>
 <script src="script.js"></script>
