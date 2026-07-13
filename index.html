@@ -86,11 +86,19 @@
         <button onclick="showQuizAnswer()">查看自测答案</button>
         <div class="answer-text" id="quizAns" style="display:none"></div>
     </div>
-    <div class="section" id="weakWordsSec" style="display:none">
+<div class="section" id="weakWordsSec" style="display:none">
     <h2>生词自查</h2>
     <p class="tip-text" style="margin-bottom:16px;">
-        这里会显示你标记为「陌生」或「模糊」的单词，方便休息时随时复习。
+        请选择日期查看当天标记为「陌生」或「模糊」的单词。
     </p>
+
+    <div class="weak-date-selector">
+        <label for="weakDateSelect">选择日期</label>
+        <select id="weakDateSelect" onchange="renderWeakWordsBySelectedDate()">
+            <option value="">暂无日期</option>
+        </select>
+    </div>
+
     <div id="weakWordsList"></div>
 </div>
 <div class="section" id="planSec" style="display:none">
