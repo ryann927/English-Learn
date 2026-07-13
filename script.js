@@ -2194,7 +2194,7 @@ function buildWeakWordCard(w, idx, statusText) {
         + w.example
         + '</div>'
         + '<div class="word-status-actions">'
-        + '<button class="status-btn status-familiar" onclick="markWeakWordAsFamiliar(\'' + w.word + '\')">标记熟悉</button>'
+        + '<button class="status-btn status-familiar" onclick="markWeakWordAsFamiliar(\'' + w.word + '\')">我已掌握，移出</button>'
         + '</div>'
         + '</div>';
 }
