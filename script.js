@@ -432,6 +432,142 @@ function getUniqueNewWord(count) {
     return randomPick;
 }
 
+function handleSearchEnter(event) {
+    if (event.key === "Enter") {
+        searchLearnedWord();
+    }
+}
+
+function getWordStatusText(word) {
+    if (!cloudStudyData.wordStatus || !cloudStudyData.wordStatus[word]) {
+        return "未标记";
+    }
+
+    var status = cloudStudyData.wordStatus[word];
+
+    if (status === "unfamiliar") return "陌生";
+    if (status === "fuzzy") return "模糊";
+    if (status === "familiar") return "熟悉";
+
+    return "未标记";
+}
+
+function searchLearnedWord() {
+    if (!isLoggedIn()) {
+        alert("请先登录账号，再搜索学习记录。");
+        return;
+    }
+
+    if (!cloudDataLoaded) {
+        alert("正在加载云端学习记录，请稍后再搜索。");
+        return;
+    }
+
+    var input = document.getElementById("globalWordSearchInput");
+    var resultBox = document.getElementById("wordSearchResult");
+    var resultSec = document.getElementById("searchResultSec");
+
+    if (!input || !resultBox || !resultSec) return;
+
+    var query = input.value.trim().toLowerCase();
+
+    if (!query) {
+        alert("请输入要搜索的单词。");
+        return;
+    }
+
+    var results = [];
+    var history = cloudStudyData.history || {};
+
+    Object.keys(history).forEach(function(date) {
+        var dayData = history[date] || {};
+        var words = dayData.words || [];
+
+        words.forEach(function(w) {
+            if (!w || !w.word) return;
+
+            var wordText = String(w.word).toLowerCase();
+
+            if (wordText.includes(query)) {
+                results.push({
+                    date: date,
+                    word: w.word,
+                    mean: w.mean || "",
+                    example: w.example || "",
+                    status: getWordStatusText(w.word)
+                });
+            }
+        });
+    });
+
+    if (cloudStudyData.todayWords && cloudStudyData.todayWords.length > 0) {
+        cloudStudyData.todayWords.forEach(function(w) {
+            if (!w || !w.word) return;
+
+            var wordText = String(w.word).toLowerCase();
+
+            if (wordText.includes(query)) {
+                var alreadyExists = results.some(function(item) {
+                    return item.word === w.word && item.date === getTodayStr();
+                });
+
+                if (!alreadyExists) {
+                    results.push({
+                        date: getTodayStr(),
+                        word: w.word,
+                        mean: w.mean || "",
+                        example: w.example || "",
+                        status: getWordStatusText(w.word)
+                    });
+                }
+            }
+        });
+    }
+
+    showSearchResults(query, results);
+}
+
+function showSearchResults(query, results) {
+    var resultBox = document.getElementById("wordSearchResult");
+    var resultSec = document.getElementById("searchResultSec");
+
+    if (!resultBox || !resultSec) return;
+
+    document.getElementById("homeSec").style.display = "none";
+    resultSec.style.display = "block";
+
+    if (results.length === 0) {
+        resultBox.innerHTML =
+            '<div class="word-item" style="color:#8b8f97;">没有找到包含 “' +
+            query +
+            '” 的已学单词记录。</div>';
+        return;
+    }
+
+    var html = '<div class="word-card-grid">';
+
+    results.sort(function(a, b) {
+        return b.date.localeCompare(a.date);
+    });
+
+    results.forEach(function(item, idx) {
+        html += ''
+            + '<div class="word-card">'
+            + '<div class="word-card-index">' + String(idx + 1).padStart(2, "0") + ' · ' + item.date + '</div>'
+            + '<div class="word-card-word">' + item.word + '</div>'
+            + '<div class="word-card-meaning">' + item.mean + '</div>'
+            + '<div class="word-card-example">'
+            + '<span class="word-card-example-label">Example</span>'
+            + item.example
+            + '</div>'
+            + '<div class="word-search-status">当前状态：' + item.status + '</div>'
+            + '</div>';
+    });
+
+    html += '</div>';
+
+    resultBox.innerHTML = html;
+}
 function getTodayStr() {
     const d = new Date();
     const y = d.getFullYear();
