@@ -1364,3 +1364,169 @@ body > button {
     font-weight: 800;
     margin-right: 4px;
 }
+/* ===== 搜索结果弹窗 ===== */
+
+.search-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+}
+
+.search-modal-mask {
+    position: absolute;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.28);
+    backdrop-filter: blur(6px);
+}
+
+.search-modal-card {
+    position: relative;
+    width: min(820px, calc(100vw - 48px));
+    max-height: min(760px, calc(100vh - 70px));
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #eeeeef;
+    border-radius: 28px;
+    box-shadow: 0 28px 80px rgba(15, 23, 42, 0.22);
+    display: flex;
+    flex-direction: column;
+}
+
+.search-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 26px 30px 18px;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.search-modal-title {
+    font-size: 24px;
+    font-weight: 850;
+    color: #111827;
+    letter-spacing: -0.4px;
+}
+
+.search-modal-subtitle {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #8b8f97;
+    font-weight: 600;
+}
+
+.search-modal-close {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 999px !important;
+    border: none !important;
+    background: #f4f4f5 !important;
+    color: #6b7280 !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+}
+
+.search-modal-close:hover {
+    background: #eeeeef !important;
+    color: #111827 !important;
+    transform: none !important;
+}
+
+.search-modal-body {
+    padding: 26px 30px 30px;
+    overflow-y: auto;
+}
+
+.search-result-card {
+    background: #ffffff;
+    border: 1px solid #eeeeef;
+    border-radius: 22px;
+    padding: 22px 24px;
+    margin-bottom: 18px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+}
+
+.search-result-card:last-child {
+    margin-bottom: 0;
+}
+
+.search-result-index {
+    font-size: 12px;
+    font-weight: 800;
+    color: #ff5a3c;
+    margin-bottom: 8px;
+}
+
+.search-result-word {
+    font-size: 30px;
+    line-height: 1.1;
+    font-weight: 850;
+    color: #111827;
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+}
+
+.search-result-meaning {
+    font-size: 17px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 16px;
+}
+
+.search-result-example-box {
+    background: #f8f8f9;
+    border-left: 3px solid #ff6b4a;
+    border-radius: 14px;
+    padding: 13px 15px;
+    margin-bottom: 16px;
+}
+
+.search-example-item {
+    margin-top: 7px;
+    color: #6b7280;
+    line-height: 1.65;
+    font-size: 14px;
+}
+
+.search-example-item:first-of-type {
+    margin-top: 0;
+}
+
+.search-example-num {
+    color: #ff5a3c;
+    font-weight: 850;
+    margin-right: 4px;
+}
+
+.search-meta-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.search-meta-pill {
+    background: #fff7ed;
+    color: #ea580c;
+    border-radius: 999px;
+    padding: 7px 11px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.search-empty-card {
+    background: #f8f8f9;
+    border: 1px solid #eeeeef;
+    color: #8b8f97;
+    border-radius: 18px;
+    padding: 22px;
+    font-size: 15px;
+    font-weight: 700;
+}
