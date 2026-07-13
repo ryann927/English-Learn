@@ -37,9 +37,17 @@
 <main class="main-content">
 
     <div class="top-nav">
-        <div class="search-pill">
-            <span>雅思单词 / 长难句 / 学习记录</span>
-        </div>
+
+       <div class="search-pill real-search">
+           <input
+               id="globalWordSearchInput"
+               type="text"
+               placeholder="搜索已学单词，例如 finite"
+               onkeydown="handleSearchEnter(event)"
+           >
+           <button type="button" onclick="searchLearnedWord()">搜索</button>
+       </div>
+
 
         <div class="account-area">
             <button id="loginBtn" class="login-top-btn" onclick="initCloudData()">登录账号</button>
@@ -65,6 +73,10 @@
             <button class="text-action" onclick="resetGitHubConfig()">退出登录</button>
         </div>
     </section>
+    <div class="section" id="searchResultSec" style="display:none">
+    <h2>单词搜索结果</h2>
+    <div id="wordSearchResult"></div>
+    </div>
 
     <div class="section" id="rev1" style="display:none">
         <h2>1. D-1 昨日单词复盘（10个）</h2>
