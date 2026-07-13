@@ -724,7 +724,6 @@ const fullWordBank = [
 {"word":"upskilling","mean":"n.技能升级","topic":"work","example":"Upskilling programs help workers remain competitive in digital industries."},
 {"word":"reskilling","mean":"n.再培训，重新学习技能","topic":"work","example":"Reskilling is necessary when automation replaces routine jobs."},
 {"word":"job-security","mean":"n.工作稳定性","topic":"work","example":"Job-security concerns influence employees’ career decisions."},
-
 {"word":"perception","mean":"n.感知，看法","topic":"psychology","example":"Public perception of nuclear energy differs greatly across countries."},
 {"word":"preference","mean":"n.偏好，喜好","topic":"psychology","example":"Consumer preference increasingly shifts toward environmentally friendly goods."},
 {"word":"ambition","mean":"n.抱负，雄心","topic":"psychology","example":"Personal ambition motivates many students to study overseas."},
@@ -789,7 +788,6 @@ const fullWordBank = [
 {"word":"appeal","mean":"n./v.吸引力；呼吁；上诉","topic":"society","example":"Public transport has greater appeal when it is affordable, reliable and convenient."},
 {"word":"applicable","mean":"adj.适用的，可应用的","topic":"policy","example":"The new safety regulations are applicable to both domestic and foreign manufacturers."},
 {"word":"appreciate","mean":"v.理解；欣赏；感激","topic":"general","example":"Studying history helps young people appreciate the value of cultural heritage."},
-
 {"word":"articulate","mean":"v.清楚表达 adj.表达清晰的","topic":"study","example":"Candidates should articulate their opinions clearly during the speaking examination."},
 {"word":"aspire","mean":"v.渴望，立志","topic":"work","example":"Many graduates aspire to work for organisations that contribute to society."},
 {"word":"assemble","mean":"v.集合；组装","topic":"technology","example":"Engineers assemble the components before testing the final device."},
@@ -815,7 +813,6 @@ const fullWordBank = [
 {"word":"capitalize","mean":"v.利用；资本化","topic":"economy","example":"Local businesses capitalized on the growth of international tourism."},
 {"word":"capture","mean":"v.捕获；记录；吸引","topic":"technology","example":"Satellite images capture changes in forest coverage over long periods."},
 {"word":"cautious","mean":"adj.谨慎的，小心的","topic":"general","example":"Scientists remain cautious about drawing conclusions from a small sample."},
-
 {"word":"centralize","mean":"v.集中管理，使中央集权","topic":"policy","example":"The government decided to centralize medical procurement to reduce costs."},
 {"word":"chronicity","mean":"n.慢性，长期持续性","topic":"health","example":"The chronicity of the condition makes long-term treatment necessary."},
 {"word":"circulate","mean":"v.流通，传播，循环","topic":"media","example":"False information can circulate rapidly through social networking platforms."},
@@ -841,7 +838,6 @@ const fullWordBank = [
 {"word":"concurrent","mean":"adj.同时发生的","topic":"general","example":"The city experienced concurrent growth in population and housing demand."},
 {"word":"condemn","mean":"v.谴责，判定","topic":"society","example":"Human rights organisations condemned the exploitation of migrant workers."},
 {"word":"confer","mean":"v.授予；商议","topic":"education","example":"Universities confer degrees only after students meet all academic requirements."},
-
 {"word":"confidential","mean":"adj.机密的，保密的","topic":"technology","example":"Medical records must remain confidential to protect patient privacy."},
 {"word":"configure","mean":"v.配置，设定","topic":"technology","example":"Administrators configure the system to prevent unauthorized access."},
 {"word":"conflict","mean":"n./v.冲突，矛盾","topic":"society","example":"Economic development may conflict with efforts to preserve natural habitats."},
@@ -867,7 +863,6 @@ const fullWordBank = [
 {"word":"demolish","mean":"v.拆除，摧毁","topic":"urban","example":"The city plans to demolish unsafe buildings and replace them with affordable housing."},
 {"word":"deprive","mean":"v.剥夺，使丧失","topic":"society","example":"Poverty can deprive children of access to nutritious food and quality education."},
 {"word":"deteriorate","mean":"v.恶化，变坏","topic":"general","example":"Public infrastructure will deteriorate without regular maintenance and investment."},
-
 {"word":"detrimental","mean":"adj.有害的，不利的","topic":"general","example":"Excessive screen time can be detrimental to children’s sleep quality."},
 {"word":"deviate","mean":"v.偏离，背离","topic":"study","example":"The observed results deviate significantly from the original prediction."},
 {"word":"diagnose","mean":"v.诊断，判断问题","topic":"health","example":"Doctors use laboratory tests to diagnose infectious diseases accurately."},
@@ -1043,8 +1038,6 @@ const fullWordBank = [
 {"word":"ameliorate","mean":"v.改善，缓解","topic":"policy","example":"Targeted housing subsidies may ameliorate living conditions for low-income families."},
 {"word":"analytical","mean":"adj.分析的，善于分析的","topic":"study","example":"Analytical skills enable students to distinguish reliable evidence from unsupported claims."},
 {"word":"antecedent","mean":"n.前因，先例","topic":"study","example":"Researchers examined the historical antecedents of the current economic crisis."},
-
-// 26-50 Research and Study
 {"word":"apparently","mean":"adv.显然；据报道","topic":"study","example":"The treatment was apparently effective, although the sample was too small for firm conclusions."},
 {"word":"applicability","mean":"n.适用性，实用性","topic":"study","example":"Further research is needed to assess the applicability of the model in rural regions."},
 {"word":"appraise","mean":"v.评价，估价","topic":"study","example":"Students should appraise each source before including it in an academic essay."},
@@ -1097,8 +1090,6 @@ const fullWordBank = [
 {"word":"syllabus","mean":"n.教学大纲","topic":"education","example":"The revised syllabus places greater emphasis on practical problem-solving."},
 {"word":"tutorial","mean":"n.辅导课；教程","topic":"education","example":"Weekly tutorials allow students to discuss difficult concepts in small groups."},
 {"word":"vocational","mean":"adj.职业的，职业教育的","topic":"education","example":"Vocational education can provide direct pathways into skilled employment."},
-
-// 76-100 Economy and Business
 {"word":"acquisition","mean":"n.收购；获得","topic":"economy","example":"The acquisition allowed the company to enter several overseas markets."},
 {"word":"appreciation","mean":"n.升值；欣赏；理解","topic":"economy","example":"Currency appreciation makes imported goods cheaper for domestic consumers."},
 {"word":"bankrupt","mean":"adj.破产的 v.使破产","topic":"economy","example":"Several small retailers went bankrupt after a prolonged decline in consumer spending."},
@@ -1124,8 +1115,6 @@ const fullWordBank = [
 {"word":"tariff","mean":"n.关税；收费表","topic":"economy","example":"Higher import tariffs may protect domestic producers but raise consumer prices."},
 {"word":"transaction","mean":"n.交易，业务","topic":"economy","example":"Digital payment systems reduce the time required to complete financial transactions."},
 {"word":"volatility","mean":"n.波动性，不稳定性","topic":"economy","example":"Oil price volatility makes long-term budgeting difficult for transport companies."},
-
-// 101-125 Society and Public Issues
 {"word":"alienation","mean":"n.疏离感，异化","topic":"society","example":"Remote work may cause social alienation when employees rarely interact with colleagues."},
 {"word":"assimilation","mean":"n.同化，吸收","topic":"society","example":"Cultural assimilation may weaken immigrants’ connection with their original traditions."},
 {"word":"civic","mean":"adj.公民的，城市的","topic":"society","example":"Schools can encourage civic participation through volunteering programmes."},
@@ -1151,8 +1140,6 @@ const fullWordBank = [
 {"word":"tolerance","mean":"n.宽容；忍耐力","topic":"society","example":"Cultural education can promote tolerance in increasingly diverse societies."},
 {"word":"underprivileged","mean":"adj.贫困的，弱势的","topic":"society","example":"The charity provides free tutoring to children from underprivileged families."},
 {"word":"urbanize","mean":"v.使城市化","topic":"urban","example":"The region urbanized rapidly after new manufacturing industries were established."},
-
-// 126-150 Environment and Science
 {"word":"aquatic","mean":"adj.水生的，水中的","topic":"environment","example":"Chemical pollution poses a serious threat to aquatic plants and animals."},
 {"word":"arid","mean":"adj.干旱的，贫瘠的","topic":"environment","example":"Farmers in arid regions depend heavily on efficient irrigation systems."},
 {"word":"biodegrade","mean":"v.生物降解","topic":"environment","example":"Unlike conventional plastic, the new material can biodegrade within several months."},
@@ -1178,8 +1165,6 @@ const fullWordBank = [
 {"word":"toxic","mean":"adj.有毒的","topic":"environment","example":"Electronic waste may release toxic metals when processed without proper equipment."},
 {"word":"vegetation","mean":"n.植被，植物","topic":"environment","example":"Dense vegetation protects steep slopes from soil erosion."},
 {"word":"watershed","mean":"n.流域；转折点","topic":"environment","example":"Pollution in one part of a watershed can affect communities far downstream."},
-
-// 151-175 Health
 {"word":"ailment","mean":"n.疾病，小病","topic":"health","example":"Minor ailments can often be treated effectively through primary healthcare."},
 {"word":"antibiotic","mean":"n.抗生素 adj.抗菌的","topic":"health","example":"The unnecessary use of antibiotics contributes to drug-resistant infections."},
 {"word":"antibody","mean":"n.抗体","topic":"health","example":"Blood tests can detect antibodies produced after infection or vaccination."},
@@ -1232,8 +1217,6 @@ const fullWordBank = [
 {"word":"satirical","mean":"adj.讽刺的","topic":"media","example":"The programme uses satirical humour to criticize political corruption."},
 {"word":"sensational","mean":"adj.耸人听闻的，轰动的","topic":"media","example":"Sensational headlines can attract attention while reducing journalistic credibility."},
 {"word":"subscribe","mean":"v.订阅；赞同","topic":"media","example":"Many readers subscribe to digital newspapers for access to detailed analysis."},
-
-// 201-225 Work and Psychology
 {"word":"absenteeism","mean":"n.旷工，缺勤","topic":"work","example":"High workplace stress is associated with increased absenteeism and staff turnover."},
 {"word":"apprentice","mean":"n.学徒 v.使当学徒","topic":"work","example":"Each apprentice receives practical training from an experienced technician."},
 {"word":"collaborative","mean":"adj.协作的，合作的","topic":"work","example":"Collaborative workplaces encourage employees to share knowledge and solve problems together."},
@@ -1259,8 +1242,6 @@ const fullWordBank = [
 {"word":"persistent","mean":"adj.坚持不懈的；持续的","topic":"psychology","example":"Persistent learners are more likely to overcome difficulties in language acquisition."},
 {"word":"rationalize","mean":"v.合理化；作出合理解释","topic":"psychology","example":"Consumers sometimes rationalize unnecessary purchases by describing them as investments."},
 {"word":"reassure","mean":"v.使安心，消除疑虑","topic":"psychology","example":"Clear communication can reassure residents during a public health emergency."},
-
-// 226-250 Policy, Culture and Transport
 {"word":"accountability","mean":"n.问责，责任制","topic":"policy","example":"Greater government accountability can reduce corruption and improve public trust."},
 {"word":"bureaucracy","mean":"n.官僚体系；繁琐程序","topic":"policy","example":"Excessive bureaucracy can delay urgent infrastructure projects."},
 {"word":"constitutional","mean":"adj.宪法的","topic":"policy","example":"The court examined whether the new regulation was constitutional."},
@@ -1287,7 +1268,6 @@ const fullWordBank = [
 {"word":"infrastructure","mean":"n.基础设施","topic":"urban","example":"Rapid population growth places increasing pressure on urban infrastructure."},
 {"word":"redevelopment","mean":"n.重新开发，改造","topic":"urban","example":"The redevelopment project transformed an abandoned industrial site into a public park."},
 // ===== 扩容第 3/8 批：第 501–750 词 =====
-
 // 501–525：通用学术词
 {"word":"abate","mean":"v.减弱，缓和","topic":"general","example":"Traffic noise usually begins to abate after the evening rush hour."},
 {"word":"aberration","mean":"n.异常现象，偏差","topic":"study","example":"Researchers treated the unusually high result as an aberration and repeated the experiment."},
@@ -1314,7 +1294,6 @@ const fullWordBank = [
 {"word":"bolster","mean":"v.支持，加强","topic":"economy","example":"Investment in vocational education can bolster regional employment and productivity."},
 {"word":"brevity","mean":"n.简洁，简短","topic":"study","example":"The brevity of the report made it accessible but left several questions unanswered."},
 {"word":"circumspect","mean":"adj.谨慎的，慎重的","topic":"general","example":"Policy-makers should be circumspect when interpreting incomplete economic forecasts."},
-
 // 526–550：研究与论证
 {"word":"coalesce","mean":"v.合并，联合","topic":"study","example":"Several minor research questions coalesced into one broader investigation."},
 {"word":"cogent","mean":"adj.有说服力的，切中要点的","topic":"study","example":"The author presents a cogent argument for expanding preventative healthcare."},
@@ -1341,7 +1320,6 @@ const fullWordBank = [
 {"word":"reiterate","mean":"v.重申，反复说明","topic":"study","example":"The report reiterates the need for greater investment in rural healthcare."},
 {"word":"synthesize","mean":"v.综合，合成","topic":"study","example":"Students must synthesize information from several sources rather than summarize each one separately."},
 {"word":"theorize","mean":"v.建立理论，推测","topic":"study","example":"Researchers theorize that social isolation contributes to declining mental health."},
-
 // 551–575：教育
 {"word":"academia","mean":"n.学术界","topic":"education","example":"Closer cooperation between industry and academia can accelerate technological innovation."},
 {"word":"apprentice","mean":"n.学徒 v.使当学徒","topic":"education","example":"Each apprentice receives supervised training from an experienced technician."},
@@ -1368,7 +1346,6 @@ const fullWordBank = [
 {"word":"workload","mean":"n.工作量，学习负担","topic":"education","example":"An excessive academic workload can increase stress and reduce sleep quality."},
 {"word":"workshop","mean":"n.研讨会，实践课","topic":"education","example":"The writing workshop teaches students how to structure evidence-based arguments."},
 {"word":"accredit","mean":"v.认证，认可","topic":"education","example":"Independent agencies accredit universities that meet established quality standards."},
-
 // 576–600：经济
 {"word":"amortize","mean":"v.分期偿还，摊销","topic":"economy","example":"The company will amortize the cost of the equipment over ten years."},
 {"word":"arbitrage","mean":"n.套利","topic":"economy","example":"Traders use arbitrage to profit from price differences between markets."},
@@ -1395,7 +1372,6 @@ const fullWordBank = [
 {"word":"subsidy","mean":"n.补贴，津贴","topic":"economy","example":"The agricultural subsidy enables small farmers to purchase modern equipment."},
 {"word":"wholesale","mean":"adj./adv.批发的 n.批发","topic":"economy","example":"Wholesale electricity prices fell after renewable generation increased."},
 {"word":"enterprising","mean":"adj.有进取心的，有创业精神的","topic":"economy","example":"Enterprising graduates often identify business opportunities in emerging industries."},
-
 // 601–625：社会与心理
 {"word":"adolescence","mean":"n.青春期，青少年时期","topic":"society","example":"Adolescence is a critical period for emotional and social development."},
 {"word":"altruism","mean":"n.利他主义，无私行为","topic":"psychology","example":"Volunteering is often motivated by both altruism and a desire for social connection."},
@@ -1422,7 +1398,6 @@ const fullWordBank = [
 {"word":"solidarity","mean":"n.团结，一致支持","topic":"society","example":"Community solidarity helped residents recover after the natural disaster."},
 {"word":"stereotypical","mean":"adj.刻板印象的，典型化的","topic":"society","example":"Stereotypical media portrayals can influence how minority groups are perceived."},
 {"word":"vulnerability","mean":"n.脆弱性，易受伤害","topic":"society","example":"Financial vulnerability increases when households have little savings and unstable employment."},
-
 // 626–650：环境与资源
 {"word":"afforestation","mean":"n.植树造林","topic":"environment","example":"Afforestation can reduce soil erosion and increase carbon absorption."},
 {"word":"biodiversity","mean":"n.生物多样性","topic":"environment","example":"Agricultural expansion has caused a serious decline in regional biodiversity."},
@@ -1449,7 +1424,6 @@ const fullWordBank = [
 {"word":"sustainability","mean":"n.可持续性","topic":"environment","example":"Long-term sustainability requires changes in production as well as consumption."},
 {"word":"wetland","mean":"n.湿地","topic":"environment","example":"The wetland absorbs floodwater and provides habitat for migratory birds."},
 {"word":"wildlife","mean":"n.野生动物","topic":"environment","example":"Road construction may divide wildlife habitats into isolated areas."},
-
 // 651–675：科技与数字社会
 {"word":"algorithm","mean":"n.算法","topic":"technology","example":"The search engine uses an algorithm to rank pages according to relevance."},
 {"word":"automation","mean":"n.自动化","topic":"technology","example":"Automation has increased factory output while reducing demand for routine labour."},
@@ -1476,7 +1450,6 @@ const fullWordBank = [
 {"word":"upload","mean":"v./n.上传","topic":"technology","example":"Applicants must upload identification documents through the secure portal."},
 {"word":"usability","mean":"n.可用性，易用性","topic":"technology","example":"Developers tested the application’s usability with elderly participants."},
 {"word":"visualization","mean":"n.可视化","topic":"technology","example":"Data visualization helps the public understand complex statistical trends."},
-
 // 676–700：政策与治理
 {"word":"amendment","mean":"n.修正案，修改","topic":"policy","example":"Parliament approved an amendment requiring companies to publish emission data."},
 {"word":"bureaucratic","mean":"adj.官僚的，手续繁杂的","topic":"policy","example":"Bureaucratic delays prevented local authorities from distributing emergency funds quickly."},
@@ -1503,7 +1476,6 @@ const fullWordBank = [
 {"word":"unconstitutional","mean":"adj.违反宪法的","topic":"policy","example":"The court ruled that the proposed restriction was unconstitutional."},
 {"word":"ordinance","mean":"n.法令，条例","topic":"policy","example":"The local ordinance prohibits excessive construction noise after midnight."},
 {"word":"prosecution","mean":"n.起诉，检控","topic":"policy","example":"Serious environmental offences may result in criminal prosecution."},
-
 // 701–725：城市、交通与就业
 {"word":"amenity","mean":"n.便利设施，生活福利设施","topic":"urban","example":"New residential areas should include basic amenities such as clinics and parks."},
 {"word":"commuter","mean":"n.通勤者","topic":"transport","example":"Rail delays affect thousands of commuters travelling into the city each morning."},
@@ -1530,7 +1502,6 @@ const fullWordBank = [
 {"word":"workforce","mean":"n.劳动力，员工总数","topic":"work","example":"An ageing workforce may create shortages in physically demanding occupations."},
 {"word":"workplace","mean":"n.工作场所","topic":"work","example":"A respectful workplace encourages employees to report problems openly."},
 {"word":"overtime","mean":"n.加班，加班时间","topic":"work","example":"Regular compulsory overtime can damage family relationships and employee health."},
-
 // 726–750：文化、媒体与语言
 {"word":"aesthetic","mean":"adj.审美的 n.美感","topic":"culture","example":"The building has considerable aesthetic value as well as historical significance."},
 {"word":"artifact","mean":"n.人工制品，文物","topic":"culture","example":"The museum displayed artifacts recovered from an ancient settlement."},
@@ -1558,7 +1529,6 @@ const fullWordBank = [
 {"word":"viewership","mean":"n.观众人数，收视人群","topic":"media","example":"The programme achieved record viewership after moving to an online platform."},
 {"word":"visibility","mean":"n.可见性，关注度","topic":"media","example":"Social media has increased the visibility of environmental campaigns led by young people."},
 // ===== 扩容第 4/8 批：第 751–1000 词 =====
-
 // 751–775：通用学术词
 {"word":"abject","mean":"adj.极其糟糕的；卑微的","topic":"general","example":"Millions of people still live in abject poverty despite decades of economic growth."},
 {"word":"acclimatize","mean":"v.使适应新环境或气候","topic":"general","example":"New employees need time to acclimatize to unfamiliar workplace practices."},
@@ -1585,7 +1555,6 @@ const fullWordBank = [
 {"word":"axiomatic","mean":"adj.不言自明的，公理的","topic":"study","example":"It is often considered axiomatic that reliable education benefits the wider economy."},
 {"word":"bifurcate","mean":"v.分成两支，分叉","topic":"study","example":"The debate tends to bifurcate into economic and environmental arguments."},
 {"word":"cumbersome","mean":"adj.笨重的；繁琐的","topic":"general","example":"Cumbersome administrative procedures discourage small businesses from applying for public funding."},
-
 // 776–800：研究、数据与论证
 {"word":"causality","mean":"n.因果关系","topic":"study","example":"A statistical correlation alone does not establish causality between two variables."},
 {"word":"codify","mean":"v.编纂，整理成规则","topic":"policy","example":"The organisation codified its ethical standards in a publicly available document."},
@@ -1612,7 +1581,6 @@ const fullWordBank = [
 {"word":"multivariate","mean":"adj.多变量的","topic":"study","example":"Multivariate analysis helps researchers examine several interacting factors simultaneously."},
 {"word":"replicability","mean":"n.可重复性","topic":"study","example":"Replicability is a basic requirement for confidence in scientific findings."},
 {"word":"triangulate","mean":"v.用多种方法交叉验证","topic":"study","example":"The researchers triangulated survey data with interviews and direct observation."},
-
 // 801–825：教育、语言与学习
 {"word":"andragogy","mean":"n.成人教育学","topic":"education","example":"Andragogy emphasizes the experience and independence of adult learners."},
 {"word":"assessment","mean":"n.评估，评价","topic":"education","example":"Continuous assessment can provide a broader picture of student performance than one final examination."},
@@ -1639,7 +1607,6 @@ const fullWordBank = [
 {"word":"visual-spatial","mean":"adj.视觉空间的","topic":"education","example":"Architecture students require strong visual-spatial skills to interpret technical drawings."},
 {"word":"work-based","mean":"adj.以工作实践为基础的","topic":"education","example":"Work-based learning gives students experience that cannot be gained from textbooks alone."},
 {"word":"zone-of-development","mean":"n.发展区，最近发展区","topic":"education","example":"Teachers can support learners by providing tasks within their zone of development."},
-
 // 826–850：经济、商业与就业
 {"word":"arbitration","mean":"n.仲裁，公断","topic":"economy","example":"The contract requires commercial disputes to be resolved through independent arbitration."},
 {"word":"capitalization","mean":"n.资本化；市值","topic":"economy","example":"The company’s market capitalization rose after it announced strong annual earnings."},
@@ -1666,7 +1633,6 @@ const fullWordBank = [
 {"word":"stagflation","mean":"n.滞胀","topic":"economy","example":"Stagflation creates a difficult combination of rising prices and weak economic growth."},
 {"word":"underemployment","mean":"n.就业不足，大材小用","topic":"work","example":"Many graduates experience underemployment when they cannot find work matching their qualifications."},
 {"word":"venture-capital","mean":"n.风险投资","topic":"economy","example":"Venture capital helped the startup develop its medical technology for commercial use."},
-
 // 851–875：环境、农业与气候
 {"word":"agroforestry","mean":"n.农林复合经营","topic":"environment","example":"Agroforestry combines crops and trees to improve soil quality and biodiversity."},
 {"word":"aquifer","mean":"n.含水层，蓄水层","topic":"environment","example":"Excessive pumping has lowered the water level of the underground aquifer."},
@@ -1693,7 +1659,6 @@ const fullWordBank = [
 {"word":"subterranean","mean":"adj.地下的","topic":"environment","example":"Subterranean water reserves supply farms during periods of low rainfall."},
 {"word":"urban-sprawl","mean":"n.城市蔓延","topic":"urban","example":"Urban sprawl increases commuting distances and destroys surrounding farmland."},
 {"word":"waterborne","mean":"adj.水传播的，水运的","topic":"environment","example":"Improved sanitation can prevent many waterborne diseases."},
-
 // 876–900：健康与医学
 {"word":"adipose","mean":"adj.脂肪的","topic":"health","example":"Excess adipose tissue is associated with a higher risk of metabolic disease."},
 {"word":"adrenaline","mean":"n.肾上腺素","topic":"health","example":"The body releases adrenaline in response to sudden danger or intense stress."},
@@ -1720,7 +1685,6 @@ const fullWordBank = [
 {"word":"toxicology","mean":"n.毒理学","topic":"health","example":"Toxicology examines how chemical substances affect living organisms."},
 {"word":"vaccinate","mean":"v.给……接种疫苗","topic":"health","example":"Health workers aim to vaccinate vulnerable residents before winter."},
 {"word":"vitality","mean":"n.活力，生命力","topic":"health","example":"Adequate sleep and regular exercise contribute to physical vitality."},
-
 // 901–925：科技、网络与人工智能
 {"word":"bandwidth","mean":"n.带宽，处理能力","topic":"technology","example":"Video conferencing requires sufficient bandwidth to transmit sound and images smoothly."},
 {"word":"bot","mean":"n.自动程序，网络机器人","topic":"technology","example":"The customer-service bot can answer simple questions at any time of day."},
@@ -1747,7 +1711,6 @@ const fullWordBank = [
 {"word":"virtual-reality","mean":"n.虚拟现实","topic":"technology","example":"Virtual reality allows medical students to practise procedures in a safe environment."},
 {"word":"wearable","mean":"adj.可穿戴的 n.可穿戴设备","topic":"technology","example":"Wearable devices can monitor heart rate and daily physical activity."},
 {"word":"wireless","mean":"adj.无线的","topic":"technology","example":"Wireless internet has expanded access to digital services in public spaces."},
-
 // 926–950：社会、人口与治理
 {"word":"ageism","mean":"n.年龄歧视","topic":"society","example":"Ageism can prevent experienced older workers from finding suitable employment."},
 {"word":"citizenship","mean":"n.公民身份，公民权","topic":"society","example":"Citizenship education teaches students about legal rights and civic responsibilities."},
@@ -1774,7 +1737,6 @@ const fullWordBank = [
 {"word":"urbanization","mean":"n.城市化","topic":"urban","example":"Rapid urbanization has increased demand for affordable housing and public transport."},
 {"word":"volunteerism","mean":"n.志愿服务精神","topic":"society","example":"Volunteerism strengthens community relationships during emergencies."},
 {"word":"xenophobia","mean":"n.仇外心理，对外国人的恐惧","topic":"society","example":"Public education can counter xenophobia by encouraging intercultural understanding."},
-
 // 951–975：法律、政策与公共管理
 {"word":"adjudicate","mean":"v.裁决，判决","topic":"policy","example":"An independent tribunal will adjudicate disputes between employers and workers."},
 {"word":"administrative","mean":"adj.行政的，管理的","topic":"policy","example":"Administrative reform reduced the time needed to register a new business."},
@@ -1801,7 +1763,6 @@ const fullWordBank = [
 {"word":"whistleblower","mean":"n.举报人","topic":"policy","example":"The whistleblower revealed that the company had concealed evidence of pollution."},
 {"word":"jurisprudence","mean":"n.法理学；法律体系","topic":"policy","example":"The judgment influenced later jurisprudence concerning digital privacy."},
 {"word":"legitimacy","mean":"n.合法性，正当性","topic":"policy","example":"Public consultation strengthens the legitimacy of controversial policy decisions."},
-
 // 976–1000：文化、媒体、城市与综合词汇
 {"word":"anthropology","mean":"n.人类学","topic":"culture","example":"Anthropology examines how cultures and social practices develop over time."},
 {"word":"assimilationist","mean":"adj.主张文化同化的","topic":"culture","example":"Assimilationist policies may weaken minority languages and cultural traditions."},
@@ -1829,7 +1790,6 @@ const fullWordBank = [
 {"word":"viability","mean":"n.可行性，生存能力","topic":"general","example":"The financial viability of the railway depends on long-term passenger demand."},
 {"word":"zeitgeist","mean":"n.时代精神，时代潮流","topic":"culture","example":"Growing concern about sustainability has become part of the contemporary zeitgeist."},
 // ===== 扩容第 5/8 批：第 1001–1250 词 =====
-
 // 1001–1025：通用学术词
 {"word":"abrogate","mean":"v.废除，取消","topic":"policy","example":"The court ruled that the government could not abrogate citizens’ basic legal rights."},
 {"word":"acquiescence","mean":"n.默认，默许","topic":"society","example":"Public acquiescence should not be interpreted as genuine support for an unpopular policy."},
@@ -1856,7 +1816,6 @@ const fullWordBank = [
 {"word":"benign","mean":"adj.良性的，无害的","topic":"health","example":"The tests confirmed that the growth was benign and required no immediate treatment."},
 {"word":"coherent","mean":"adj.连贯的，一致的","topic":"study","example":"A coherent essay connects every paragraph to the central argument."},
 {"word":"compatible","mean":"adj.兼容的，协调一致的","topic":"general","example":"Economic development must be compatible with long-term environmental protection."},
-
 // 1026–1050：研究、数据与论证
 {"word":"conclusive","mean":"adj.结论性的，确凿的","topic":"study","example":"The experiment produced no conclusive evidence that the treatment was effective."},
 {"word":"confounding","mean":"adj.造成混淆的 n.混杂因素","topic":"study","example":"Researchers controlled for confounding variables such as age and income."},
@@ -1883,7 +1842,6 @@ const fullWordBank = [
 {"word":"reproducible","mean":"adj.可重复的，可复现的","topic":"study","example":"Scientific findings should be reproducible by independent research teams."},
 {"word":"sampling","mean":"n.抽样，取样","topic":"study","example":"Random sampling reduces the risk that a survey will favour one social group."},
 {"word":"verification","mean":"n.验证，核实","topic":"study","example":"Independent verification is necessary before the results can influence public policy."},
-
 // 1051–1075：教育与学习
 {"word":"academic","mean":"adj.学术的 n.学者","topic":"education","example":"Academic success depends on consistent effort rather than memorisation alone."},
 {"word":"accreditation","mean":"n.认证，资格认可","topic":"education","example":"Accreditation ensures that universities meet agreed standards of teaching quality."},
@@ -1910,7 +1868,6 @@ const fullWordBank = [
 {"word":"syllabus","mean":"n.教学大纲","topic":"education","example":"The syllabus lists the topics, assignments and assessment requirements for the course."},
 {"word":"textbook","mean":"n.教科书","topic":"education","example":"A textbook should be supplemented with current examples and independent research."},
 {"word":"tutor","mean":"n.导师，家庭教师 v.辅导","topic":"education","example":"The tutor provided individual feedback on the student’s writing."},
-
 // 1076–1100：经济与商业
 {"word":"accrue","mean":"v.积累，逐渐增加","topic":"economy","example":"Interest will accrue until the loan is fully repaid."},
 {"word":"asset","mean":"n.资产；有价值的人或物","topic":"economy","example":"Reliable public infrastructure is a valuable economic asset."},
@@ -1937,7 +1894,6 @@ const fullWordBank = [
 {"word":"valuation","mean":"n.估价，估值","topic":"economy","example":"The company’s valuation rose after it developed a successful new product."},
 {"word":"wholesaler","mean":"n.批发商","topic":"economy","example":"The wholesaler supplies food products to hundreds of small retailers."},
 {"word":"yield-rate","mean":"n.收益率，产出率","topic":"economy","example":"Investors compared the yield rate of government bonds with other financial assets."},
-
 // 1101–1125：工作与职场
 {"word":"absentee","mean":"n.缺勤者","topic":"work","example":"Managers contacted each absentee to determine the reason for repeated absence."},
 {"word":"applicant","mean":"n.申请人","topic":"work","example":"Every applicant must provide evidence of relevant professional experience."},
@@ -1964,7 +1920,6 @@ const fullWordBank = [
 {"word":"work-life-balance","mean":"n.工作与生活平衡","topic":"work","example":"Flexible hours can improve work-life balance for employees with family responsibilities."},
 {"word":"workplace-diversity","mean":"n.职场多样性","topic":"work","example":"Workplace diversity can improve creativity when employees are treated equally."},
 {"word":"workplace-harassment","mean":"n.职场骚扰","topic":"work","example":"Employers need clear procedures for investigating workplace harassment."},
-
 // 1126–1150：心理与行为
 {"word":"adaptability","mean":"n.适应能力","topic":"psychology","example":"Adaptability enables individuals to cope with unfamiliar working environments."},
 {"word":"ambition","mean":"n.抱负，雄心","topic":"psychology","example":"Personal ambition can motivate achievement but also create excessive pressure."},
@@ -1991,7 +1946,6 @@ const fullWordBank = [
 {"word":"subconscious","mean":"adj.潜意识的 n.潜意识","topic":"psychology","example":"Advertising can influence subconscious associations with particular brands."},
 {"word":"temperament","mean":"n.气质，性情","topic":"psychology","example":"A child’s temperament influences interactions with teachers and classmates."},
 {"word":"willpower","mean":"n.意志力，自制力","topic":"psychology","example":"Healthy habits depend on supportive environments as well as personal willpower."},
-
 // 1151–1175：社会与人口
 {"word":"affiliation","mean":"n.隶属关系，联系","topic":"society","example":"Political affiliation often influences how individuals interpret news."},
 {"word":"ageing","mean":"n./adj.老龄化的","topic":"society","example":"An ageing population increases demand for pensions and long-term care."},
@@ -2018,7 +1972,6 @@ const fullWordBank = [
 {"word":"urbanity","mean":"n.城市生活；文雅","topic":"society","example":"The neighbourhood combines the convenience of urbanity with access to green space."},
 {"word":"vulnerable","mean":"adj.脆弱的，易受影响的","topic":"society","example":"Social protection should prioritize vulnerable households during economic crises."},
 {"word":"wellbeing","mean":"n.幸福，身心健康","topic":"society","example":"Access to nature has measurable benefits for community wellbeing."},
-
 // 1176–1200：政策与公共治理
 {"word":"accountable","mean":"adj.负有责任的","topic":"policy","example":"Public agencies must be accountable for the way they spend taxpayer money."},
 {"word":"advisory","mean":"adj.咨询的，顾问的","topic":"policy","example":"An independent advisory panel reviewed the proposed energy strategy."},
@@ -2045,7 +1998,6 @@ const fullWordBank = [
 {"word":"treaty","mean":"n.条约，协议","topic":"policy","example":"The international treaty establishes common targets for reducing emissions."},
 {"word":"welfare","mean":"n.福利，福祉","topic":"policy","example":"Welfare programmes provide temporary support to unemployed households."},
 {"word":"zoning-law","mean":"n.土地分区法","topic":"policy","example":"The zoning law prevents heavy industry from operating near residential districts."},
-
 // 1201–1225：城市、人居与交通
 {"word":"accommodation","mean":"n.住宿，住处；适应","topic":"urban","example":"The university plans to build affordable accommodation for international students."},
 {"word":"boulevard","mean":"n.林荫大道","topic":"urban","example":"The central boulevard includes separate lanes for buses and bicycles."},
@@ -2072,7 +2024,6 @@ const fullWordBank = [
 {"word":"utility","mean":"n.公共设施；效用","topic":"urban","example":"Utility companies must maintain reliable water and electricity supplies."},
 {"word":"walkability","mean":"n.步行便利性","topic":"urban","example":"Street lighting and wide pavements improve neighbourhood walkability."},
 {"word":"water-supply","mean":"n.供水","topic":"urban","example":"Population growth is placing increasing pressure on the city’s water supply."},
-
 // 1226–1250：媒体、文化与综合高级词
 {"word":"advertising","mean":"n.广告活动","topic":"media","example":"Advertising aimed at children often promotes foods high in sugar and salt."},
 {"word":"broadcasting","mean":"n.广播电视业","topic":"media","example":"Public broadcasting should provide accurate news and educational programming."},
@@ -2100,7 +2051,6 @@ const fullWordBank = [
 {"word":"localize","mean":"v.使本地化；确定位置","topic":"culture","example":"International companies localize advertisements to suit regional languages and customs."},
 {"word":"pluralistic","mean":"adj.多元化的，多元主义的","topic":"culture","example":"A pluralistic society allows different cultural and religious traditions to coexist."},
 // ===== 扩容第 6/8 批：第 1251–1500 词 =====
-
 // 1251–1275：通用学术与高级表达
 {"word":"abbreviated","mean":"adj.缩短的，简略的","topic":"study","example":"The journal published an abbreviated version of the original research report."},
 {"word":"abound","mean":"v.大量存在，充满","topic":"general","example":"Opportunities for scientific collaboration abound in large international universities."},
@@ -2127,7 +2077,6 @@ const fullWordBank = [
 {"word":"concerted","mean":"adj.共同努力的，协同的","topic":"general","example":"A concerted international effort is required to reduce ocean pollution."},
 {"word":"conspicuously","mean":"adv.显眼地，明显地","topic":"general","example":"Affordable housing was conspicuously absent from the redevelopment proposal."},
 {"word":"contentious","mean":"adj.有争议的，引起争论的","topic":"society","example":"The construction of nuclear power stations remains a contentious political issue."},
-
 // 1276–1300：研究、方法与数据
 {"word":"anonymize","mean":"v.使匿名化","topic":"study","example":"Researchers anonymized the interview records before sharing the data."},
 {"word":"benchmarking","mean":"n.基准比较，对标分析","topic":"study","example":"International benchmarking helps universities compare their teaching performance."},
@@ -2154,7 +2103,6 @@ const fullWordBank = [
 {"word":"statistically","mean":"adv.在统计意义上","topic":"study","example":"The difference between the groups was statistically significant."},
 {"word":"stratified","mean":"adj.分层的","topic":"study","example":"The research team used a stratified sample representing different age groups."},
 {"word":"variable","mean":"n.变量 adj.可变的","topic":"study","example":"Household income was an important variable in the analysis of educational access."},
-
 // 1301–1325：教育、语言与学术发展
 {"word":"bursary","mean":"n.助学金，奖学金","topic":"education","example":"The bursary allowed the student to cover accommodation and textbook costs."},
 {"word":"co-curricular","mean":"adj.与课程配套的","topic":"education","example":"Co-curricular projects help students apply classroom knowledge in practical settings."},
@@ -2181,7 +2129,6 @@ const fullWordBank = [
 {"word":"tertiary","mean":"adj.高等教育的；第三的","topic":"education","example":"Access to tertiary education has expanded considerably over the past generation."},
 {"word":"transdisciplinary","mean":"adj.超学科的，跨越学科的","topic":"education","example":"A transdisciplinary programme combines scientific knowledge with social and ethical analysis."},
 {"word":"vocationally","mean":"adv.在职业教育方面","topic":"education","example":"The course prepares students vocationally for employment in healthcare."},
-
 // 1326–1350：经济、金融与产业
 {"word":"bear-market","mean":"n.熊市","topic":"economy","example":"Investors often become cautious during a prolonged bear market."},
 {"word":"blue-chip","mean":"adj.蓝筹的 n.蓝筹股","topic":"economy","example":"Pension funds commonly invest in established blue-chip companies."},
@@ -2208,7 +2155,6 @@ const fullWordBank = [
 {"word":"taxpayer","mean":"n.纳税人","topic":"economy","example":"Taxpayers expect public funds to be managed efficiently and transparently."},
 {"word":"trade-off","mean":"n.权衡，取舍","topic":"economy","example":"There is often a trade-off between short-term profit and long-term sustainability."},
 {"word":"value-chain","mean":"n.价值链","topic":"economy","example":"Digital tracking improves transparency throughout the agricultural value chain."},
-
 // 1351–1375：科技、数字化与网络安全
 {"word":"application","mean":"n.应用程序；申请；应用","topic":"technology","example":"The mobile application allows passengers to purchase tickets and view live schedules."},
 {"word":"architecture","mean":"n.架构；建筑学","topic":"technology","example":"The system architecture was redesigned to support a larger number of users."},
@@ -2235,7 +2181,6 @@ const fullWordBank = [
 {"word":"scalability","mean":"n.可扩展性","topic":"technology","example":"Scalability is essential if the platform is expected to support millions of users."},
 {"word":"server","mean":"n.服务器","topic":"technology","example":"The server automatically backs up learning records every night."},
 {"word":"user-friendly","mean":"adj.方便用户使用的","topic":"technology","example":"A user-friendly interface reduces the need for detailed technical instructions."},
-
 // 1376–1400：环境、能源与生态
 {"word":"acidification","mean":"n.酸化","topic":"environment","example":"Ocean acidification threatens coral reefs and shell-forming organisms."},
 {"word":"agrochemical","mean":"n.农用化学品","topic":"environment","example":"Excessive agrochemical use can contaminate soil and drinking water."},
@@ -2262,7 +2207,6 @@ const fullWordBank = [
 {"word":"stormwater","mean":"n.暴雨径流","topic":"environment","example":"Urban wetlands absorb stormwater and reduce the risk of flooding."},
 {"word":"wastewater","mean":"n.废水，污水","topic":"environment","example":"Treated wastewater can be reused for agriculture and industrial cooling."},
 {"word":"wind-farm","mean":"n.风电场","topic":"environment","example":"The offshore wind farm generates electricity for hundreds of thousands of homes."},
-
 // 1401–1425：健康、医学与生活方式
 {"word":"ambulatory","mean":"adj.门诊的；可行走的","topic":"health","example":"Ambulatory care allows patients to return home on the same day."},
 {"word":"antioxidant","mean":"n.抗氧化物 adj.抗氧化的","topic":"health","example":"Fresh fruit contains antioxidants that help protect cells from damage."},
@@ -2289,7 +2233,6 @@ const fullWordBank = [
 {"word":"trauma","mean":"n.创伤，精神创伤","topic":"health","example":"Psychological support can help children recover from severe trauma."},
 {"word":"underweight","mean":"adj.体重过轻的","topic":"health","example":"Underweight children may be vulnerable to infection and delayed development."},
 {"word":"viral","mean":"adj.病毒性的；迅速传播的","topic":"health","example":"Antibiotics are ineffective against most viral infections."},
-
 // 1426–1450：社会、人口与公共生活
 {"word":"age-discrimination","mean":"n.年龄歧视","topic":"society","example":"Age discrimination can prevent qualified older applicants from finding employment."},
 {"word":"civil-society","mean":"n.公民社会","topic":"society","example":"Civil society organisations often represent communities excluded from formal politics."},
@@ -2316,7 +2259,6 @@ const fullWordBank = [
 {"word":"social-norm","mean":"n.社会规范","topic":"society","example":"Recycling became a social norm after years of public education."},
 {"word":"urban-poverty","mean":"n.城市贫困","topic":"society","example":"Urban poverty often exists close to areas of extreme wealth."},
 {"word":"youth-unemployment","mean":"n.青年失业","topic":"society","example":"Persistently high youth unemployment may increase migration and social frustration."},
-
 // 1451–1475：媒体、文化与传播
 {"word":"algorithmic-filter","mean":"n.算法过滤机制","topic":"media","example":"An algorithmic filter determines which stories users see on their social media feeds."},
 {"word":"audience-reach","mean":"n.受众覆盖范围","topic":"media","example":"Online broadcasting greatly increased the campaign’s audience reach."},
@@ -2343,7 +2285,6 @@ const fullWordBank = [
 {"word":"viral-content","mean":"n.病毒式传播内容","topic":"media","example":"Viral content often attracts attention through surprise or emotional appeal."},
 {"word":"visual-media","mean":"n.视觉媒体","topic":"media","example":"Visual media can communicate environmental damage more powerfully than statistics alone."},
 {"word":"webcast","mean":"n./v.网络直播","topic":"media","example":"The university webcast the public lecture to an international audience."},
-
 // 1476–1500：政策、治理与综合高级词
 {"word":"approval-process","mean":"n.审批流程","topic":"policy","example":"A transparent approval process reduces opportunities for corruption."},
 {"word":"border-control","mean":"n.边境管制","topic":"policy","example":"Border control measures were strengthened during the public health emergency."},
@@ -2370,5 +2311,275 @@ const fullWordBank = [
 {"word":"governance-capacity","mean":"n.治理能力","topic":"policy","example":"Digital systems can strengthen governance capacity when staff receive adequate training."},
 {"word":"implementation-gap","mean":"n.政策执行差距","topic":"policy","example":"The implementation gap between national law and local practice remains substantial."},
 {"word":"institutional-reform","mean":"n.制度改革","topic":"policy","example":"Institutional reform is required to improve transparency and administrative efficiency."},
+// ===== 扩容第 7/8 批：第 1501–1750 词 =====
 
+// 1501–1525
+{"word":"abdicate","mean":"v.放弃职责，退位","topic":"policy","example":"Governments cannot abdicate responsibility for protecting vulnerable citizens."},
+{"word":"abhor","mean":"v.憎恶，厌恶","topic":"psychology","example":"Many consumers abhor companies that exploit workers."},
+{"word":"abnegation","mean":"n.克制，自我牺牲","topic":"psychology","example":"Public service sometimes requires personal abnegation for the wider community."},
+{"word":"abstinent","mean":"adj.节制的，戒除的","topic":"health","example":"The patient remained abstinent from alcohol throughout treatment."},
+{"word":"admonition","mean":"n.警告，劝诫","topic":"general","example":"The official admonition failed to prevent further violations."},
+{"word":"adversarial","mean":"adj.对抗的，敌对的","topic":"society","example":"An adversarial workplace culture discourages constructive negotiation."},
+{"word":"affordance","mean":"n.功能可见性；潜在用途","topic":"technology","example":"Clear affordance helps users understand how an interface works."},
+{"word":"agglomeration","mean":"n.聚集，聚合","topic":"urban","example":"Industrial agglomeration can reduce production and transport costs."},
+{"word":"altruistic","mean":"adj.利他的，无私的","topic":"psychology","example":"Altruistic behaviour often increases during natural disasters."},
+{"word":"ambit","mean":"n.范围，界限","topic":"policy","example":"Online advertising falls within the ambit of the new law."},
+{"word":"annul","mean":"v.废除，宣告无效","topic":"policy","example":"The court may annul a contract obtained through fraud."},
+{"word":"apportion","mean":"v.分配，分摊","topic":"policy","example":"The council must apportion funding among several public services."},
+{"word":"arbitrate","mean":"v.仲裁，调解","topic":"policy","example":"An independent panel will arbitrate the labour dispute."},
+{"word":"assertiveness","mean":"n.坚定自信，果断","topic":"psychology","example":"Assertiveness helps employees express concerns without becoming aggressive."},
+{"word":"atrophy","mean":"v./n.萎缩，衰退","topic":"health","example":"Muscles may atrophy after a long period of inactivity."},
+{"word":"attenuation","mean":"n.减弱，衰减","topic":"science","example":"Vegetation contributes to the attenuation of traffic noise."},
+{"word":"avow","mean":"v.公开承认，声明","topic":"general","example":"The organisation avowed its commitment to ethical business practices."},
+{"word":"banal","mean":"adj.平庸的，陈腐的","topic":"culture","example":"The advertisement relied on banal cultural stereotypes."},
+{"word":"belated","mean":"adj.迟来的，延误的","topic":"general","example":"The government’s belated response worsened the housing crisis."},
+{"word":"burgeon","mean":"v.迅速发展，蓬勃增长","topic":"economy","example":"Online retail began to burgeon as internet access expanded."},
+{"word":"catalyst","mean":"n.催化剂；促成因素","topic":"general","example":"The energy crisis became a catalyst for green investment."},
+{"word":"coercive","mean":"adj.强制的，胁迫的","topic":"policy","example":"Coercive measures may secure compliance without changing attitudes."},
+{"word":"concerted","mean":"adj.共同努力的，协同的","topic":"general","example":"A concerted international effort is needed to reduce pollution."},
+{"word":"contentious","mean":"adj.有争议的，引起争论的","topic":"society","example":"Nuclear energy remains a contentious political issue."},
+{"word":"corrosive","mean":"adj.腐蚀性的；逐渐破坏的","topic":"general","example":"Persistent corruption has a corrosive effect on public trust."},
+
+// 1526–1550
+{"word":"causal","mean":"adj.因果关系的","topic":"study","example":"The study found an association but not a causal relationship."},
+{"word":"comparability","mean":"n.可比性","topic":"study","example":"Different methods reduced the comparability of the two surveys."},
+{"word":"conceptualization","mean":"n.概念化，构想","topic":"study","example":"The conceptualization of poverty should include social exclusion."},
+{"word":"confidence-interval","mean":"n.置信区间","topic":"study","example":"The confidence interval indicates uncertainty around the estimate."},
+{"word":"control-group","mean":"n.对照组","topic":"study","example":"The control group received no additional language training."},
+{"word":"covariate","mean":"n.协变量","topic":"study","example":"Age was included as a covariate in the model."},
+{"word":"data-integrity","mean":"n.数据完整性","topic":"study","example":"Regular audits help maintain data integrity throughout research."},
+{"word":"distributional","mean":"adj.分布的，分配方面的","topic":"study","example":"The study examined the distributional effects of tax reform."},
+{"word":"double-blind","mean":"adj.双盲的","topic":"study","example":"A double-blind trial reduces researcher and participant bias."},
+{"word":"effect-size","mean":"n.效应量","topic":"study","example":"The effect size remained small despite statistical significance."},
+{"word":"endogeneity","mean":"n.内生性","topic":"study","example":"Endogeneity complicates estimates of education’s effect on income."},
+{"word":"ethnographic","mean":"adj.民族志研究的","topic":"study","example":"The ethnographic study examined daily life in a remote village."},
+{"word":"exogenous","mean":"adj.外生的，外部产生的","topic":"study","example":"The model treats oil prices as an exogenous variable."},
+{"word":"fieldwork","mean":"n.实地调查，野外研究","topic":"study","example":"The team conducted fieldwork in isolated farming communities."},
+{"word":"intercoder-reliability","mean":"n.编码者间信度","topic":"study","example":"High intercoder reliability confirmed consistent data classification."},
+{"word":"median","mean":"n.中位数 adj.中间的","topic":"study","example":"Median income is less affected by extreme values."},
+{"word":"ordinal","mean":"adj.顺序的，序数的","topic":"study","example":"Participants rated satisfaction on an ordinal scale."},
+{"word":"outlier","mean":"n.异常值，离群值","topic":"study","example":"The analyst checked whether the outlier reflected measurement error."},
+{"word":"pilot-study","mean":"n.试点研究，预备研究","topic":"study","example":"The pilot study revealed weaknesses in the questionnaire."},
+{"word":"probabilistic","mean":"adj.概率性的","topic":"study","example":"The forecast is probabilistic rather than completely certain."},
+{"word":"standard-deviation","mean":"n.标准差","topic":"study","example":"A large standard deviation indicates considerable data variation."},
+{"word":"survey-design","mean":"n.调查设计","topic":"study","example":"Careful survey design improves the quality of responses."},
+{"word":"univariate","mean":"adj.单变量的","topic":"study","example":"The researcher began with a univariate analysis."},
+{"word":"parameterization","mean":"n.参数化","topic":"study","example":"Model parameterization should reflect observed environmental conditions."},
+{"word":"robustness","mean":"n.稳健性，强健性","topic":"study","example":"Additional tests confirmed the robustness of the findings."},
+
+// 1551–1575
+{"word":"academic-rigor","mean":"n.学术严谨性","topic":"education","example":"Online courses should maintain strong academic rigor."},
+{"word":"achievement-gap","mean":"n.学业成绩差距","topic":"education","example":"Early support can narrow the achievement gap."},
+{"word":"adaptive-learning","mean":"n.自适应学习","topic":"education","example":"Adaptive learning software changes tasks according to student performance."},
+{"word":"adult-literacy","mean":"n.成人读写能力","topic":"education","example":"Adult literacy programmes improve access to employment."},
+{"word":"capstone","mean":"n.顶点；毕业综合项目","topic":"education","example":"The capstone project combines knowledge from several courses."},
+{"word":"classroom-management","mean":"n.课堂管理","topic":"education","example":"Effective classroom management creates an orderly learning environment."},
+{"word":"competency-based","mean":"adj.以能力为基础的","topic":"education","example":"Competency-based education rewards demonstrated mastery."},
+{"word":"continuing-education","mean":"n.继续教育","topic":"education","example":"Continuing education helps professionals update their skills."},
+{"word":"degree-holder","mean":"n.学位持有者","topic":"education","example":"A degree holder may still require practical training."},
+{"word":"digital-classroom","mean":"n.数字课堂","topic":"education","example":"The digital classroom provides interactive learning materials."},
+{"word":"educational-psychology","mean":"n.教育心理学","topic":"education","example":"Educational psychology examines motivation, memory and learning."},
+{"word":"enquiry-based","mean":"adj.探究式的","topic":"education","example":"Enquiry-based learning encourages independent investigation."},
+{"word":"graduate-school","mean":"n.研究生院","topic":"education","example":"Graduate school requires advanced research and academic writing."},
+{"word":"learning-objective","mean":"n.学习目标","topic":"education","example":"Each lesson begins with a clear learning objective."},
+{"word":"lesson-plan","mean":"n.教案","topic":"education","example":"A lesson plan helps teachers manage classroom time."},
+{"word":"open-access","mean":"adj.开放获取的","topic":"education","example":"Open-access journals make research freely available."},
+{"word":"peer-assessment","mean":"n.同伴评价","topic":"education","example":"Peer assessment encourages reflection on writing quality."},
+{"word":"school-readiness","mean":"n.入学准备","topic":"education","example":"Preschool programmes can improve children’s school readiness."},
+{"word":"summative","mean":"adj.总结性的，终结性评价的","topic":"education","example":"A final examination is a form of summative assessment."},
+{"word":"attendance","mean":"n.出勤，参加人数","topic":"education","example":"Regular attendance is strongly associated with academic achievement."},
+{"word":"bilingualism","mean":"n.双语能力","topic":"education","example":"Childhood bilingualism can improve awareness of language structure."},
+{"word":"curricular","mean":"adj.课程的","topic":"education","example":"Curricular reform should reflect changing social needs."},
+{"word":"instructional-design","mean":"n.教学设计","topic":"education","example":"Good instructional design reduces unnecessary cognitive difficulty."},
+{"word":"learner-autonomy","mean":"n.学习者自主性","topic":"education","example":"Online study requires considerable learner autonomy."},
+{"word":"scholastic-aptitude","mean":"n.学术能力倾向","topic":"education","example":"Scholastic aptitude cannot be measured by grades alone."},
+
+// 1576–1600
+{"word":"aggregate-demand","mean":"n.总需求","topic":"economy","example":"Lower interest rates may stimulate aggregate demand."},
+{"word":"aggregate-supply","mean":"n.总供给","topic":"economy","example":"Supply disruption can reduce aggregate supply."},
+{"word":"balance-of-payments","mean":"n.国际收支","topic":"economy","example":"A trade deficit affects the balance of payments."},
+{"word":"capital-flight","mean":"n.资本外逃","topic":"economy","example":"Political instability may trigger capital flight."},
+{"word":"consumer-confidence","mean":"n.消费者信心","topic":"economy","example":"Consumer confidence declined as unemployment increased."},
+{"word":"crowdfunding","mean":"n.众筹","topic":"economy","example":"The startup raised capital through crowdfunding."},
+{"word":"debt-burden","mean":"n.债务负担","topic":"economy","example":"Higher interest rates increased household debt burdens."},
+{"word":"disposable-income","mean":"n.可支配收入","topic":"economy","example":"Energy costs reduced families’ disposable income."},
+{"word":"economic-output","mean":"n.经济产出","topic":"economy","example":"Factory closures reduced regional economic output."},
+{"word":"economies-of-scale","mean":"n.规模经济","topic":"economy","example":"Large producers benefit from economies of scale."},
+{"word":"exchange-rate","mean":"n.汇率","topic":"economy","example":"A weaker exchange rate raises import prices."},
+{"word":"financial-literacy","mean":"n.金融素养","topic":"economy","example":"Financial literacy helps young adults manage debt."},
+{"word":"free-market","mean":"n.自由市场","topic":"economy","example":"A free market still requires consumer protection."},
+{"word":"gross-domestic-product","mean":"n.国内生产总值","topic":"economy","example":"Gross domestic product measures national economic activity."},
+{"word":"household-income","mean":"n.家庭收入","topic":"economy","example":"Household income influences educational opportunities."},
+{"word":"human-capital","mean":"n.人力资本","topic":"economy","example":"Education is an investment in human capital."},
+{"word":"interest-rate","mean":"n.利率","topic":"economy","example":"Higher interest rates discourage household borrowing."},
+{"word":"monetary-policy","mean":"n.货币政策","topic":"economy","example":"Monetary policy influences prices and investment."},
+{"word":"price-index","mean":"n.价格指数","topic":"economy","example":"The price index tracks changes in living costs."},
+{"word":"trade-deficit","mean":"n.贸易逆差","topic":"economy","example":"The trade deficit widened as imports increased."},
+{"word":"externality","mean":"n.外部性","topic":"economy","example":"Air pollution is a negative externality of industrial production."},
+{"word":"fiscal-deficit","mean":"n.财政赤字","topic":"economy","example":"The fiscal deficit increased after emergency spending."},
+{"word":"income-elasticity","mean":"n.收入弹性","topic":"economy","example":"Income elasticity measures how demand changes with income."},
+{"word":"market-clearing","mean":"adj.市场出清的","topic":"economy","example":"A market-clearing price balances supply and demand."},
+{"word":"productivity-growth","mean":"n.生产率增长","topic":"economy","example":"Technology contributed to long-term productivity growth."},
+
+// 1601–1625
+{"word":"annual-leave","mean":"n.年假","topic":"work","example":"Employees receive paid annual leave each year."},
+{"word":"career-progression","mean":"n.职业晋升","topic":"work","example":"Clear career progression helps retain talented employees."},
+{"word":"corporate-culture","mean":"n.企业文化","topic":"work","example":"A supportive corporate culture encourages cooperation."},
+{"word":"employee-engagement","mean":"n.员工敬业度","topic":"work","example":"Regular recognition improves employee engagement."},
+{"word":"employee-retention","mean":"n.员工留任","topic":"work","example":"Flexible work has improved employee retention."},
+{"word":"executive-pay","mean":"n.高管薪酬","topic":"work","example":"Shareholders questioned the increase in executive pay."},
+{"word":"gig-economy","mean":"n.零工经济","topic":"work","example":"The gig economy offers flexibility but limited security."},
+{"word":"hybrid-work","mean":"n.混合办公","topic":"work","example":"Hybrid work combines home and office attendance."},
+{"word":"job-rotation","mean":"n.岗位轮换","topic":"work","example":"Job rotation helps employees acquire broader experience."},
+{"word":"labour-force","mean":"n.劳动力人口","topic":"work","example":"Population ageing may reduce the labour force."},
+{"word":"pay-gap","mean":"n.薪酬差距","topic":"work","example":"Transparent salaries can reveal an unfair pay gap."},
+{"word":"performance-review","mean":"n.绩效评估","topic":"work","example":"The annual performance review identifies development goals."},
+{"word":"professional-network","mean":"n.职业人脉","topic":"work","example":"A professional network can reveal new opportunities."},
+{"word":"skill-shortage","mean":"n.技能短缺","topic":"work","example":"The engineering sector faces a serious skill shortage."},
+{"word":"staff-turnover","mean":"n.员工流失率","topic":"work","example":"Poor management contributed to high staff turnover."},
+{"word":"talent-pipeline","mean":"n.人才梯队","topic":"work","example":"Internships help companies build a talent pipeline."},
+{"word":"career-break","mean":"n.职业中断期","topic":"work","example":"Some parents take a career break after childbirth."},
+{"word":"collective-bargaining","mean":"n.集体谈判","topic":"work","example":"Collective bargaining improved wages and workplace safety."},
+{"word":"employability","mean":"n.就业能力","topic":"work","example":"Practical experience increases graduate employability."},
+{"word":"job-displacement","mean":"n.岗位流失，职业替代","topic":"work","example":"Automation may cause job displacement in manufacturing."},
+{"word":"occupational-mobility","mean":"n.职业流动性","topic":"work","example":"Retraining supports occupational mobility between industries."},
+{"word":"performance-related","mean":"adj.与绩效挂钩的","topic":"work","example":"Performance-related pay may encourage unhealthy competition."},
+{"word":"understaffed","mean":"adj.人员不足的","topic":"work","example":"The understaffed hospital struggled to maintain services."},
+{"word":"workplace-autonomy","mean":"n.职场自主权","topic":"work","example":"Workplace autonomy can improve motivation and satisfaction."},
+{"word":"workplace-bullying","mean":"n.职场霸凌","topic":"work","example":"Employers must investigate reports of workplace bullying."},
+
+// 1626–1650
+{"word":"adaptive-behaviour","mean":"n.适应性行为","topic":"psychology","example":"Adaptive behaviour helps individuals manage unfamiliar conditions."},
+{"word":"attention-control","mean":"n.注意控制","topic":"psychology","example":"Meditation may improve attention control."},
+{"word":"cognitive-load","mean":"n.认知负荷","topic":"psychology","example":"Complex instructions create excessive cognitive load."},
+{"word":"decision-fatigue","mean":"n.决策疲劳","topic":"psychology","example":"Decision fatigue can lead to poor choices."},
+{"word":"delayed-gratification","mean":"n.延迟满足","topic":"psychology","example":"Delayed gratification supports long-term financial planning."},
+{"word":"emotional-regulation","mean":"n.情绪调节","topic":"psychology","example":"Emotional regulation helps people manage conflict."},
+{"word":"fear-of-failure","mean":"n.失败恐惧","topic":"psychology","example":"Fear of failure may prevent experimentation."},
+{"word":"growth-mindset","mean":"n.成长型思维","topic":"psychology","example":"A growth mindset encourages persistence after mistakes."},
+{"word":"learned-helplessness","mean":"n.习得性无助","topic":"psychology","example":"Repeated failure may create learned helplessness."},
+{"word":"memory-retention","mean":"n.记忆保持","topic":"psychology","example":"Spaced review improves memory retention."},
+{"word":"mental-fatigue","mean":"n.精神疲劳","topic":"psychology","example":"Continuous concentration causes mental fatigue."},
+{"word":"peer-pressure","mean":"n.同伴压力","topic":"psychology","example":"Peer pressure influences adolescent behaviour."},
+{"word":"positive-reinforcement","mean":"n.正强化","topic":"psychology","example":"Positive reinforcement encourages desirable behaviour."},
+{"word":"risk-aversion","mean":"n.风险规避","topic":"psychology","example":"Income insecurity increases risk aversion."},
+{"word":"self-control","mean":"n.自我控制","topic":"psychology","example":"Self-control reduces impulsive spending."},
+{"word":"self-reflection","mean":"n.自我反思","topic":"psychology","example":"Self-reflection helps learners improve their habits."},
+{"word":"stress-response","mean":"n.压力反应","topic":"psychology","example":"Deep breathing can regulate the stress response."},
+{"word":"behavioural-inhibition","mean":"n.行为抑制","topic":"psychology","example":"Behavioural inhibition can make unfamiliar situations stressful."},
+{"word":"cognitive-flexibility","mean":"n.认知灵活性","topic":"psychology","example":"Cognitive flexibility supports creative problem-solving."},
+{"word":"emotional-resilience","mean":"n.情绪韧性","topic":"psychology","example":"Social support strengthens emotional resilience."},
+{"word":"external-motivation","mean":"n.外在动机","topic":"psychology","example":"External motivation may disappear when rewards stop."},
+{"word":"metacognition","mean":"n.元认知","topic":"psychology","example":"Metacognition helps students evaluate their learning strategies."},
+{"word":"optimistic-bias","mean":"n.乐观偏差","topic":"psychology","example":"Optimistic bias causes people to underestimate personal risks."},
+{"word":"self-perception","mean":"n.自我认知","topic":"psychology","example":"Online comparison can distort self-perception."},
+{"word":"social-cognition","mean":"n.社会认知","topic":"psychology","example":"Social cognition shapes how people interpret others’ behaviour."},
+
+// 1651–1675
+{"word":"airborne","mean":"adj.空气传播的","topic":"environment","example":"Airborne particles can enter homes near busy roads."},
+{"word":"algae","mean":"n.藻类","topic":"environment","example":"Nutrient pollution caused rapid algae growth."},
+{"word":"arable","mean":"adj.适于耕种的","topic":"environment","example":"Urban expansion has reduced arable land."},
+{"word":"biodiesel","mean":"n.生物柴油","topic":"environment","example":"Biodiesel can be produced from waste cooking oil."},
+{"word":"carbon-credit","mean":"n.碳信用额度","topic":"environment","example":"Companies purchase carbon credits to offset emissions."},
+{"word":"carbon-intensive","mean":"adj.高碳排放的","topic":"environment","example":"Steelmaking remains a carbon-intensive industry."},
+{"word":"climate-adaptation","mean":"n.气候适应","topic":"environment","example":"Climate adaptation includes stronger flood defences."},
+{"word":"coastal-erosion","mean":"n.海岸侵蚀","topic":"environment","example":"Sea-level rise accelerates coastal erosion."},
+{"word":"conservation-area","mean":"n.保护区","topic":"environment","example":"Construction is restricted within the conservation area."},
+{"word":"drought-resistant","mean":"adj.抗旱的","topic":"environment","example":"Farmers are adopting drought-resistant crop varieties."},
+{"word":"ecological-footprint","mean":"n.生态足迹","topic":"environment","example":"Public transport reduces a commuter’s ecological footprint."},
+{"word":"energy-conservation","mean":"n.节能","topic":"environment","example":"Energy conservation reduces costs and emissions."},
+{"word":"environmental-cost","mean":"n.环境成本","topic":"environment","example":"Fuel prices rarely reflect the full environmental cost."},
+{"word":"fossil-fuel","mean":"n.化石燃料","topic":"environment","example":"Electricity generation still depends heavily on fossil fuels."},
+{"word":"green-transition","mean":"n.绿色转型","topic":"environment","example":"The green transition will reshape industrial employment."},
+{"word":"hazardous-waste","mean":"n.危险废物","topic":"environment","example":"Hazardous waste requires specialist treatment."},
+{"word":"marine-pollution","mean":"n.海洋污染","topic":"environment","example":"Plastic packaging contributes to marine pollution."},
+{"word":"organic-farming","mean":"n.有机农业","topic":"environment","example":"Organic farming limits synthetic pesticide use."},
+{"word":"resource-efficiency","mean":"n.资源效率","topic":"environment","example":"Resource efficiency reduces inputs and industrial waste."},
+{"word":"water-conservation","mean":"n.节水","topic":"environment","example":"Water conservation is essential during prolonged drought."},
+{"word":"aquaculture","mean":"n.水产养殖","topic":"environment","example":"Sustainable aquaculture can reduce pressure on wild fish."},
+{"word":"bioremediation","mean":"n.生物修复","topic":"environment","example":"Bioremediation uses microorganisms to clean polluted soil."},
+{"word":"climate-neutral","mean":"adj.气候中和的","topic":"environment","example":"The city aims to become climate-neutral by 2040."},
+{"word":"ecological-restoration","mean":"n.生态修复","topic":"environment","example":"Ecological restoration revived the damaged wetland."},
+{"word":"renewable-capacity","mean":"n.可再生能源装机容量","topic":"environment","example":"National renewable capacity has expanded rapidly."},
+
+// 1676–1700
+{"word":"ageing-population","mean":"n.老龄化人口","topic":"society","example":"An ageing population increases demand for long-term care."},
+{"word":"birth-rate","mean":"n.出生率","topic":"society","example":"The national birth rate has declined steadily."},
+{"word":"civic-engagement","mean":"n.公民参与","topic":"society","example":"Local elections encourage civic engagement."},
+{"word":"community-cohesion","mean":"n.社区凝聚力","topic":"society","example":"Shared facilities strengthen community cohesion."},
+{"word":"cultural-norm","mean":"n.文化规范","topic":"society","example":"Cultural norms influence family responsibilities."},
+{"word":"digital-exclusion","mean":"n.数字排斥","topic":"society","example":"Digital exclusion prevents some elderly people from accessing services."},
+{"word":"elderly-care","mean":"n.老年护理","topic":"society","example":"Demand for elderly care continues to rise."},
+{"word":"equal-access","mean":"n.平等获取","topic":"society","example":"Equal access to healthcare remains a major challenge."},
+{"word":"family-bond","mean":"n.家庭纽带","topic":"society","example":"Shared activities can strengthen family bonds."},
+{"word":"housing-shortage","mean":"n.住房短缺","topic":"society","example":"Rapid migration has worsened the housing shortage."},
+{"word":"identity-crisis","mean":"n.身份危机","topic":"society","example":"Sudden cultural change may cause an identity crisis."},
+{"word":"language-barrier","mean":"n.语言障碍","topic":"society","example":"A language barrier can restrict access to medical care."},
+{"word":"life-satisfaction","mean":"n.生活满意度","topic":"society","example":"Reliable employment improves life satisfaction."},
+{"word":"population-density","mean":"n.人口密度","topic":"society","example":"High population density supports efficient public transport."},
+{"word":"regional-disparity","mean":"n.地区差异","topic":"society","example":"Regional disparities remain visible in education spending."},
+{"word":"rural-urban-gap","mean":"n.城乡差距","topic":"society","example":"Infrastructure investment can narrow the rural-urban gap."},
+{"word":"social-exclusion","mean":"n.社会排斥","topic":"society","example":"Long-term unemployment contributes to social exclusion."},
+{"word":"social-integration","mean":"n.社会融合","topic":"society","example":"Language classes support migrants’ social integration."},
+{"word":"social-isolation","mean":"n.社会孤立","topic":"society","example":"Older adults are particularly vulnerable to social isolation."},
+{"word":"social-responsibility","mean":"n.社会责任","topic":"society","example":"Businesses have a social responsibility to protect workers."},
+{"word":"suburbanization","mean":"n.郊区化","topic":"society","example":"Suburbanization has increased dependence on private cars."},
+{"word":"urban-migration","mean":"n.城市迁移","topic":"society","example":"Urban migration places pressure on housing and services."},
+{"word":"voluntary-sector","mean":"n.志愿部门","topic":"society","example":"The voluntary sector supports vulnerable households."},
+{"word":"welfare-dependency","mean":"n.福利依赖","topic":"society","example":"Training may reduce long-term welfare dependency."},
+{"word":"youth-engagement","mean":"n.青年参与","topic":"society","example":"Youth engagement improves local decision-making."},
+
+// 1701–1725
+{"word":"approval-process","mean":"n.审批流程","topic":"policy","example":"A transparent approval process reduces corruption."},
+{"word":"border-control","mean":"n.边境管制","topic":"policy","example":"Border controls were strengthened during the outbreak."},
+{"word":"compliance-cost","mean":"n.合规成本","topic":"policy","example":"Complex regulations create high compliance costs."},
+{"word":"data-protection","mean":"n.数据保护","topic":"policy","example":"Data protection law limits the collection of personal information."},
+{"word":"decision-making","mean":"n.决策","topic":"policy","example":"Public participation improves local decision-making."},
+{"word":"emission-standard","mean":"n.排放标准","topic":"policy","example":"The new emission standard requires cleaner engines."},
+{"word":"enforcement-agency","mean":"n.执法机构","topic":"policy","example":"The enforcement agency investigated illegal dumping."},
+{"word":"environmental-law","mean":"n.环境法","topic":"policy","example":"Environmental law limits industrial pollution."},
+{"word":"governing-body","mean":"n.管理机构","topic":"policy","example":"The governing body approved the revised policy."},
+{"word":"immigration-policy","mean":"n.移民政策","topic":"policy","example":"Immigration policy should address labour needs."},
+{"word":"law-abiding","mean":"adj.守法的","topic":"policy","example":"Law-abiding businesses expect fair enforcement."},
+{"word":"legal-framework","mean":"n.法律框架","topic":"policy","example":"Artificial intelligence requires a clear legal framework."},
+{"word":"lobbying","mean":"n.游说活动","topic":"policy","example":"Corporate lobbying can influence national legislation."},
+{"word":"policy-instrument","mean":"n.政策工具","topic":"policy","example":"Carbon pricing is one policy instrument for reducing emissions."},
+{"word":"public-consultation","mean":"n.公众咨询","topic":"policy","example":"Public consultation revealed strong opposition."},
+{"word":"public-hearing","mean":"n.公开听证会","topic":"policy","example":"Residents spoke during the public hearing."},
+{"word":"public-interest","mean":"n.公共利益","topic":"policy","example":"Regulators must protect the public interest."},
+{"word":"regulatory-body","mean":"n.监管机构","topic":"policy","example":"The regulatory body monitors energy suppliers."},
+{"word":"urban-planning","mean":"n.城市规划","topic":"policy","example":"Urban planning should connect housing and transport."},
+{"word":"governance-capacity","mean":"n.治理能力","topic":"policy","example":"Digital systems can strengthen governance capacity."},
+{"word":"administrative-burden","mean":"n.行政负担","topic":"policy","example":"Online forms reduced the administrative burden on citizens."},
+{"word":"budget-transparency","mean":"n.预算透明度","topic":"policy","example":"Budget transparency allows taxpayers to monitor spending."},
+{"word":"policy-coherence","mean":"n.政策一致性","topic":"policy","example":"Policy coherence prevents contradictory government measures."},
+{"word":"regulatory-capture","mean":"n.监管俘获","topic":"policy","example":"Regulatory capture occurs when agencies serve industry interests."},
+{"word":"service-delivery","mean":"n.公共服务提供","topic":"policy","example":"Digital technology can improve public service delivery."},
+
+// 1726–1750
+{"word":"audience-reach","mean":"n.受众覆盖","topic":"media","example":"Online publication expanded the campaign’s audience reach."},
+{"word":"breaking-news","mean":"n.突发新闻","topic":"media","example":"Breaking news must still be independently verified."},
+{"word":"content-creator","mean":"n.内容创作者","topic":"media","example":"A content creator should identify sponsored material."},
+{"word":"data-journalism","mean":"n.数据新闻","topic":"media","example":"Data journalism makes complex statistics easier to understand."},
+{"word":"echo-chamber","mean":"n.回音室效应","topic":"media","example":"An echo chamber reinforces users’ existing opinions."},
+{"word":"fact-checker","mean":"n.事实核查员","topic":"media","example":"The fact-checker compared the claim with official records."},
+{"word":"independent-media","mean":"n.独立媒体","topic":"media","example":"Independent media can investigate powerful institutions."},
+{"word":"media-regulation","mean":"n.媒体监管","topic":"media","example":"Media regulation should protect children without suppressing criticism."},
+{"word":"news-agency","mean":"n.通讯社","topic":"media","example":"The news agency employs reporters around the world."},
+{"word":"public-discourse","mean":"n.公共话语","topic":"media","example":"Misinformation lowers the quality of public discourse."},
+{"word":"viral-content","mean":"n.病毒式传播内容","topic":"media","example":"Viral content often relies on emotional appeal."},
+{"word":"cultural-exchange","mean":"n.文化交流","topic":"culture","example":"Student mobility promotes international cultural exchange."},
+{"word":"cultural-preservation","mean":"n.文化保护","topic":"culture","example":"Digital archives support cultural preservation."},
+{"word":"museum-curator","mean":"n.博物馆策展人","topic":"culture","example":"The museum curator selected objects for the exhibition."},
+{"word":"performing-art","mean":"n.表演艺术","topic":"culture","example":"Public funding helps performing arts reach wider audiences."},
+{"word":"traditional-craft","mean":"n.传统工艺","topic":"culture","example":"Tourism has created new demand for traditional crafts."},
+{"word":"heritage-site","mean":"n.遗产地","topic":"culture","example":"Visitor numbers are controlled at the heritage site."},
+{"word":"language-loss","mean":"n.语言流失","topic":"culture","example":"Migration and assimilation can accelerate language loss."},
+{"word":"creative-industry","mean":"n.创意产业","topic":"culture","example":"The creative industry provides employment in design and media."},
+{"word":"historical-memory","mean":"n.历史记忆","topic":"culture","example":"Public monuments influence collective historical memory."},
+{"word":"cultural-assimilation","mean":"n.文化同化","topic":"culture","example":"Cultural assimilation may weaken minority traditions."},
+{"word":"digital-storytelling","mean":"n.数字叙事","topic":"media","example":"Digital storytelling combines recorded speech, images and text."},
+{"word":"public-relations","mean":"n.公共关系","topic":"media","example":"The company used public relations to rebuild trust."},
+{"word":"media-framing","mean":"n.媒体框架","topic":"media","example":"Media framing influences how audiences interpret social problems."},
+{"word":"cultural-appropriation","mean":"n.文化挪用","topic":"culture","example":"The fashion campaign was criticized for cultural appropriation."},
 ];
