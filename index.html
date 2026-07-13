@@ -39,7 +39,8 @@
     <div class="top-nav">
 
 
-<form class="search-box" id="globalSearchForm">
+
+<form class="search-box" id="globalSearchForm" onsubmit="event.preventDefault(); searchLearnedWord();">
     <div class="search-icon">⌕</div>
 
     <input
@@ -51,6 +52,7 @@
 
     <button type="submit">搜索</button>
 </form>
+
 
 
         <div class="account-area">
