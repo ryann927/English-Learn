@@ -1824,8 +1824,9 @@ function renderWeakWordsBySelectedDate() {
 
     html += '<h3 class="weak-date-title">' + selectedDate + ' 生词</h3>';
 
+    html += '<h4 class="weak-status-title">陌生</h4>';
+
     if (unfamiliarList.length > 0) {
-        html += '<h4 class="weak-status-title">陌生</h4>';
         html += '<div class="word-card-grid">';
 
         unfamiliarList.forEach(function(w, idx) {
@@ -1834,12 +1835,12 @@ function renderWeakWordsBySelectedDate() {
 
         html += '</div>';
     } else {
-        html += '<h4 class="weak-status-title">陌生</h4>';
         html += '<div class="word-item" style="color:#8b8f97;">暂无陌生单词。</div>';
     }
 
+    html += '<h4 class="weak-status-title">模糊</h4>';
+
     if (fuzzyList.length > 0) {
-        html += '<h4 class="weak-status-title">模糊</h4>';
         html += '<div class="word-card-grid">';
 
         fuzzyList.forEach(function(w, idx) {
@@ -1848,7 +1849,6 @@ function renderWeakWordsBySelectedDate() {
 
         html += '</div>';
     } else {
-        html += '<h4 class="weak-status-title">模糊</h4>';
         html += '<div class="word-item" style="color:#8b8f97;">暂无模糊单词。</div>';
     }
 
@@ -1863,11 +1863,17 @@ function createQuiz(wordArr) {
         "Official documents ______ strict standards for factory waste discharge.",
         "The rapid ______ of renewable energy changes traditional industrial patterns."
     ];
+
     let quizHtml = "";
-    window.globalQuizAns = wordArr.map(w => w.word);
-    wordArr.forEach((w, idx) => {
-        quizHtml += `<div class="test-block">${idx+1}. ${testTemplate[idx]}</div>`;
+
+    window.globalQuizAns = wordArr.map(function(w) {
+        return w.word;
     });
+
+    wordArr.forEach(function(w, idx) {
+        quizHtml += '<div class="test-block">' + (idx + 1) + '. ' + testTemplate[idx] + '</div>';
+    });
+
     document.getElementById("quizArea").innerHTML = quizHtml;
 }
 let calendarViewDate = new Date();
