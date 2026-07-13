@@ -524,32 +524,7 @@ function searchLearnedWord() {
     showSearchResults(query, results);
 }
 
-    if (cloudStudyData.todayWords && cloudStudyData.todayWords.length > 0) {
-        cloudStudyData.todayWords.forEach(function(w) {
-            if (!w || !w.word) return;
-
-            var wordText = String(w.word).toLowerCase();
-
-            if (wordText.includes(query)) {
-                var alreadyExists = results.some(function(item) {
-                    return item.word === w.word && item.date === getTodayStr();
-                });
-
-                if (!alreadyExists) {
-                    results.push({
-                        date: getTodayStr(),
-                        word: w.word,
-                        mean: w.mean || "",
-                        example: w.example || "",
-                        status: getWordStatusText(w.word)
-                    });
-                }
-            }
-        });
-    }
-
-    showSearchResults(query, results);
-}
+   
 
 function showSearchResults(query, results) {
     var resultBox = document.getElementById("wordSearchResult");
