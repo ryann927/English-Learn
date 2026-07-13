@@ -1345,7 +1345,7 @@ function generateTodayContent() {
     }
     
     if (!cloudDataLoaded) {
-    alert("正在加载云端学习记录，请稍后再开始学习。"");
+    alert("正在加载云端学习记录，请稍后再开始学习。");
     return;
 }
 
