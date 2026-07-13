@@ -630,14 +630,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     
-var searchForm = document.getElementById("globalSearchForm");
-
-if (searchForm) {
-    searchForm.addEventListener("submit", function(event) {
-        event.preventDefault();
-        searchLearnedWord();
-    });
-}
 
 });
 
