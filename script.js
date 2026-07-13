@@ -454,7 +454,7 @@ function getWordStatusText(word) {
 
 function searchLearnedWord() {
     if (!isLoggedIn()) {
-        alert("请先登录账号，再搜索学习记录。");
+        alert("请先登录账号，再搜索单词库。");
         return;
     }
 
@@ -478,7 +478,9 @@ function searchLearnedWord() {
 
     var results = [];
     var history = cloudStudyData.history || {};
+    var learnedDateMap = {};
 
+    // 先从 history 里整理：哪些词在哪些日期学过
     Object.keys(history).forEach(function(date) {
         var dayData = history[date] || {};
         var words = dayData.words || [];
@@ -486,19 +488,41 @@ function searchLearnedWord() {
         words.forEach(function(w) {
             if (!w || !w.word) return;
 
-            var wordText = String(w.word).toLowerCase();
+            var key = String(w.word).toLowerCase();
 
-            if (wordText.includes(query)) {
-                results.push({
-                    date: date,
-                    word: w.word,
-                    mean: w.mean || "",
-                    example: w.example || "",
-                    status: getWordStatusText(w.word)
-                });
+            if (!learnedDateMap[key]) {
+                learnedDateMap[key] = [];
+            }
+
+            if (learnedDateMap[key].indexOf(date) === -1) {
+                learnedDateMap[key].push(date);
             }
         });
     });
+
+    // 再从完整单词库 fullWordBank 里搜索
+    fullWordBank.forEach(function(w) {
+        if (!w || !w.word) return;
+
+        var wordText = String(w.word).toLowerCase();
+
+        // 支持模糊搜索：输入 fin 可以搜到 finite
+        if (wordText.indexOf(query) !== -1) {
+            var dates = learnedDateMap[wordText] || [];
+
+            results.push({
+                word: w.word,
+                mean: w.mean || "",
+                example: w.example || "",
+                topic: w.topic || "",
+                dates: dates,
+                status: getWordStatusText(w.word)
+            });
+        }
+    });
+
+    showSearchResults(query, results);
+}
 
     if (cloudStudyData.todayWords && cloudStudyData.todayWords.length > 0) {
         cloudStudyData.todayWords.forEach(function(w) {
@@ -533,34 +557,46 @@ function showSearchResults(query, results) {
 
     if (!resultBox || !resultSec) return;
 
-    document.getElementById("homeSec").style.display = "none";
+    var homeSec = document.getElementById("homeSec");
+    if (homeSec) {
+        homeSec.style.display = "none";
+    }
+
     resultSec.style.display = "block";
 
     if (results.length === 0) {
         resultBox.innerHTML =
-            '<div class="word-item" style="color:#8b8f97;">没有找到包含 “' +
+            '<div class="word-item" style="color:#8b8f97;">词库中没有找到包含 “' +
             query +
-            '” 的已学单词记录。</div>';
+            '” 的单词。</div>';
         return;
     }
 
     var html = '<div class="word-card-grid">';
 
-    results.sort(function(a, b) {
-        return b.date.localeCompare(a.date);
-    });
-
     results.forEach(function(item, idx) {
+        var learnedInfo = "";
+
+        if (item.dates && item.dates.length > 0) {
+            learnedInfo = "学习日期：" + item.dates.sort().reverse().join("，");
+        } else {
+            learnedInfo = "学习状态：尚未学习";
+        }
+
+        var topicInfo = item.topic ? "词库分类：" + item.topic : "词库分类：未分类";
+
         html += ''
             + '<div class="word-card">'
-            + '<div class="word-card-index">' + String(idx + 1).padStart(2, "0") + ' · ' + item.date + '</div>'
+            + '<div class="word-card-index">' + String(idx + 1).padStart(2, "0") + '</div>'
             + '<div class="word-card-word">' + item.word + '</div>'
             + '<div class="word-card-meaning">' + item.mean + '</div>'
             + '<div class="word-card-example">'
             + '<span class="word-card-example-label">Example</span>'
             + item.example
             + '</div>'
+            + '<div class="word-search-status">' + learnedInfo + '</div>'
             + '<div class="word-search-status">当前状态：' + item.status + '</div>'
+            + '<div class="word-search-status">' + topicInfo + '</div>'
             + '</div>';
     });
 
