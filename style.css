@@ -1172,3 +1172,39 @@ body > button {
     color: #ff5a3c;
     margin: 16px 0 10px;
 }
+/* ===== 生词自查日期选择器 ===== */
+
+.weak-date-selector {
+    disp*ay: flex;
+    align-items: center;*    gap: 12px;
+    margin: 18px 0 *4px;
+    padding: 16px 18px;
+    b*ckground: #f8f8f9;
+    border: 1px*solid #eeeeef;
+    border-radius: *6px;
+    width: fit-content;
+}
+
+.w*ak-date-selector label {
+    font-*ize: 14px;
+    font-weight: 800;
+ *  color: #111827;
+}
+
+.weak-date-se*ector select {
+    height: 40px;
+ *  min-width: 180px;
+    border-rad*us: 12px;
+    border: 1px solid #e*e7eb;
+    background: #ffffff;
+   *padding: 0 14px;
+    font-size: 14*x;
+    font-weight: 700;
+    color* #111827;
+    outline: none;
+}
+
+.w*ak-date-selector select:focus {
+  * border-color: #ff5a3c;
+    box-sh*dow: 0 0 0 3px rgba(255, 90, 60, 0*12);
+}
