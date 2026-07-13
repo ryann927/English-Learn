@@ -476,11 +476,10 @@ function searchLearnedWord() {
         return;
     }
 
-    var results = [];
     var history = cloudStudyData.history || {};
     var learnedDateMap = {};
 
-    // 先从 history 里整理：哪些词在哪些日期学过
+    // 记录每个词在哪些日期学过
     Object.keys(history).forEach(function(date) {
         var dayData = history[date] || {};
         var words = dayData.words || [];
@@ -500,26 +499,46 @@ function searchLearnedWord() {
         });
     });
 
-    // 再从完整单词库 fullWordBank 里搜索
+    var resultMap = {};
+
+    // 从完整单词库搜索，并按单词合并
     fullWordBank.forEach(function(w) {
         if (!w || !w.word) return;
 
         var wordText = String(w.word).toLowerCase();
 
-        // 支持模糊搜索：输入 fin 可以搜到 finite
         if (wordText.indexOf(query) !== -1) {
-            var dates = learnedDateMap[wordText] || [];
+            if (!resultMap[wordText]) {
+                resultMap[wordText] = {
+                    word: w.word,
+                    meanings: [],
+                    examples: [],
+                    topics: [],
+                    dates: learnedDateMap[wordText] || [],
+                    status: getWordStatusText(w.word)
+                };
+            }
 
-            results.push({
-                word: w.word,
-                mean: w.mean || "",
-                example: w.example || "",
-                topic: w.topic || "",
-                dates: dates,
-                status: getWordStatusText(w.word)
-            });
+            if (w.mean && resultMap[wordText].meanings.indexOf(w.mean) === -1) {
+                resultMap[wordText].meanings.push(w.mean);
+            }
+
+            if (w.example && resultMap[wordText].examples.indexOf(w.example) === -1) {
+                resultMap[wordText].examples.push(w.example);
+            }
+
+            if (w.topic && resultMap[wordText].topics.indexOf(w.topic) === -1) {
+                resultMap[wordText].topics.push(w.topic);
+            }
         }
     });
+
+    var results = Object.keys(resultMap).map(function(key) {
+        return resultMap[key];
+    });
+
+    showSearchResults(query, results);
+}
 
     showSearchResults(query, results);
 }
@@ -538,6 +557,7 @@ function showSearchResults(query, results) {
     }
 
     resultSec.style.display = "block";
+    resultSec.scrollIntoView({ behavior: "smooth", block: "start" });
 
     if (results.length === 0) {
         resultBox.innerHTML =
@@ -558,16 +578,38 @@ function showSearchResults(query, results) {
             learnedInfo = "学习状态：尚未学习";
         }
 
-        var topicInfo = item.topic ? "词库分类：" + item.topic : "词库分类：未分类";
+        var topicInfo = item.topics && item.topics.length > 0
+            ? "词库分类：" + item.topics.join(" / ")
+            : "词库分类：未分类";
+
+        var meaningInfo = item.meanings && item.meanings.length > 0
+            ? item.meanings.join("；")
+            : "";
+
+        var exampleHtml = "";
+
+        if (item.examples && item.examples.length > 0) {
+            item.examples.forEach(function(example, exampleIdx) {
+                exampleHtml +=
+                    '<div class="search-example-item">' +
+                    '<span class="search-example-num">' +
+                    (exampleIdx + 1) +
+                    '.</span> ' +
+                    example +
+                    '</div>';
+            });
+        } else {
+            exampleHtml = '<div class="search-example-item">暂无例句</div>';
+        }
 
         html += ''
             + '<div class="word-card">'
             + '<div class="word-card-index">' + String(idx + 1).padStart(2, "0") + '</div>'
             + '<div class="word-card-word">' + item.word + '</div>'
-            + '<div class="word-card-meaning">' + item.mean + '</div>'
+            + '<div class="word-card-meaning">' + meaningInfo + '</div>'
             + '<div class="word-card-example">'
-            + '<span class="word-card-example-label">Example</span>'
-            + item.example
+            + '<span class="word-card-example-label">Examples</span>'
+            + exampleHtml
             + '</div>'
             + '<div class="word-search-status">' + learnedInfo + '</div>'
             + '<div class="word-search-status">当前状态：' + item.status + '</div>'
