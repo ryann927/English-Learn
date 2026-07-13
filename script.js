@@ -629,6 +629,16 @@ document.addEventListener("DOMContentLoaded", () => {
     initCloudData(true);
     }
 
+    
+var searchForm = document.getElementById("globalSearchForm");
+
+if (searchForm) {
+    searchForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        searchLearnedWord();
+    });
+}
+
 });
 
 
