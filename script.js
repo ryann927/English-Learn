@@ -237,16 +237,19 @@ function showStudyPanel(type, btn) {
         return;
     }
 
-    var sections = [
-        "homeSec",
-        "rev1",
-        "rev3",
-        "newWordSec",
-        "sentSec",
-        "weakWordsSec",
-        "planSec",
-        "historySec"
-    ];
+    
+var sections = [
+    "homeSec",
+    "searchResultSec",
+    "rev1",
+    "rev3",
+    "newWordSec",
+    "sentSec",
+    "weakWordsSec",
+    "planSec",
+    "historySec"
+];
+
 
     sections.forEach(function(id) {
         var el = document.getElementById(id);
