@@ -1208,3 +1208,51 @@ body > button {
   * border-color: #ff5a3c;
     box-sh*dow: 0 0 0 3px rgba(255, 90, 60, 0*12);
 }
+/* ===== 生词自查日期胶囊按钮 ===== */
+
+.weak-date-panel {
+    margin: *8px 0 28px;
+    padding: 16px 18px*
+    background: #f8f8f9;
+    bord*r: 1px solid #eeeeef;
+    border-r*dius: 18px;
+}
+
+.weak-date-label {
+*   font-size: 14px;
+    font-weigh*: 800;
+    color: #111827;
+    mar*in-bottom: 12px;
+}
+
+.weak-date-but*ons {
+    display: flex;
+    flex-*rap: wrap;
+    gap: 10px;
+}
+
+.weak*date-chip {
+    border: 1px solid *eeeeef !important;
+    background:*#ffffff !important;
+    color: #37*151 !important;
+    border-radius:*999px !important;
+    padding: 9px*15px !important;
+    font-size: 14*x !important;
+    font-weight: 700*!important;
+    box-shadow: none !*mportant;
+    margin: 0 !important;
+    cursor: pointer;
+}
+
+.weak-date-chip:hover {
+    background: #fff7f4 !important;
+    border-color: #ffb4a3 !important;
+    color: #ff5a3c !important;
+    transform: none !important;
+}
+
+.weak-date-chip.active {
+    background: #fff1ed !important;
+    border-color: #ff5a3c !important;
+    color: #ff5a3c !important;
+}
