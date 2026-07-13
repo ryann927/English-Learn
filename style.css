@@ -1274,8 +1274,9 @@ body > button {
 }
 /* ===== 顶部单词搜索框：胶囊轻量风 ===== */
 
+
 .search-box {
-    width: 520px;
+    width: 460px;
     height: 48px;
     background: #ffffff;
     border: 1px solid #eeeeef;
@@ -1317,19 +1318,22 @@ body > button {
     font-weight: 500;
 }
 
+
 .search-box button {
-    height: 36px !important;
-    min-width: 72px !important;
+    height: 34px !important;
+    min-width: 64px !important;
     border: none !important;
     border-radius: 999px !important;
     background: #ff5a3c !important;
     color: #ffffff !important;
-    font-size: 14px !important;
+    font-size: 13px !important;
     font-weight: 800 !important;
-    padding: 0 16px !important;
+    padding: 0 14px !important;
     margin: 0 !important;
     box-shadow: none !important;
     cursor: pointer;
+}
+
 }
 
 .search-box button:hover {
