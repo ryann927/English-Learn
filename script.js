@@ -2122,36 +2122,113 @@ function markWeakWordAsFamiliar(word) {
     alert("已标记为「熟悉」，该单词已从生词自查中移除。记得点击【保存进度】同步云端。");
 }
 
+var currentWeakDate = "";
+
 function renderWeakWordsList() {
     ensureWordStatusData();
 
-    var select = document.getElementById("weakDateSelect");
+    var dateButtonBox = document.getElementById("weakDateButtons");
     var container = document.getElementById("weakWordsList");
 
-    if (!select || !container) return;
+    if (!dateButtonBox || !container) return;
 
     var records = cloudStudyData.weakWordRecords || {};
-    var dates = Object.keys(records).sort().reverse();
+    var dates = Object.keys(records).filter(function(date) {
+        var record = records[date] || {};
+        var unfamiliarList = record.unfamiliar || [];
+        var fuzzyList = record.fuzzy || [];
+        return unfamiliarList.length > 0 || fuzzyList.length > 0;
+    }).sort().reverse();
 
-    select.innerHTML = "";
+    dateButtonBox.innerHTML = "";
 
     if (dates.length === 0) {
-        select.innerHTML = '<option value="">暂无日期</option>';
         container.innerHTML =
             '<div class="word-item" style="color:#8b8f97;">暂无生词。你可以在今日单词中将单词标记为「陌生」或「模糊」。</div>';
         return;
     }
 
+    if (!currentWeakDate || dates.indexOf(currentWeakDate) === -1) {
+        currentWeakDate = dates[0];
+    }
+
     dates.forEach(function(date) {
-        var option = document.createElement("option");
-        option.value = date;
-        option.textContent = date;
-        select.appendChild(option);
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "weak-date-chip";
+
+        if (date === currentWeakDate) {
+            btn.className += " active";
+        }
+
+        var record = records[date] || {};
+        var count =
+            (record.unfamiliar || []).length +
+            (record.fuzzy || []).length;
+
+        btn.textContent = date + " · " + count + "词";
+
+        btn.onclick = function() {
+            currentWeakDate = date;
+            renderWeakWordsList();
+        };
+
+        dateButtonBox.appendChild(btn);
     });
 
-    select.value = dates[0];
+    renderWeakWordsByDate(currentWeakDate);
+}
+function renderWeakWordsByDate(date) {
+    ensureWordStatusData();
 
-    renderWeakWordsBySelectedDate();
+    var container = document.getElementById("weakWordsList");
+    if (!container) return;
+
+    var records = cloudStudyData.weakWordRecords || {};
+    var dayRecord = records[date];
+
+    if (!dayRecord) {
+        container.innerHTML =
+            '<div class="word-item" style="color:#8b8f97;">该日期暂无生词。</div>';
+        return;
+    }
+
+    var unfamiliarList = dayRecord.unfamiliar || [];
+    var fuzzyList = dayRecord.fuzzy || [];
+
+    var html = "";
+
+    html += '<h3 class="weak-date-title">' + date + ' 生词</h3>';
+
+    html += '<h4 class="weak-status-title">陌生</h4>';
+
+    if (unfamiliarList.length > 0) {
+        html += '<div class="word-card-grid">';
+
+        unfamiliarList.forEach(function(w, idx) {
+            html += buildWeakWordCard(w, idx, "陌生");
+        });
+
+        html += '</div>';
+    } else {
+        html += '<div class="word-item" style="color:#8b8f97;">暂无陌生单词。</div>';
+    }
+
+    html += '<h4 class="weak-status-title">模糊</h4>';
+
+    if (fuzzyList.length > 0) {
+        html += '<div class="word-card-grid">';
+
+        fuzzyList.forEach(function(w, idx) {
+            html += buildWeakWordCard(w, idx, "模糊");
+        });
+
+        html += '</div>';
+    } else {
+        html += '<div class="word-item" style="color:#8b8f97;">暂无模糊单词。</div>';
+    }
+
+    container.innerHTML = html;
 }
 
 function buildWeakWordCard(w, idx, statusText) {
