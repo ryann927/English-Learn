@@ -811,7 +811,6 @@ function renderReviewBlock(
     listHtml +=
         '<div class="word-item review-word-item">' +
         '<div class="review-word-title">' +
-        (index + 1) +
         ". " +
         item.word +
         '</div>' +
@@ -841,7 +840,6 @@ reviewWords.forEach(function(item, index) {
         listDom + "-" + index
     );
 });
-
     listElement.innerHTML = listHtml;
 
     answerElement.innerHTML =
