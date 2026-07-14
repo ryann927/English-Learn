@@ -133,7 +133,7 @@ const topicExamplePool = {
         "Special testing apparatus is used to measure underground water quality."
     ],
     economy: [
-        "Financial subsidies bolster small manufacturers’ green transformation.",
+        "Financial subsidies bolster small manufacturers' green transformation.",
         "Investment in clean energy helps buoy regional economic growth."
     ],
     policy: [
@@ -467,12 +467,13 @@ function searchLearnedWord() {
     showSearchResults(query, results);
 }
 
-
 function closeSearchModal() {
     var modal = document.getElementById("searchModal");
     if (modal) {
         modal.style.display = "none";
-}  
+    }
+}
+
 function showSearchResults(query, results) {
     var modal = document.getElementById("searchModal");
     var subtitle = document.getElementById("searchModalSubtitle");
@@ -485,7 +486,7 @@ function showSearchResults(query, results) {
     if (results.length === 0) {
         body.innerHTML =
             '<div class="search-empty-card">' +
-            '词库中没有找到包含 “' + query + '” 的单词。' +
+            '词库中没有找到包含 "' + query + '" 的单词。' +
             '</div>';
         modal.style.display = "flex";
         return;
@@ -494,7 +495,6 @@ function showSearchResults(query, results) {
     var html = "";
 
     results.forEach(function(item, idx) {
-        // phoneticId 放在内层循环，idx 有效
         var phoneticId = "search-" + idx;
         var learnedInfo = "";
 
@@ -553,7 +553,7 @@ function showSearchResults(query, results) {
             "search-" + idx
         );
     });
-} // 补上缺失的函数闭合 }
+}
 
 function getTodayStr() {
     const d = new Date();
@@ -617,7 +617,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
 function autoStartTodayLearning() {
     if (!isLoggedIn()) {
         return;
@@ -650,7 +649,7 @@ function generateTodayContent() {
     let isNewDay = (cloudStudyData.lastStudyDate !== today);
 
     if (isNewDay) {
-        // 关键：先保存“进入今天之前”的复习内容快照
+        // 关键：先保存"进入今天��前"的复习内容快照
         const reviewD1Snapshot = cloudStudyData.d1ReviewWords || [];
         const reviewD3Snapshot = cloudStudyData.d3ReviewWords || [];
 
@@ -681,8 +680,8 @@ function generateTodayContent() {
             sentences: []
         };
 
-        // 关键：这里更新的是“未来复习队列”
-        // 今天页面不要直接显示这个更新后的 d1ReviewWords
+        // 关键：这里更新的是"未来复习队列"
+        // 今天页面不要直接显示这个更新后��� d1ReviewWords
         cloudStudyData.d3ReviewWords = reviewD1Snapshot;
         cloudStudyData.d1ReviewWords = todayNewWords.filter(function(w) {
     return !cloudStudyData.wordStatus || cloudStudyData.wordStatus[w.word] !== "familiar";
@@ -721,7 +720,7 @@ function generateTodayContent() {
         alert(`今天（${today}）已生成过内容，为你显示当天学习内容。`);
     }
 
-    // 关键：页面显示的是“今天进入时的复习快照”
+    // 关键：页面显示的是"今天进入时的复习快照"
     renderReviewBlock(cloudStudyData.todayReviewD1 || [], "rev1List", "rev1Ans");
     renderReviewBlock(cloudStudyData.todayReviewD3 || [], "rev3List", "rev3Ans");
 
@@ -805,6 +804,17 @@ function renderReviewBlock(wordArr, listDom, ansDom) {
     answerElement.innerHTML =
         "释义答案：<br>" + answerHtml;
 }
+
+// ===== 🔴 新增缺失函数：确保 wordStatus 和 weakWordRecords 初始化 =====
+function ensureWordStatusData() {
+    if (!cloudStudyData.wordStatus) {
+        cloudStudyData.wordStatus = {};
+    }
+    if (!cloudStudyData.weakWordRecords) {
+        cloudStudyData.weakWordRecords = {};
+    }
+}
+
 function ensureWeakDate(date) {
     ensureWordStatusData();
 
@@ -1032,19 +1042,6 @@ function buildWeakWordCard(w, idx, statusText) {
         + '</div>';
 }
 
-function markWeakWordAsFamiliar(word) {
-    ensureWordStatusData();
-
-    cloudStudyData.wordStatus[word] = "familiar";
-
-    cloudStudyData.weakWords = cloudStudyData.weakWords.filter(function(item) {
-        return item.word !== word;
-    });
-
-    renderWeakWordsList();
-
-    alert("已标记为「熟悉」，该单词已从生词自查中移除。记得点击【保存进度】同步云端。");
-}
 function renderNewWordList(wordArr) {
     var container = document.getElementById("newWordList");
     container.innerHTML = "";
@@ -1571,7 +1568,7 @@ async function getWordPhonetic(word) {
             }
         }
 
-        // 查找可播放的发音音频
+        // 查找可播放的发音音���
         for (var j = 0; j < phonetics.length; j++) {
             if (
                 phonetics[j] &&
