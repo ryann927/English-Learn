@@ -391,7 +391,6 @@ const fullWordBank = [
 {"word":"welfare","mean":"n.福利，福祉","topic":"society","example":"Ecological protection improves the long-term welfare of all residents."},
 {"word":"whereas","mean":"conj.然而，反之","topic":"general","example":"Developed nations cut emissions, whereas developing countries face industrial pressure."},
 {"word":"whereby","mean":"adv.借此，凭此","topic":"policy","example":"A tax system whereby polluting firms pay compensation for environmental damage."},
-{"word":"widespread","mean":"adj.广泛普及的","topic":"society","example":"Widespread public support accelerates the enforcement of green policies."},
 {"word":"withstand","mean":"v.抵御，承受","topic":"science","example":"New composite materials can withstand harsh marine natural environments."},
 {"word":"accommodate","mean":"v.容纳；适应","topic":"general","example":"Cities build more public housing to accommodate growing populations."},
 {"word":"anticipate","mean":"v.预期，预见","topic":"study","example":"Scientists anticipate rising sea levels due to global warming."},
