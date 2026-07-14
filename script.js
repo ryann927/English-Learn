@@ -805,58 +805,41 @@ function renderReviewBlock(
     var answerHtml = "";
 
     reviewWords.forEach(function(item, index) {
-    var phoneticId =
-        listDom + "-" + index;
+        var phoneticId = listDom + "-" + index;
 
-    listHtml +=
-        '<div class="word-item review-word-item">' +
-        '<div class="review-word-title">' +
-        ". " +
-        item.word +
-        '</div>' +
-        createPhoneticHtml(
-            item.word,
-            phoneticId
-        ) +
-        '</div>';
+        listHtml +=
+            '<div class="word-item review-word-item">' +
+            '<div class="review-word-title">' +
+            (index + 1) + ". " +
+            item.word +
+            '</div>' +
+            createPhoneticHtml(
+                item.word,
+                phoneticId
+            ) +
+            '</div>';
 
-    answerHtml +=
-        '<div class="word-item">' +
-        (index + 1) +
-        ". " +
-        (item.mean || "暂无释义") +
-        '</div>';
-});
+        answerHtml +=
+            '<div class="word-item">' +
+            (index + 1) +
+            ". " +
+            (item.mean || "暂无释义") +
+            '</div>';
+    });
 
-listElement.innerHTML = listHtml;
-
-answerElement.innerHTML =
-    "释义答案：<br>" +
-    answerHtml;
-
-reviewWords.forEach(function(item, index) {
-    loadPhoneticIntoElement(
-        item.word,
-        listDom + "-" + index
-    );
-});
     listElement.innerHTML = listHtml;
+    answerElement.innerHTML = "释义答案：<br>" + answerHtml;
 
-    answerElement.innerHTML =
-        "释义答案：<br>" +
-        answerHtml;
-
-    /*
-     * HTML 已经放入页面后，再加载每个单词的音标。
-     */
-    reviewWords.forEach(funct*on(item, index) {
-        loadPhon*ticIntoElement(
-            item.w*rd,
-            listDom + "-" + in*ex
+    // 加载音标（无乱码正确版本）
+    reviewWords.forEach(function(item, index) {
+        loadPhoneticIntoElement(
+            item.word,
+            listDom + "-" + index
         );
     });
 }
-// ===== 🔴 新增缺失函数：确保 wordStatus 和 weakWordRecords 初始化 =====
+
+// 初始化单词状态工具函数
 function ensureWordStatusData() {
     if (!cloudStudyData.wordStatus) {
         cloudStudyData.wordStatus = {};
@@ -865,6 +848,7 @@ function ensureWordStatusData() {
         cloudStudyData.weakWordRecords = {};
     }
 }
+
 
 function ensureWeakDate(date) {
     ensureWordStatusData();
