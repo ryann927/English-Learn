@@ -1759,7 +1759,14 @@ function playPronunciation(audioUrl, word) {
     if (!audioUrl) {
         return;
     }
+// 1761 行原有闭合 } 保留不动
+}
 
+// 完整无残缺的发音播放函数
+function playPronunciation(audioUrl, word) {
+    if (!audioUrl) {
+        return;
+    }
     var audio = new Audio(audioUrl);
     audio.play().catch(function(error) {
         console.warn(
@@ -1769,3 +1776,4 @@ function playPronunciation(audioUrl, word) {
         );
     });
 }
+
