@@ -470,14 +470,10 @@ function searchLearnedWord() {
 
 function closeSearchModal() {
     var modal = document.getElementById("searchModal");
-
     if (modal) {
         modal.style.display = "none";
-    }
-}   
+}  
 function showSearchResults(query, results) {
-    results.forEach(function(item, idx) {
-    var phoneticId = "search-" + idx;
     var modal = document.getElementById("searchModal");
     var subtitle = document.getElementById("searchModalSubtitle");
     var body = document.getElementById("searchModalBody");
@@ -491,7 +487,6 @@ function showSearchResults(query, results) {
             '<div class="search-empty-card">' +
             '词库中没有找到包含 “' + query + '” 的单词。' +
             '</div>';
-
         modal.style.display = "flex";
         return;
     }
@@ -499,6 +494,8 @@ function showSearchResults(query, results) {
     var html = "";
 
     results.forEach(function(item, idx) {
+        // phoneticId 放在内层循环，idx 有效
+        var phoneticId = "search-" + idx;
         var learnedInfo = "";
 
         if (item.dates && item.dates.length > 0) {
@@ -550,12 +547,13 @@ function showSearchResults(query, results) {
     body.innerHTML = html;
     modal.style.display = "flex";
 
-results.forEach(function(item, idx) {
-    loadPhoneticIntoElement(
-        item.word,
-        "search-" + idx
-    );
-});
+    results.forEach(function(item, idx) {
+        loadPhoneticIntoElement(
+            item.word,
+            "search-" + idx
+        );
+    });
+} // 补上缺失的函数闭合 }
 
 function getTodayStr() {
     const d = new Date();
