@@ -732,40 +732,57 @@ createLongSentenceBlock(isNewDay, sentenceCount);
 window.generateTodayContent = generateTodayContent;
 
 
-function renderReviewBlock(wordArr, listDom, ansDom) {
-    var reviewWords = (wordArr || []).filter(function(item) {
-        if (!item || !item.word) {
-            return false;
-        }
+function renderReviewBlock(
+    wordArr,
+    listDom,
+    ansDom
+) {
+    var reviewWords =
+        (wordArr || []).filter(function(item) {
+            if (!item || !item.word) {
+                return false;
+            }
 
-        var status = cloudStudyData.wordStatus
-            ? cloudStudyData.wordStatus[item.word]
-            : undefined;
+            var status =
+                cloudStudyData.wordStatus
+                    ? cloudStudyData.wordStatus[item.word]
+                    : undefined;
 
-        // 只有明确标记为 familiar 的单词才不复习
-        return status !== "familiar";
-    });
+            // 只有明确标记为 familiar 才不复习
+            return status !== "familiar";
+        });
 
-    var listElement = document.getElementById(listDom);
-    var answerElement = document.getElementById(ansDom);
+    var listElement =
+        document.getElementById(listDom);
+
+    var answerElement =
+        document.getElementById(ansDom);
 
     if (!listElement || !answerElement) {
         return;
     }
 
-    var section = listElement.closest(".section");
+    var section =
+        listElement.closest(".section");
 
     if (section) {
-        var title = section.querySelector("h2");
+        var title =
+            section.querySelector("h2");
 
-        if (title && listDom === "rev1List") {
+        if (
+            title &&
+            listDom === "rev1List"
+        ) {
             title.textContent =
                 "1. D-1 昨日单词复盘（" +
                 reviewWords.length +
                 "个）";
         }
 
-        if (title && listDom === "rev3List") {
+        if (
+            title &&
+            listDom === "rev3List"
+        ) {
             title.textContent =
                 "2. D-3 三日前单词复盘（" +
                 reviewWords.length +
@@ -775,7 +792,10 @@ function renderReviewBlock(wordArr, listDom, ansDom) {
 
     if (reviewWords.length === 0) {
         listElement.innerHTML =
-            '<div class="word-item" style="color:#8b8f97;">暂无需要复习的单词</div>';
+            '<div class="word-item" ' +
+            'style="color:#8b8f97;">' +
+            "暂无需要复习的单词" +
+            "</div>";
 
         answerElement.innerHTML = "";
         return;
@@ -785,11 +805,26 @@ function renderReviewBlock(wordArr, listDom, ansDom) {
     var answerHtml = "";
 
     reviewWords.forEach(function(item, index) {
-        listHtml +=
-            '<div class="word-item">' +
+        /*
+         * 使用 listDom 作为前缀，确保 D-1 和 D-3
+         * 不会产生重复的 HTML ID。
+         */
+        var phoneticId =
+       *    listDom + "-" + index;
+
+      * listHtml +=
+            '<div cla*s="word-item review-word-item">' +*
+            '<div class="review-w*rd-title">' +
             (index + 1) +
             ". " +
             item.word +
+            "</div>" +
+
+            createPhoneticHtml(
+                item.word,
+                phoneticId
+            ) +
+
             "</div>";
 
         answerHtml +=
@@ -801,10 +836,21 @@ function renderReviewBlock(wordArr, listDom, ansDom) {
     });
 
     listElement.innerHTML = listHtml;
-    answerElement.innerHTML =
-        "释义答案：<br>" + answerHtml;
-}
 
+    answerElement.innerHTML =
+        "释义答案：<br>" +
+        answerHtml;
+
+    /*
+     * HTML 已经放入页面后，再加载每个单词的音标。
+     */
+    reviewWords.forEach(funct*on(item, index) {
+        loadPhon*ticIntoElement(
+            item.w*rd,
+            listDom + "-" + in*ex
+        );
+    });
+}
 // ===== 🔴 新增缺失函数：确保 wordStatus 和 weakWordRecords 初始化 =====
 function ensureWordStatusData() {
     if (!cloudStudyData.wordStatus) {
