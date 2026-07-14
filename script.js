@@ -1044,6 +1044,11 @@ function buildWeakWordCard(w, idx, statusText) {
 
 function renderNewWordList(wordArr) {
     var container = document.getElementById("newWordList");
+
+    if (!container) {
+        return;
+    }
+
     container.innerHTML = "";
 
     var grid = document.createElement("div");
@@ -1055,52 +1060,95 @@ function renderNewWordList(wordArr) {
 
         var index = document.createElement("div");
         index.className = "word-card-index";
-        index.textContent = String(idx + 1).padStart(2, "0");
+        index.textContent =
+            String(idx + 1).padStart(2, "0");
 
         var word = document.createElement("div");
         word.className = "word-card-word";
         word.textContent = w.word;
 
+        // 为每日单词创建唯一音标 ID
+        var phoneticId = "today-" + idx;
+
+        var phoneticWrapper =
+            document.createElement("div");
+
+        phoneticWrapper.innerHTML =
+            createPhoneticHtml(
+                w.word,
+                phoneticId
+            );
+
+        var phoneticRow =
+            phoneticWrapper.firstElementChild;
+
         var meaning = document.createElement("div");
         meaning.className = "word-card-meaning";
         meaning.textContent = w.mean;
 
-        var example = document.createElement("div");
+        var example =
+            document.createElement("div");
+
         example.className = "word-card-example";
 
-        var label = document.createElement("span");
-        label.className = "word-card-example-label";
+        var label =
+            document.createElement("span");
+
+        label.className =
+            "word-card-example-label";
+
         label.textContent = "Example";
 
-        var exampleText = document.createElement("div");
-        exampleText.textContent = w.example;
+        var exampleText =
+            document.createElement("div");
+
+        exampleText.textContent =
+            w.example || "暂无例句";
 
         example.appendChild(label);
         example.appendChild(exampleText);
 
-        var actions = document.createElement("div");
-        actions.className = "word-status-actions";
+        var actions =
+            document.createElement("div");
 
-        var unfamiliarBtn = document.createElement("button");
+        actions.className =
+            "word-status-actions";
+
+        var unfamiliarBtn =
+            document.createElement("button");
+
         unfamiliarBtn.type = "button";
-        unfamiliarBtn.className = "status-btn status-unfamiliar";
+        unfamiliarBtn.className =
+            "status-btn status-unfamiliar";
+
         unfamiliarBtn.textContent = "陌生";
+
         unfamiliarBtn.onclick = function() {
             markWordStatus(w, "unfamiliar");
         };
 
-        var fuzzyBtn = document.createElement("button");
+        var fuzzyBtn =
+            document.createElement("button");
+
         fuzzyBtn.type = "button";
-        fuzzyBtn.className = "status-btn status-fuzzy";
+        fuzzyBtn.className =
+            "status-btn status-fuzzy";
+
         fuzzyBtn.textContent = "模糊";
+
         fuzzyBtn.onclick = function() {
             markWordStatus(w, "fuzzy");
         };
 
-        var familiarBtn = document.createElement("button");
+        var familiarBtn =
+            document.createElement("button");
+
         familiarBtn.type = "button";
-        familiarBtn.className = "status-btn status-familiar";
+        familiarBtn.className =
+            "status-btn status-familiar";
+
         familiarBtn.textContent = "熟悉";
+
         familiarBtn.onclick = function() {
             markWordStatus(w, "familiar");
         };
@@ -1111,6 +1159,11 @@ function renderNewWordList(wordArr) {
 
         card.appendChild(index);
         card.appendChild(word);
+
+        if (phoneticRow) {
+            card.appendChild(phoneticRow);
+        }
+
         card.appendChild(meaning);
         card.appendChild(example);
         card.appendChild(actions);
@@ -1119,7 +1172,16 @@ function renderNewWordList(wordArr) {
     });
 
     container.appendChild(grid);
+
+    // 卡片进入页面后，再逐个加载音标和发音
+    wordArr.forEach(function(w, idx) {
+        loadPhoneticIntoElement(
+            w.word,
+            "today-" + idx
+        );
+    });
 }
+
 function renderWeakWordsBySelectedDate() {
     ensureWordStatusData();
 
