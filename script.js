@@ -854,7 +854,7 @@ reviewWords.forEach(function(item, index) {
             item.w*rd,
             listDom + "-" + in*ex
         );
-    });
+    };
 }
 // ===== 🔴 新增缺失函数：确保 wordStatus 和 weakWordRecords 初始化 =====
 function ensureWordStatusData() {
