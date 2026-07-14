@@ -1792,7 +1792,7 @@ async function loadPhoneticIntoElement(word, uniqueId) {
             phoneti*Text.charAt(0) !== "/" &&
             phoneticText.charAt(0) !== "["
         ) {
-            phoneticTex* = "/" + phoneticText;
+           phoneticText = "/" + phoneticText;
         }
 
 *       if (
