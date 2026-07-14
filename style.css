@@ -1530,3 +1530,50 @@ body > button {
     font-size: 15px;
     font-weight: 700;
 }
+/* ===== 单词音标 ===== */
+
+.word-phonetic-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 5px;
+    margin-bottom: 12px;
+}
+
+.word-phonetic {
+    color: #8b8f97;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.2px;
+}
+
+.pronunciation-button {
+    width: 29px !important;
+    height: 29px !important;
+    min-width: 29px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none !important;
+    border-radius: 999px !important;
+    background: #fff0eb !important;
+    color: #ff5a3c !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    font-size: 13px !important;
+    cursor: pointer;
+    transition:
+        background 0.18s ease,
+        transform 0.18s ease;
+}
+
+.pronunciation-button:hover {
+    background: #ffe1d8 !important;
+    transform: translateY(-1px) !important;
+}
+
+.pronunciation-button:active {
+    transform: scale(0.96) !important;
+}
