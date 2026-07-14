@@ -231,80 +231,7 @@ if (!cloudDataLoaded) {
     }
 }
 
-function showStudyPanel(type, btn) {
-    if (!isLoggedIn()) {
-        alert("请先登录账号，再查看学习内容。");
-        return;
-    }
 
-    
-var sections = [
-    "homeSec",
-    "searchResultSec",
-    "rev1",
-    "rev3",
-    "newWordSec",
-    "sentSec",
-    "weakWordsSec",
-    "planSec",
-    "historySec"
-];
-
-
-    sections.forEach(function(id) {
-        var el = document.getElementById(id);
-        if (el) {
-            el.style.display = "none";
-        }
-    });
-
-    if (type === "home") {
-        document.getElementById("homeSec").style.display = "flex";
-    }
-
-    if (type === "review") {
-        document.getElementById("rev1").style.display = "block";
-        document.getElementById("rev3").style.display = "block";
-    }
-
-    if (type === "words") {
-        document.getElementById("newWordSec").style.display = "block";
-
-        if (cloudStudyData.todayWords && cloudStudyData.todayWords.length > 0) {
-            renderNewWordList(cloudStudyData.todayWords);
-        } else {
-            document.getElementById("newWordList").innerHTML =
-                '<div class="word-item" style="color:#8b8f97;">今天还没有生成单词，请先点击「开始今日学习」。</div>';
-        }
-    }
-
-    if (type === "sentences") {
-        document.getElementById("sentSec").style.display = "block";
-
-        if (!cloudStudyData.todaySentences || cloudStudyData.todaySentences.length === 0) {
-            document.getElementById("sentArea").innerHTML =
-                '<div class="word-item" style="color:#8b8f97;">今天还没有生成长难句，请先点击「开始今日学习」。</div>';
-        }
-    }
-
-    if (type === "weakWords") {
-        document.getElementById("weakWordsSec").style.display = "block";
-        renderWeakWordsList();
-    }
-
-    if (type === "plan") {
-        document.getElementById("planSec").style.display = "block";
-        loadStudyPlanToInputs();
-    }
-
-    document.querySelectorAll(".nav-item").forEach(function(item) {
-        item.classList.remove("active");
-    });
-
-    if (btn) {
-        btn.classList.add("active");
-    }
-}
 function getStudyPlan() {
     if (!cloudStudyData.studyPlan) {
         cloudStudyData.studyPlan = {
@@ -541,9 +468,15 @@ function searchLearnedWord() {
 }
 
 
-   
+function closeSearchModal() {
+    var modal = document.getElementById("searchModal");
 
+    if (modal) {
+        modal.style.display = "none";
+    }
+}   
 function showSearchResults(query, results) {
+    results.forEach(function(item, idx) {
     var phoneticId = "search-" + idx;
     var modal = document.getElementById("searchModal");
     var subtitle = document.getElementById("searchModalSubtitle");
@@ -623,14 +556,6 @@ results.forEach(function(item, idx) {
         "search-" + idx
     );
 });
-
-function closeSearchModal() {
-    var modal = document.getElementById("searchModal");
-
-    if (modal) {
-        modal.style.display = "none";
-    }
-}
 
 function getTodayStr() {
     const d = new Date();
