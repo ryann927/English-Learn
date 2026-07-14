@@ -1502,9 +1502,14 @@ function showHistoryDay(date) {
 }
 function showQuizAnswer() {
     let ansText = "";
-    window.globalQuizAns.forEach((ans, idx) => ansText += `${idx+1}. ${ans}<br>`);
+
+    window.globalQuizAns.forEach((ans, idx) => {
+        ansText += `${idx + 1}. ${ans}<br>`;
+    });
+
     document.getElementById("quizAns").style.display = "block";
-    document.getElementById("quizAns").innerHTML = "自测答案：<br>" + ansText;
+    document.getElementById("quizAns").innerHTML =
+        "自测答案：<br>" + ansText;
 }
 
 function createLongSentenceBlock(isNewDay, sentenceCount) {
