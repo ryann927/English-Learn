@@ -802,37 +802,77 @@ window.generateTodayContent = generateTodayContent;
 
 
 function renderReviewBlock(wordArr, listDom, ansDom) {
-    wordArr = (wordArr || []).filter(function(item) {
-    return !cloudStudyData.wordStatus || cloudStudyData.wordStatus[item.word] !== "familiar";
-});
-    let listHtml = "";
-    let ansHtml = "";
+    var reviewWords = (wordArr || []).filter(function(item) {
+        if (!item || !item.word) {
+            return false;
+        }
 
-    if (!wordArr || wordArr.length === 0) {
-        document.getElementById(listDom).innerHTML =
-            `<div class="word-item" style="color:#8b8f97;">暂无复习内容</div>`;
-        document.getElementById(ansDom).innerHTML = "";
+        var status = cloudStudyData.wordStatus
+            ? cloudStudyData.wordStatus[item.word]
+            : undefined;
+
+        // 只有明确标记为 familiar 的单词才不复习
+        return status !== "familiar";
+    });
+
+    var listElement = document.getElementById(listDom);
+    var answerElement = document.getElementById(ansDom);
+
+    if (!listElement || !answerElement) {
         return;
     }
 
-    wordArr.forEach((item, idx) => {
-        listHtml += `<div class="word-item">${idx + 1}. ${item.word}</div>`;
-        ansHtml += `<div class="word-item">${idx + 1}. ${item.mean}</div>`;
+    var section = listElement.closest(".section");
+
+    if (section) {
+        var title = section.querySelector("h2");
+
+        if (title && listDom === "rev1List") {
+            title.textContent =
+                "1. D-1 昨日单词复盘（" +
+                reviewWords.length +
+                "个）";
+        }
+
+        if (title && listDom === "rev3List") {
+            title.textContent =
+                "2. D-3 三日前单词复盘（" +
+                reviewWords.length +
+                "个）";
+        }
+    }
+
+    if (reviewWords.length === 0) {
+        listElement.innerHTML =
+            '<div class="word-item" style="color:#8b8f97;">暂无需要复习的单词</div>';
+
+        answerElement.innerHTML = "";
+        return;
+    }
+
+    var listHtml = "";
+    var answerHtml = "";
+
+    reviewWords.forEach(function(item, index) {
+        listHtml +=
+            '<div class="word-item">' +
+            (index + 1) +
+            ". " +
+            item.word +
+            "</div>";
+
+        answerHtml +=
+            '<div class="word-item">' +
+            (index + 1) +
+            ". " +
+            (item.mean || "暂无释义") +
+            "</div>";
     });
 
-    document.getElementById(listDom).innerHTML = listHtml;
-    document.getElementById(ansDom).innerHTML = "释义答案：<br>" + ansHtml;
+    listElement.innerHTML = listHtml;
+    answerElement.innerHTML =
+        "释义答案：<br>" + answerHtml;
 }
-function ensureWordStatusData() {
-    if (!cloudStudyData.wordStatus) {
-        cloudStudyData.wordStatus = {};
-    }
-
-    if (!cloudStudyData.weakWordRecords) {
-        cloudStudyData.weakWordRecords = {};
-    }
-}
-
 function ensureWeakDate(date) {
     ensureWordStatusData();
 
