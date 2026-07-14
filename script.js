@@ -1539,3 +1539,233 @@ const pool = unused.length >= sentenceCount
     });
     document.getElementById("sentArea").innerHTML = sentHtml;
 }
+// ===== 自动获取英语单词音标 =====
+
+var phoneticMemoryCache = {};
+
+function normalizeDictionaryWord(word) {
+    return String(word || "")
+        .trim()
+        .toLowerCase()
+        .replace(/-/g, " ");
+}
+
+function getPhoneticCache() {
+    try {
+        return JSON.parse(
+            localStorage.getItem("ielts_phonetic_cache") || "{}"
+        );
+    } catch (error) {
+        console.warn("音标缓存读取失败：", error);
+        return {};
+    }
+}
+
+function savePhoneticCache(cache) {
+    try {
+        localStorage.setItem(
+            "ielts_phonetic_cache",
+            JSON.stringify(cache)
+        );
+    } catch (error) {
+        console.warn("音标缓存保存失败：", error);
+    }
+}
+
+async function getWordPhonetic(word) {
+    var normalizedWord = normalizeDictionaryWord(word);
+
+    if (!normalizedWord) {
+        return {
+            phonetic: "",
+            audio: ""
+        };
+    }
+
+    /*
+     * 第一层缓存：当前页面内存。
+     */
+    if (phoneticMemoryCache[normalizedWord]) {
+        return phoneticMemoryCache[normalizedWord];
+    }
+
+    /*
+     * 第二层缓存：浏览器 localStorage。
+     */
+    var localCache = getPhonet*cCache();
+
+    if (localCache[normalizedWord]) {
+        phoneticMemo*yCache[normalizedWord] =
+         *  localCache[normalizedWord];
+
+   *    return localCache[normalizedWord];
+    }
+
+    try {
+        var r*sponse = await fetch(
+            "https://api.dictionaryapi.dev/api/v2/entries/en/" +
+            encodeURIComponent(normalizedWord)
+        );
+
+        if (!response.ok) {
+            throw new Error("Word not found");
+        }
+
+        var data = await response.json();
+        var firstEntry = data && data[0] ? data[0] : {};
+        var phonetic = firstEntry.phonetic || "";
+        var audio = "";
+
+        var phonetics = Array.isArray(firstEntry.phonetics)
+            ? firstEntry.phonetics
+            : [];
+
+        /*
+         * 优先从 phonetics 数组中找有效音标。
+         */
+        if (!phonetic) {
+            for (var i = 0; i < phonetics.length; i++) {
+                if (phonetics[i] && phonetics[i].text) {
+                    phonetic = phonetics[i].text;
+                    break;
+                }
+            }
+        }
+
+        /*
+         * 找一个可播放的发音音频。
+         */
+        for (var j = 0; j < phonetics.length; j++) {
+            if (phonetics[j] && phonetics[j].audio) {
+                audio = phonetics[j].audio;
+
+                if (audio.indexOf("//") === 0) {
+                    audio = "https:" + audio;
+                }
+
+                break;
+            }
+        }
+
+        var result = {
+            phonetic: phonetic || "",
+            audio: audio || ""
+        };
+
+        /*
+         * 即使没查到也缓存，避免每次都重复请求。
+         */
+        phoneticMemoryCache[normalizedWord] = result;
+        localCache[normalizedWord] = result;
+        savePhoneticCache(localCache);
+
+        return result;
+    } catch (error) {
+        console.warn(
+            "音标获取失败：",
+            normalizedWord,
+            error
+        );
+
+        var emptyResult = {
+            phonetic: "",
+            audio: ""
+        };
+
+        /*
+         * 查询失败不永久写入 localStorage，
+         * 避免临时断网导致以后一直没有音标。
+         */
+        phoneticMemoryCache[normalizedWord] = emptyResult;
+
+        return emptyResult;
+    }
+}
+function createPhoneticHtml(word, uniqueId) {
+    var safeWord = String(word || "");
+    var safeId = String(uniqueId || "")
+        .replace(/[^a-zA-Z0-9_-]/g, "");
+
+    return ''
+        + '<div class="word-phonetic-row">'
+        + '    <span'
+        + '        class="word-phonetic"'
+        + '        id="phonetic-' + safeId + '"'
+        + '    >'
+        + '        音标加载中...'
+        + '    </span>'
+        + '    <button'
+        + '        type="button"'
+        + '        class="pronunciation-button"'
+        + '        id="audio-' + safeId + '"'
+        + '        style="display:none;"'
+        + '        data-word="' + safeWord + '"'
+        + '        aria-label="播放 ' + safeWord + ' 的发音"'
+        + '    >'
+        + '        🔊'
+        + '    </button>'
+        + '</div>';
+}async function loadPhoneticIntoElement(word, uniqueId) {
+    var safeId = String(uniqueId || "")
+        .replace(/[^a-zA-Z0-9_-]/g, "");
+
+    var phoneticElement =
+        document.getElementById("phonetic-" + safeId);
+
+    var audioButton =
+        document.getElementById("audio-" + safeId);
+
+    if (!phoneticElement) {
+        return;
+    }
+
+    var result = await getWordPhonetic(word);
+
+    if (result.phonetic) {
+        var phoneticText = result.phonetic;
+
+        /*
+         * 有些 API 返回的音标没有斜杠，
+         * 这里统一加上。
+         */
+        if (
+            phoneti*Text.charAt(0) !== "/" &&
+        *   phoneticText.charAt(0) !== "["
+        ) {
+            phoneticTex* = "/" + phoneticText;
+        }
+
+*       if (
+            phoneticTe*t.charAt(phoneticText.length - 1) *== "/" &&
+            phoneticText*charAt(phoneticText.length - 1) !=* "]"
+        ) {
+            phone*icText = phoneticText + "/";
+     *  }
+
+        phoneticElement.textC*ntent = phoneticText;
+    } else {*        phoneticElement.textConten* = "暂无音标";
+    }
+
+    if (audioBut*on && result.audio) {
+        audi*Button.style.display = "inline-fle*";
+
+        audioButton.onclick = *unction() {
+            playPronun*iation(result.audio, word);
+      * };
+    }
+}
+
+function playPronunci*tion(audioUrl, word) {
+    if (!au*ioUrl) {
+        return;
+    }
+
+  * var audio = new Audio(audioUrl);
+*    audio.play().catch(function(er*or) {
+        console.warn(
+      *     "发音播放失败：",
+            word,
+*           error
+        );
+    })*
+}
