@@ -1698,25 +1698,73 @@ function createPhoneticHtml(word, uniqueId) {
     var safeId = String(uniqueId || "")
         .replace(/[^a-zA-Z0-9_-]/g, "");
 
-    return ''
+    return ""
         + '<div class="word-phonetic-row">'
-        + '    <span'
-        + '        class="word-phonetic"'
-        + '        id="phonetic-' + safeId + '"'
-        + '    >'
-        + '        音标加载中...'
-        + '    </span>'
-        + '    <button'
-        + '        type="button"'
-        + '        class="pronunciation-button"'
-        + '        id="audio-' + safeId + '"'
-        + '        style="display:none;"'
-        + '        data-word="' + safeWord + '"'
-        + '        aria-label="播放 ' + safeWord + ' 的发音"'
-        + '    >'
-        + '        🔊'
-        + '    </button>'
-        + '</div>';
+        + '<span class="word-phonetic" id="phonetic-' + safeId + '">'
+        + "音标加载中..."
+        + "</span>"
+        + '<button type="button"'
+        + ' class="pronunciation-button"'
+        + ' id="audio-' + safeId + '"'
+        + ' style="display:none;"'
+        + ' data-word="' + safeWord + '"'
+        + ' aria-label="播放 ' + safeWord + ' 的发音">'
+        + "🔊"
+        + "</button>"
+        + "</div>";
+}
+
+async function loadPhoneticIntoElement(word, uniqueId) {
+    var safeId = String(uniqueId || "")
+        .replace(/[^a-zA-Z0-9_-]/g, "");
+
+    var phoneticElement =
+        document.getElementById("phonetic-" + safeId);
+
+    var audioButton =
+        document.getElementById("audio-" + safeId);
+
+    if (!phoneticElement) {
+        return;
+    }
+
+    var result = await getWordPhonetic(word);
+
+    if (result.phonetic) {
+        var phoneticText = result.phonetic;
+
+        // 如果音标开头没有斜杠或方括号，则补上斜杠
+        if (
+            phoneticText.charAt(0) !== "/" &&
+            phoneticText.charAt(0) !== "["
+        ) {
+            phoneticText = "/" + phoneticText;
+        }
+
+        var lastCharacter =
+            phoneticText.charAt(phoneticText.length - 1);
+
+        // 如果音标结尾没有斜杠或方括号，则补上斜杠
+        if (
+            lastCharacter !== "/" &&
+            lastCharacter !== "]"
+        ) {
+            phoneticText = phoneticText + "/";
+        }
+
+        phoneticElement.textContent = phoneticText;
+    } else {
+        phoneticElement.textContent = "暂无音标";
+    }
+
+    if (audioButton && result.audio) {
+        audioButton.style.display = "inline-flex";
+
+        audioButton.onclick = function() {
+            playPronunciation(result.audio, word);
+        };
+    }
+}
 }async function loadPhoneticIntoElement(word, uniqueId) {
     var safeId = String(uniqueId || "")
         .replace(/[^a-zA-Z0-9_-]/g, "");
