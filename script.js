@@ -1755,17 +1755,18 @@ async function loadPhoneticIntoElement(word, uniqueId) {
 }
 
 
-function playPronunci*tion(audioUrl, word) {
-    if (!au*ioUrl) {
+function playPronunciation(audioUrl, word) {
+    if (!audioUrl) {
         return;
     }
 
-  * var audio = new Audio(audioUrl);
-*    audio.play().catch(function(er*or) {
+    var audio = new Audio(audioUrl);
+    audio.play().catch(function(error) {
         console.warn(
-      *     "发音播放失败：",
+            "发音播放失败：",
             word,
-*           error
+            error
         );
-    })*
+    });
 }
+
