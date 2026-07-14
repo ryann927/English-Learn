@@ -561,7 +561,7 @@ const fullWordBank = [
 {"word":"utilise","mean":"v.利用，使用（英式utilize）","topic":"general","example":"Cities utilise idle rooftop space to install solar power panels."},
 {"word":"voluntary","mean":"adj.自愿的，主动参与的","topic":"society","example":"Voluntary green consumption habits reduce household plastic waste output."},
 {"word":"whereby","mean":"adv.借此，凭此方式","topic":"policy","example":"A carbon tax system whereby polluting enterprises pay ecological compensation fees."},
-{"word":"widespread","mean":"adj.广泛普及的，大范围的","topic":"society","example":"Widespread public participation accelerates the enforcement of plastic ban policies."}，
+{"word":"widespread","mean":"adj.广泛普及的，大范围的","topic":"society","example":"Widespread public participation accelerates the enforcement of plastic ban policies."},
 {"word":"algorithm","mean":"n.算法","topic":"technology","example":"Recommendation platforms use algorithms to predict users’ preferences."},
 {"word":"analytics","mean":"n.数据分析","topic":"technology","example":"Data analytics helps governments identify urban pollution patterns."},
 {"word":"architecture","mean":"n.架构；建筑学","topic":"technology","example":"A reliable digital architecture supports large-scale online learning systems."},
