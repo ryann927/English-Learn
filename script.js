@@ -1769,4 +1769,3 @@ function playPronunciation(audioUrl, word) {
         );
     });
 }
-
