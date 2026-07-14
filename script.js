@@ -544,6 +544,7 @@ function searchLearnedWord() {
    
 
 function showSearchResults(query, results) {
+    var phoneticId = "search-" + idx;
     var modal = document.getElementById("searchModal");
     var subtitle = document.getElementById("searchModalSubtitle");
     var body = document.getElementById("searchModalBody");
@@ -598,6 +599,7 @@ function showSearchResults(query, results) {
         html += ''
             + '<div class="search-result-card">'
             + '<div class="search-result-index">' + String(idx + 1).padStart(2, "0") + '</div>'
+            + createPhoneticHtml(item.word, phoneticId)
             + '<div class="search-result-word">' + item.word + '</div>'
             + '<div class="search-result-meaning">' + meaningInfo + '</div>'
             + '<div class="search-result-example-box">'
@@ -614,7 +616,14 @@ function showSearchResults(query, results) {
 
     body.innerHTML = html;
     modal.style.display = "flex";
-}
+
+results.forEach(function(item, idx) {
+    loadPhoneticIntoElement(
+        item.word,
+        "search-" + idx
+    );
+});
+
 function closeSearchModal() {
     var modal = document.getElementById("searchModal");
 
