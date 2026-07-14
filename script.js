@@ -1591,27 +1591,23 @@ async function getWordPhonetic(word) {
         };
     }
 
-    /*
-     * 第一层缓存：当前页面内存。
-     */
+    // 第一层缓存：当前页面内存
     if (phoneticMemoryCache[normalizedWord]) {
         return phoneticMemoryCache[normalizedWord];
     }
 
-    /*
-     * 第二层缓存：浏览器 localStorage。
-     */
-    var localCache = getPhonet*cCache();
+    // 第二层缓存：浏览器 localStorage
+    var localCache = getPhoneticCache();
 
     if (localCache[normalizedWord]) {
-        phoneticMemo*yCache[normalizedWord] =
-         *  localCache[normalizedWord];
+        phoneticMemoryCache[normalizedWord] =
+            localCache[normalizedWord];
 
-   *    return localCache[normalizedWord];
+        return localCache[normalizedWord];
     }
 
     try {
-        var r*sponse = await fetch(
+        var response = await fetch(
             "https://api.dictionaryapi.dev/api/v2/entries/en/" +
             encodeURIComponent(normalizedWord)
         );
@@ -1621,7 +1617,11 @@ async function getWordPhonetic(word) {
         }
 
         var data = await response.json();
-        var firstEntry = data && data[0] ? data[0] : {};
+        var firstEntry =
+            data && data[0]
+                ? data[0]
+                : {};
+
         var phonetic = firstEntry.phonetic || "";
         var audio = "";
 
@@ -1629,23 +1629,25 @@ async function getWordPhonetic(word) {
             ? firstEntry.phonetics
             : [];
 
-        /*
-         * 优先从 phonetics 数组中找有效音标。
-         */
+        // 优先从 phonetics 数组中查找音标
         if (!phonetic) {
             for (var i = 0; i < phonetics.length; i++) {
-                if (phonetics[i] && phonetics[i].text) {
+                if (
+                    phonetics[i] &&
+                    phonetics[i].text
+                ) {
                     phonetic = phonetics[i].text;
                     break;
                 }
             }
         }
 
-        /*
-         * 找一个可播放的发音音频。
-         */
+        // 查找可播放的发音音频
         for (var j = 0; j < phonetics.length; j++) {
-            if (phonetics[j] && phonetics[j].audio) {
+            if (
+                phonetics[j] &&
+                phonetics[j].audio
+            ) {
                 audio = phonetics[j].audio;
 
                 if (audio.indexOf("//") === 0) {
@@ -1661,11 +1663,10 @@ async function getWordPhonetic(word) {
             audio: audio || ""
         };
 
-        /*
-         * 即使没查到也缓存，避免每次都重复请求。
-         */
+        // 保存到页面内存和 localStorage
         phoneticMemoryCache[normalizedWord] = result;
         localCache[normalizedWord] = result;
+
         savePhoneticCache(localCache);
 
         return result;
@@ -1681,10 +1682,7 @@ async function getWordPhonetic(word) {
             audio: ""
         };
 
-        /*
-         * 查询失败不永久写入 localStorage，
-         * 避免临时断网导致以后一直没有音标。
-         */
+        // 临时失败只保存在内存中，不写入永久缓存
         phoneticMemoryCache[normalizedWord] = emptyResult;
 
         return emptyResult;
