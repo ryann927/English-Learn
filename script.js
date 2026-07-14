@@ -1720,11 +1720,8 @@ async function loadPhoneticIntoElement(word, uniqueId) {
     var safeId = String(uniqueId || "")
         .replace(/[^a-zA-Z0-9_-]/g, "");
 
-    var phoneticElement =
-        document.getElementById("phonetic-" + safeId);
-
-    var audioButton =
-        document.getElementById("audio-" + safeId);
+    var phoneticElement = document.getElementById("phonetic-" + safeId);
+    var audioButton = document.getElementById("audio-" + safeId);
 
     if (!phoneticElement) {
         return;
@@ -1735,22 +1732,12 @@ async function loadPhoneticIntoElement(word, uniqueId) {
     if (result.phonetic) {
         var phoneticText = result.phonetic;
 
-        // 如果开头没有斜杠或方括号，补上斜杠
-        if (
-            phoneticText.charAt(0) !== "/" &&
-            phoneticText.charAt(0) !== "["
-        ) {
+        if (phoneticText.charAt(0) !== "/" && phoneticText.charAt(0) !== "[") {
             phoneticText = "/" + phoneticText;
         }
 
-        var lastCharacter =
-            phoneticText.charAt(phoneticText.length - 1);
-
-        // 如果结尾没有斜杠或方括号，补上斜杠
-        if (
-            lastCharacter !== "/" &&
-            lastCharacter !== "]"
-        ) {
+        var lastCharacter = phoneticText.charAt(phoneticText.length - 1);
+        if (lastCharacter !== "/" && lastCharacter !== "]") {
             phoneticText = phoneticText + "/";
         }
 
@@ -1761,7 +1748,6 @@ async function loadPhoneticIntoElement(word, uniqueId) {
 
     if (audioButton && result.audio) {
         audioButton.style.display = "inline-flex";
-
         audioButton.onclick = function() {
             playPronunciation(result.audio, word);
         };
@@ -1772,14 +1758,8 @@ function playPronunciation(audioUrl, word) {
     if (!audioUrl) {
         return;
     }
-
     var audio = new Audio(audioUrl);
-
     audio.play().catch(function(error) {
-        console.warn(
-            "发音播放失败：",
-            word,
-            error
-        );
+        console.warn("发音播放失败：", word, error);
     });
 }
