@@ -805,35 +805,42 @@ function renderReviewBlock(
     var answerHtml = "";
 
     reviewWords.forEach(function(item, index) {
-        /*
-         * 使用 listDom 作为前缀，确保 D-1 和 D-3
-         * 不会产生重复的 HTML ID。
-         */
-        var phoneticId =
-       *    listDom + "-" + index;
+    var phoneticId =
+        listDom + "-" + index;
 
-      * listHtml +=
-            '<div cla*s="word-item review-word-item">' +*
-            '<div class="review-w*rd-title">' +
-            (index + 1) +
-            ". " +
-            item.word +
-            "</div>" +
+    listHtml +=
+        '<div class="word-item review-word-item">' +
+        '<div class="review-word-title">' +
+        (index + 1) +
+        ". " +
+        item.word +
+        '</div>' +
+        createPhoneticHtml(
+            item.word,
+            phoneticId
+        ) +
+        '</div>';
 
-            createPhoneticHtml(
-                item.word,
-                phoneticId
-            ) +
+    answerHtml +=
+        '<div class="word-item">' +
+        (index + 1) +
+        ". " +
+        (item.mean || "暂无释义") +
+        '</div>';
+});
 
-            "</div>";
+listElement.innerHTML = listHtml;
 
-        answerHtml +=
-            '<div class="word-item">' +
-            (index + 1) +
-            ". " +
-            (item.mean || "暂无释义") +
-            "</div>";
-    });
+answerElement.innerHTML =
+    "释义答案：<br>" +
+    answerHtml;
+
+reviewWords.forEach(function(item, index) {
+    loadPhoneticIntoElement(
+        item.word,
+        listDom + "-" + index
+    );
+});
 
     listElement.innerHTML = listHtml;
 
