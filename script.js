@@ -1795,7 +1795,7 @@ async function loadPhoneticIntoElement(word, uniqueId) {
            phoneticText = "/" + phoneticText;
         }
 
-*       if (
+        if (
             phoneticTe*t.charAt(phoneticText.length - 1) *== "/" &&
             phoneticText*charAt(phoneticText.length - 1) !=* "]"
         ) {
