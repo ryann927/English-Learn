@@ -1742,7 +1742,7 @@ function createPhoneticHtml(word, uniqueId) {
          */
         if (
             phoneti*Text.charAt(0) !== "/" &&
-        *   phoneticText.charAt(0) !== "["
+            phoneticText.charAt(0) !== "["
         ) {
             phoneticTex* = "/" + phoneticText;
         }
